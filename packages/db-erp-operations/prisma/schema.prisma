@@ -1,0 +1,1119 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["erp_operations"]
+}
+
+enum LeadStatus {
+  New
+  Contacted
+  Qualified
+  Lost
+  Converted
+
+  @@schema("erp_operations")
+}
+
+model Contact {
+  id             String    @id @default(uuid())
+  tenantId       String    @map("tenant_id")
+  fullName       String    @map("full_name")
+  email          String?
+  phone          String?
+  company        String?
+  classification String    @default("PII_MEDIUM")
+  deletedAt      DateTime? @map("deleted_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  leads Lead[]
+
+  @@index([tenantId, email])
+  @@map("contacts")
+  @@schema("erp_operations")
+}
+
+model Lead {
+  id          String     @id @default(uuid())
+  tenantId    String     @map("tenant_id")
+  contactId   String     @map("contact_id")
+  source      String
+  status      LeadStatus @default(New)
+  ownerUserId String     @map("owner_user_id")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  contact Contact @relation(fields: [contactId], references: [id])
+
+  @@index([tenantId, status])
+  @@map("leads")
+  @@schema("erp_operations")
+}
+
+enum MovementType {
+  In
+  Out
+  Transfer
+  Adjustment
+  Reserve
+  Release
+
+  @@schema("erp_operations")
+}
+
+enum SalesOrderStatus {
+  Draft
+  Confirmed
+  Fulfilled
+  Canceled
+
+  @@schema("erp_operations")
+}
+
+model Product {
+  id         String   @id @default(uuid())
+  tenantId   String   @map("tenant_id")
+  sku        String
+  nameFa     String   @map("name_fa")
+  unit       String
+  basePrice  Decimal  @map("base_price") @db.Decimal(18, 2)
+  isActive   Boolean  @default(true) @map("is_active")
+  categoryId String?  @map("category_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@unique([tenantId, sku])
+  @@map("products")
+  @@schema("erp_operations")
+}
+
+model Warehouse {
+  id       String  @id @default(uuid())
+  tenantId String  @map("tenant_id")
+  code     String
+  nameFa   String  @map("name_fa")
+  address  String?
+  isActive Boolean @default(true) @map("is_active")
+
+  zones       WarehouseZone[]
+  stockCounts StockCount[]
+
+  @@unique([tenantId, code])
+  @@map("warehouses")
+  @@schema("erp_operations")
+}
+
+model InventoryBalance {
+  id                String @id @default(uuid())
+  tenantId          String @map("tenant_id")
+  productId         String @map("product_id")
+  warehouseId       String @map("warehouse_id")
+  quantity          BigInt @default(0)
+  reservedQuantity  BigInt @default(0) @map("reserved_quantity")
+  version           Int    @default(0)
+
+  @@unique([tenantId, productId, warehouseId])
+  @@map("inventory_balances")
+  @@schema("erp_operations")
+}
+
+model StockMovement {
+  id            String       @id @default(uuid())
+  tenantId      String       @map("tenant_id")
+  productId     String       @map("product_id")
+  warehouseId   String       @map("warehouse_id")
+  movementType  MovementType @map("movement_type")
+  quantity      BigInt
+  referenceType String       @map("reference_type")
+  referenceId   String       @map("reference_id")
+  createdAt     DateTime     @default(now()) @map("created_at")
+
+  @@index([tenantId, referenceId])
+  @@map("stock_movements")
+  @@schema("erp_operations")
+}
+
+model SalesOrder {
+  id            String            @id @default(uuid())
+  tenantId      String            @map("tenant_id")
+  orderNumber   String            @map("order_number")
+  customerId    String            @map("customer_id")
+  orderDate     DateTime          @map("order_date")
+  status        SalesOrderStatus  @default(Draft)
+  total         Decimal           @db.Decimal(18, 2)
+  currency      String            @default("IRR")
+  correlationId String            @map("correlation_id")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  version       Int               @default(0)
+
+  lines SalesOrderLine[]
+
+  @@unique([tenantId, orderNumber])
+  @@map("sales_orders")
+  @@schema("erp_operations")
+}
+
+model SalesOrderLine {
+  id           String  @id @default(uuid())
+  salesOrderId String  @map("sales_order_id")
+  productId    String  @map("product_id")
+  quantity     BigInt
+  unitPrice    Decimal @map("unit_price") @db.Decimal(18, 2)
+  lineTotal    Decimal @map("line_total") @db.Decimal(18, 2)
+
+  salesOrder SalesOrder @relation(fields: [salesOrderId], references: [id])
+
+  @@map("sales_order_lines")
+  @@schema("erp_operations")
+}
+
+model TenantSetting {
+  id                           String  @id @default(uuid())
+  tenantId                     String  @map("tenant_id")
+  salesDiscountApprovalPercent Decimal @default(10) @map("sales_discount_approval_percent") @db.Decimal(5, 2)
+
+  @@unique([tenantId])
+  @@map("tenant_settings")
+  @@schema("erp_operations")
+}
+
+enum PurchaseRequestStatus {
+  Draft
+  PendingApproval
+  Approved
+  Rejected
+  Ordered
+
+  @@schema("erp_operations")
+}
+
+model PurchaseRequest {
+  id            String                  @id @default(uuid())
+  tenantId      String                  @map("tenant_id")
+  requestNumber String                  @map("request_number")
+  requestDate   DateTime                @map("request_date")
+  status        PurchaseRequestStatus   @default(Draft)
+  requestedBy   String                  @map("requested_by")
+  correlationId String                  @map("correlation_id")
+  createdAt     DateTime                @default(now()) @map("created_at")
+
+  lines PurchaseRequestLine[]
+  quotes Quote[]
+
+  @@unique([tenantId, requestNumber])
+  @@map("purchase_requests")
+  @@schema("erp_operations")
+}
+
+model PurchaseRequestLine {
+  id                String  @id @default(uuid())
+  purchaseRequestId String  @map("purchase_request_id")
+  productId         String  @map("product_id")
+  quantity          BigInt
+  estimatedPrice    Decimal @map("estimated_price") @db.Decimal(18, 2)
+
+  purchaseRequest PurchaseRequest @relation(fields: [purchaseRequestId], references: [id])
+
+  @@map("purchase_request_lines")
+  @@schema("erp_operations")
+}
+
+model Supplier {
+  id          String  @id @default(uuid())
+  tenantId    String  @map("tenant_id")
+  nameFa      String  @map("name_fa")
+  contactInfo Json?   @map("contact_info")
+  isActive    Boolean @default(true) @map("is_active")
+
+  quotes         Quote[]
+  purchaseOrders PurchaseOrder[]
+
+  @@map("suppliers")
+  @@schema("erp_operations")
+}
+
+model Quote {
+  id                String   @id @default(uuid())
+  tenantId          String   @map("tenant_id")
+  purchaseRequestId String   @map("purchase_request_id")
+  supplierId        String   @map("supplier_id")
+  quoteDate         DateTime @map("quote_date")
+  totalPrice        Decimal  @map("total_price") @db.Decimal(18, 2)
+  validUntil        DateTime @map("valid_until")
+
+  purchaseRequest PurchaseRequest @relation(fields: [purchaseRequestId], references: [id])
+  supplier        Supplier        @relation(fields: [supplierId], references: [id])
+
+  @@map("quotes")
+  @@schema("erp_operations")
+}
+
+enum PurchaseOrderStatus {
+  Draft
+  Sent
+  Confirmed
+  Received
+  Canceled
+
+  @@schema("erp_operations")
+}
+
+model PurchaseOrder {
+  id            String              @id @default(uuid())
+  tenantId      String              @map("tenant_id")
+  poNumber      String              @map("po_number")
+  supplierId    String              @map("supplier_id")
+  orderDate     DateTime            @map("order_date")
+  status        PurchaseOrderStatus @default(Draft)
+  total         Decimal             @db.Decimal(18, 2)
+  currency      String              @default("IRR")
+  correlationId String              @map("correlation_id")
+  createdAt     DateTime            @default(now()) @map("created_at")
+
+  supplier      Supplier           @relation(fields: [supplierId], references: [id])
+  lines         PurchaseOrderLine[]
+  goodsReceipts GoodsReceipt[]
+
+  @@unique([tenantId, poNumber])
+  @@map("purchase_orders")
+  @@schema("erp_operations")
+}
+
+model PurchaseOrderLine {
+  id              String  @id @default(uuid())
+  purchaseOrderId String  @map("purchase_order_id")
+  productId       String  @map("product_id")
+  quantity        BigInt
+  unitPrice       Decimal @map("unit_price") @db.Decimal(18, 2)
+  lineTotal       Decimal @map("line_total") @db.Decimal(18, 2)
+
+  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+
+  @@map("purchase_order_lines")
+  @@schema("erp_operations")
+}
+
+enum GoodsReceiptStatus {
+  Draft
+  Confirmed
+
+  @@schema("erp_operations")
+}
+
+model GoodsReceipt {
+  id              String             @id @default(uuid())
+  tenantId        String             @map("tenant_id")
+  purchaseOrderId String             @map("purchase_order_id")
+  receiptDate     DateTime           @map("receipt_date")
+  status          GoodsReceiptStatus @default(Draft)
+  receivedBy      String             @map("received_by")
+  createdAt       DateTime           @default(now()) @map("created_at")
+
+  purchaseOrder PurchaseOrder       @relation(fields: [purchaseOrderId], references: [id])
+  lines         GoodsReceiptLine[]
+
+  @@map("goods_receipts")
+  @@schema("erp_operations")
+}
+
+model GoodsReceiptLine {
+  id               String @id @default(uuid())
+  goodsReceiptId   String @map("goods_receipt_id")
+  productId        String @map("product_id")
+  quantityReceived BigInt @map("quantity_received")
+
+  goodsReceipt GoodsReceipt @relation(fields: [goodsReceiptId], references: [id])
+
+  @@map("goods_receipt_lines")
+  @@schema("erp_operations")
+}
+
+model Area {
+  id           String  @id @default(uuid())
+  tenantId     String  @map("tenant_id")
+  code         String
+  nameFa       String  @map("name_fa")
+  parentAreaId String? @map("parent_area_id")
+
+  parent   Area?  @relation("AreaTree", fields: [parentAreaId], references: [id])
+  children Area[] @relation("AreaTree")
+  routes   Route[]
+
+  @@unique([tenantId, code])
+  @@map("areas")
+  @@schema("erp_operations")
+}
+
+model Route {
+  id       String  @id @default(uuid())
+  tenantId String  @map("tenant_id")
+  code     String
+  nameFa   String  @map("name_fa")
+  areaId   String  @map("area_id")
+  isActive Boolean @default(true) @map("is_active")
+
+  area       Area        @relation(fields: [areaId], references: [id])
+  routePlans RoutePlan[]
+
+  @@unique([tenantId, code])
+  @@map("routes")
+  @@schema("erp_operations")
+}
+
+enum RoutePlanStatus {
+  Draft
+  Active
+  Completed
+
+  @@schema("erp_operations")
+}
+
+model FleetVehicle {
+  id          String  @id @default(uuid())
+  tenantId    String  @map("tenant_id")
+  plateNumber String  @map("plate_number")
+  model       String
+  isActive    Boolean @default(true) @map("is_active")
+
+  routePlans RoutePlan[]
+
+  @@unique([tenantId, plateNumber])
+  @@map("fleet_vehicles")
+  @@schema("erp_operations")
+}
+
+model Driver {
+  id            String  @id @default(uuid())
+  tenantId      String  @map("tenant_id")
+  employeeId    String  @map("employee_id")
+  licenseNumber String  @map("license_number")
+  isActive      Boolean @default(true) @map("is_active")
+
+  routePlans RoutePlan[]
+
+  @@map("drivers")
+  @@schema("erp_operations")
+}
+
+model RoutePlan {
+  id        String          @id @default(uuid())
+  tenantId  String          @map("tenant_id")
+  routeId   String          @map("route_id")
+  planDate  DateTime        @map("plan_date")
+  driverId  String          @map("driver_id")
+  vehicleId String          @map("vehicle_id")
+  status    RoutePlanStatus @default(Draft)
+
+  route      Route       @relation(fields: [routeId], references: [id])
+  driver     Driver      @relation(fields: [driverId], references: [id])
+  vehicle    FleetVehicle @relation(fields: [vehicleId], references: [id])
+  visits     Visit[]
+  deliveries Delivery[]
+
+  @@map("route_plans")
+  @@schema("erp_operations")
+}
+
+enum VisitStatus {
+  Planned
+  Visited
+  Missed
+
+  @@schema("erp_operations")
+}
+
+model Visit {
+  id           String      @id @default(uuid())
+  tenantId     String      @map("tenant_id")
+  routePlanId  String      @map("route_plan_id")
+  customerId   String      @map("customer_id")
+  plannedAt    DateTime    @map("planned_at")
+  actualAt     DateTime?   @map("actual_at")
+  status       VisitStatus @default(Planned)
+  notes        String?
+
+  routePlan RoutePlan @relation(fields: [routePlanId], references: [id])
+
+  @@map("visits")
+  @@schema("erp_operations")
+}
+
+enum DeliveryStatus {
+  Pending
+  InTransit
+  Delivered
+  Failed
+
+  @@schema("erp_operations")
+}
+
+model Delivery {
+  id           String         @id @default(uuid())
+  tenantId     String         @map("tenant_id")
+  orderId      String         @map("order_id")
+  routePlanId  String         @map("route_plan_id")
+  status       DeliveryStatus @default(Pending)
+  deliveredAt  DateTime?      @map("delivered_at")
+
+  routePlan   RoutePlan    @relation(fields: [routePlanId], references: [id])
+  settlements Settlement[]
+
+  @@map("deliveries")
+  @@schema("erp_operations")
+}
+
+model Settlement {
+  id         String    @id @default(uuid())
+  tenantId   String    @map("tenant_id")
+  deliveryId String    @map("delivery_id")
+  amount     Decimal   @db.Decimal(18, 2)
+  currency   String    @default("IRR")
+  settledAt  DateTime  @map("settled_at")
+  glEntryId  String?   @map("gl_entry_id")
+
+  delivery Delivery @relation(fields: [deliveryId], references: [id])
+
+  @@map("settlements")
+  @@schema("erp_operations")
+}
+
+model Bom {
+  id            String   @id @default(uuid())
+  tenantId      String   @map("tenant_id")
+  productId     String   @map("product_id")
+  version       Int
+  isActive      Boolean  @default(true) @map("is_active")
+  effectiveFrom DateTime @map("effective_from")
+
+  lines            BomLine[]
+  productionOrders ProductionOrder[]
+
+  @@unique([tenantId, productId, version])
+  @@map("boms")
+  @@schema("erp_operations")
+}
+
+model BomLine {
+  id                 String  @id @default(uuid())
+  bomId              String  @map("bom_id")
+  componentProductId String  @map("component_product_id")
+  quantity           Decimal @db.Decimal(18, 4)
+  scrapRate          Decimal? @map("scrap_rate") @db.Decimal(5, 2)
+
+  bom Bom @relation(fields: [bomId], references: [id])
+
+  @@map("bom_lines")
+  @@schema("erp_operations")
+}
+
+enum ProductionOrderStatus {
+  Draft
+  Released
+  InProgress
+  Completed
+  Canceled
+
+  @@schema("erp_operations")
+}
+
+model ProductionOrder {
+  id            String                @id @default(uuid())
+  tenantId      String                @map("tenant_id")
+  orderNumber   String                @map("order_number")
+  productId     String                @map("product_id")
+  bomId         String                @map("bom_id")
+  quantity      Decimal               @db.Decimal(18, 4)
+  plannedStart  DateTime              @map("planned_start")
+  plannedEnd    DateTime              @map("planned_end")
+  status        ProductionOrderStatus @default(Draft)
+  correlationId String                @map("correlation_id")
+  createdAt     DateTime              @default(now()) @map("created_at")
+
+  bom              Bom                 @relation(fields: [bomId], references: [id])
+  wip              Wip[]
+  qcInspections    QcInspection[]
+  batchTraceability BatchTraceability[]
+
+  @@unique([tenantId, orderNumber])
+  @@map("production_orders")
+  @@schema("erp_operations")
+}
+
+model WorkCenter {
+  id              String  @id @default(uuid())
+  tenantId        String  @map("tenant_id")
+  code            String
+  nameFa          String  @map("name_fa")
+  capacityPerHour Decimal @map("capacity_per_hour") @db.Decimal(18, 4)
+  costPerHour     Decimal @map("cost_per_hour") @db.Decimal(18, 2)
+
+  wip Wip[]
+
+  @@unique([tenantId, code])
+  @@map("work_centers")
+  @@schema("erp_operations")
+}
+
+model Wip {
+  id                String   @id @default(uuid())
+  tenantId          String   @map("tenant_id")
+  productionOrderId String   @map("production_order_id")
+  workCenterId      String   @map("work_center_id")
+  quantity          Decimal  @db.Decimal(18, 4)
+  stage             String
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  productionOrder ProductionOrder @relation(fields: [productionOrderId], references: [id])
+  workCenter      WorkCenter      @relation(fields: [workCenterId], references: [id])
+
+  @@map("wip")
+  @@schema("erp_operations")
+}
+
+enum QcResult {
+  Pass
+  Fail
+  Conditional
+
+  @@schema("erp_operations")
+}
+
+model QcInspection {
+  id                String   @id @default(uuid())
+  tenantId          String   @map("tenant_id")
+  productionOrderId String   @map("production_order_id")
+  inspectionDate    DateTime @map("inspection_date")
+  checklist         Json
+  result            QcResult
+
+  productionOrder ProductionOrder @relation(fields: [productionOrderId], references: [id])
+
+  @@map("qc_inspections")
+  @@schema("erp_operations")
+}
+
+model BatchTraceability {
+  id                String   @id @default(uuid())
+  tenantId          String   @map("tenant_id")
+  productionOrderId String   @map("production_order_id")
+  batchNumber       String   @map("batch_number")
+  productId         String   @map("product_id")
+  producedAt        DateTime @map("produced_at")
+  metadata          Json
+
+  productionOrder ProductionOrder @relation(fields: [productionOrderId], references: [id])
+
+  @@map("batch_traceability")
+  @@schema("erp_operations")
+}
+
+enum ZoneType {
+  Receiving
+  Storage
+  Picking
+  Shipping
+  Quarantine
+
+  @@schema("erp_operations")
+}
+
+model WarehouseZone {
+  id          String   @id @default(uuid())
+  tenantId    String   @map("tenant_id")
+  warehouseId String   @map("warehouse_id")
+  code        String
+  nameFa      String   @map("name_fa")
+  zoneType    ZoneType @map("zone_type")
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id])
+  bins      Bin[]
+
+  @@unique([tenantId, warehouseId, code])
+  @@map("warehouse_zones")
+  @@schema("erp_operations")
+}
+
+model Bin {
+  id               String  @id @default(uuid())
+  tenantId         String  @map("tenant_id")
+  zoneId           String  @map("zone_id")
+  code             String
+  capacity         Decimal @db.Decimal(18, 4)
+  currentOccupancy Decimal @default(0) @map("current_occupancy") @db.Decimal(18, 4)
+
+  zone          WarehouseZone @relation(fields: [zoneId], references: [id])
+  putawayTarget PutawayTask[] @relation("PutawayTargetBin")
+  pickSource    PickingTask[] @relation("PickSourceBin")
+  countLines    StockCountLine[]
+
+  @@unique([tenantId, zoneId, code])
+  @@map("bins")
+  @@schema("erp_operations")
+}
+
+model PutawayTask {
+  id              String  @id @default(uuid())
+  tenantId        String  @map("tenant_id")
+  goodsReceiptId  String  @map("goods_receipt_id")
+  productId       String  @map("product_id")
+  quantity        BigInt
+  targetBinId     String  @map("target_bin_id")
+  status          String  @default("Pending")
+  assignedTo      String? @map("assigned_to")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  targetBin Bin @relation("PutawayTargetBin", fields: [targetBinId], references: [id])
+
+  @@map("putaway_tasks")
+  @@schema("erp_operations")
+}
+
+model PickingTask {
+  id            String  @id @default(uuid())
+  tenantId      String  @map("tenant_id")
+  salesOrderId  String  @map("sales_order_id")
+  productId     String  @map("product_id")
+  quantity      BigInt
+  sourceBinId   String  @map("source_bin_id")
+  status        String  @default("Pending")
+  assignedTo    String? @map("assigned_to")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  sourceBin Bin @relation("PickSourceBin", fields: [sourceBinId], references: [id])
+
+  @@map("picking_tasks")
+  @@schema("erp_operations")
+}
+
+enum StockCountStatus {
+  Planned
+  InProgress
+  Completed
+  Approved
+
+  @@schema("erp_operations")
+}
+
+model StockCount {
+  id          String           @id @default(uuid())
+  tenantId    String           @map("tenant_id")
+  warehouseId String           @map("warehouse_id")
+  countDate   DateTime         @map("count_date")
+  status      StockCountStatus @default(Planned)
+  startedBy   String           @map("started_by")
+  approvedBy  String?          @map("approved_by")
+
+  warehouse Warehouse        @relation(fields: [warehouseId], references: [id])
+  lines     StockCountLine[]
+
+  @@map("stock_counts")
+  @@schema("erp_operations")
+}
+
+model StockCountLine {
+  id           String  @id @default(uuid())
+  stockCountId String  @map("stock_count_id")
+  productId    String  @map("product_id")
+  binId        String  @map("bin_id")
+  systemQty    BigInt  @map("system_qty")
+  countedQty   BigInt  @map("counted_qty")
+  variance     BigInt
+
+  stockCount StockCount @relation(fields: [stockCountId], references: [id])
+  bin        Bin        @relation(fields: [binId], references: [id])
+
+  @@map("stock_count_lines")
+  @@schema("erp_operations")
+}
+
+model StockAdjustment {
+  id          String  @id @default(uuid())
+  tenantId    String  @map("tenant_id")
+  productId   String  @map("product_id")
+  warehouseId String  @map("warehouse_id")
+  binId       String  @map("bin_id")
+  quantity    BigInt
+  reason      String
+  glEntryId   String? @map("gl_entry_id")
+  approvedBy  String? @map("approved_by")
+
+  @@map("stock_adjustments")
+  @@schema("erp_operations")
+}
+
+model QualityInspection {
+  id             String   @id @default(uuid())
+  tenantId       String   @map("tenant_id")
+  referenceType  String   @map("reference_type")
+  referenceId    String   @map("reference_id")
+  inspectionDate DateTime @map("inspection_date")
+  checklist      Json
+  samplingPlan   Json     @map("sampling_plan")
+  result         QcResult
+  inspectedBy    String   @map("inspected_by")
+  notes          String?
+
+  @@index([tenantId, referenceType, referenceId])
+  @@map("quality_inspections")
+  @@schema("erp_operations")
+}
+
+model PosTerminal {
+  id       String  @id @default(uuid())
+  tenantId String  @map("tenant_id")
+  code     String
+  nameFa   String  @map("name_fa")
+  location String?
+  isActive Boolean @default(true) @map("is_active")
+
+  shifts       PosShift[]
+  transactions PosTransaction[]
+
+  @@unique([tenantId, code])
+  @@map("pos_terminals")
+  @@schema("erp_operations")
+}
+
+model PosShift {
+  id            String    @id @default(uuid())
+  tenantId      String    @map("tenant_id")
+  terminalId    String    @map("terminal_id")
+  cashierUserId String    @map("cashier_user_id")
+  openedAt      DateTime  @map("opened_at")
+  closedAt      DateTime? @map("closed_at")
+  openingCash   Decimal   @map("opening_cash") @db.Decimal(18, 2)
+  closingCash   Decimal?  @map("closing_cash") @db.Decimal(18, 2)
+  expectedCash  Decimal?  @map("expected_cash") @db.Decimal(18, 2)
+  variance      Decimal?  @db.Decimal(18, 2)
+
+  terminal     PosTerminal      @relation(fields: [terminalId], references: [id])
+  transactions PosTransaction[]
+  cashEvents   PosCashManagement[]
+
+  @@map("pos_shifts")
+  @@schema("erp_operations")
+}
+
+enum PosPaymentMethod {
+  Cash
+  Card
+  Mixed
+
+  @@schema("erp_operations")
+}
+
+model PosTransaction {
+  id                String           @id @default(uuid())
+  tenantId          String           @map("tenant_id")
+  terminalId        String           @map("terminal_id")
+  shiftId           String           @map("shift_id")
+  transactionNumber String           @map("transaction_number")
+  total             Decimal          @db.Decimal(18, 2)
+  currency          String           @default("IRR")
+  paymentMethod     PosPaymentMethod @map("payment_method")
+  items             Json
+  glEntryId         String?          @map("gl_entry_id")
+  createdAt         DateTime         @default(now()) @map("created_at")
+
+  terminal PosTerminal @relation(fields: [terminalId], references: [id])
+  shift    PosShift    @relation(fields: [shiftId], references: [id])
+
+  @@unique([tenantId, terminalId, transactionNumber])
+  @@map("pos_transactions")
+  @@schema("erp_operations")
+}
+
+enum PosCashEventType {
+  Open
+  Close
+  Deposit
+  Withdrawal
+
+  @@schema("erp_operations")
+}
+
+model PosCashManagement {
+  id        String           @id @default(uuid())
+  shiftId   String           @map("shift_id")
+  type      PosCashEventType
+  amount    Decimal          @db.Decimal(18, 2)
+  reason    String?
+  createdAt DateTime         @default(now()) @map("created_at")
+
+  shift PosShift @relation(fields: [shiftId], references: [id])
+
+  @@map("pos_cash_management")
+  @@schema("erp_operations")
+}
+
+enum AiMessageRole {
+  user
+  assistant
+  system
+
+  @@schema("erp_operations")
+}
+
+enum UsageResourceType {
+  AI_TOKENS
+  SMS
+  VOIP_MINUTES
+  SURVEY
+
+  @@schema("erp_operations")
+}
+
+enum MessageDirection {
+  Inbound
+  Outbound
+
+  @@schema("erp_operations")
+}
+
+enum MessengerChannel {
+  Telegram
+  Bale
+  SMS
+  Email
+
+  @@schema("erp_operations")
+}
+
+enum CallDirection {
+  Inbound
+  Outbound
+
+  @@schema("erp_operations")
+}
+
+enum SurveyQuestionType {
+  Text
+  SingleChoice
+  MultiChoice
+  Rating
+
+  @@schema("erp_operations")
+}
+
+model AiConversation {
+  id        String    @id @default(uuid())
+  tenantId  String    @map("tenant_id")
+  userId    String    @map("user_id")
+  channel   String
+  startedAt DateTime  @default(now()) @map("started_at")
+  endedAt   DateTime? @map("ended_at")
+  metadata  Json?
+
+  messages AiMessage[]
+  analyses AiAnalysisResult[]
+
+  @@index([tenantId, userId])
+  @@map("ai_conversations")
+  @@schema("erp_operations")
+}
+
+model AiMessage {
+  id             String        @id @default(uuid())
+  conversationId String        @map("conversation_id")
+  role           AiMessageRole
+  content        String
+  tokensUsed     Int           @default(0) @map("tokens_used")
+  model          String
+  createdAt      DateTime      @default(now()) @map("created_at")
+
+  conversation AiConversation @relation(fields: [conversationId], references: [id])
+
+  @@map("ai_messages")
+  @@schema("erp_operations")
+}
+
+model AiAnalysisResult {
+  id             String   @id @default(uuid())
+  conversationId String   @map("conversation_id")
+  analysisType   String   @map("analysis_type")
+  result         Json
+  confidence     Decimal  @db.Decimal(5, 4)
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation AiConversation @relation(fields: [conversationId], references: [id])
+
+  @@map("ai_analysis_results")
+  @@schema("erp_operations")
+}
+
+model WorkflowLog {
+  id           String   @id @default(uuid())
+  tenantId     String   @map("tenant_id")
+  workflowCode String   @map("workflow_code")
+  executionId  String   @map("execution_id")
+  status       String
+  payload      Json
+  result       Json?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([tenantId, workflowCode])
+  @@map("workflow_logs")
+  @@schema("erp_operations")
+}
+
+model UsageRecord {
+  id             String            @id @default(uuid())
+  tenantId       String            @map("tenant_id")
+  resourceType   UsageResourceType @map("resource_type")
+  quantity       Decimal           @db.Decimal(18, 4)
+  unitCost       Decimal           @map("unit_cost") @db.Decimal(18, 6)
+  referenceType  String            @map("reference_type")
+  referenceId    String            @map("reference_id")
+  idempotencyKey String            @map("idempotency_key")
+  createdAt      DateTime          @default(now()) @map("created_at")
+
+  @@unique([tenantId, idempotencyKey])
+  @@map("usage_records")
+  @@schema("erp_operations")
+}
+
+model Message {
+  id          String           @id @default(uuid())
+  tenantId    String           @map("tenant_id")
+  channel     MessengerChannel
+  direction   MessageDirection
+  fromAddress String           @map("from_address")
+  toAddress   String           @map("to_address")
+  content     String
+  sentAt      DateTime         @map("sent_at")
+  deliveredAt DateTime?        @map("delivered_at")
+  status      String
+
+  @@index([tenantId, channel])
+  @@map("messages")
+  @@schema("erp_operations")
+}
+
+model MessageChannel {
+  id              String           @id @default(uuid())
+  tenantId        String           @map("tenant_id")
+  channel         MessengerChannel
+  configEncrypted String           @map("config_encrypted")
+  isActive        Boolean          @default(true) @map("is_active")
+
+  @@unique([tenantId, channel])
+  @@map("message_channels")
+  @@schema("erp_operations")
+}
+
+model ChannelConfig {
+  id              String           @id @default(uuid())
+  tenantId        String           @map("tenant_id")
+  channel         MessengerChannel
+  configEncrypted String           @map("config_encrypted")
+  isActive        Boolean          @default(true) @map("is_active")
+
+  @@unique([tenantId, channel])
+  @@map("channel_configs")
+  @@schema("erp_operations")
+}
+
+model Survey {
+  id        String  @id @default(uuid())
+  tenantId  String  @map("tenant_id")
+  title     String
+  questions Json
+  isActive  Boolean @default(true) @map("is_active")
+
+  surveyQuestions SurveyQuestion[]
+  responses       SurveyResponse[]
+
+  @@map("surveys")
+  @@schema("erp_operations")
+}
+
+model SurveyQuestion {
+  id       String             @id @default(uuid())
+  surveyId String             @map("survey_id")
+  textFa   String             @map("text_fa")
+  type     SurveyQuestionType
+  options  Json?
+
+  survey Survey @relation(fields: [surveyId], references: [id])
+
+  @@map("survey_questions")
+  @@schema("erp_operations")
+}
+
+model SurveyResponse {
+  id           String   @id @default(uuid())
+  tenantId     String   @map("tenant_id")
+  surveyId     String   @map("survey_id")
+  respondentId String   @map("respondent_id")
+  answers      Json
+  submittedAt  DateTime @map("submitted_at")
+
+  survey Survey @relation(fields: [surveyId], references: [id])
+
+  @@map("survey_responses")
+  @@schema("erp_operations")
+}
+
+model SipAccount {
+  id                String  @id @default(uuid())
+  tenantId          String  @map("tenant_id")
+  username          String
+  passwordEncrypted String  @map("password_encrypted")
+  provider          String
+  isActive          Boolean @default(true) @map("is_active")
+
+  @@unique([tenantId, username])
+  @@map("sip_accounts")
+  @@schema("erp_operations")
+}
+
+model CallLog {
+  id          String        @id @default(uuid())
+  tenantId    String        @map("tenant_id")
+  callId      String        @map("call_id")
+  direction   CallDirection
+  fromNumber  String        @map("from_number")
+  toNumber    String        @map("to_number")
+  startedAt   DateTime      @map("started_at")
+  endedAt     DateTime?     @map("ended_at")
+  durationSec Int           @default(0) @map("duration_sec")
+  status      String
+
+  recordings  CallRecording[]
+  transcripts CallTranscript[]
+
+  @@unique([tenantId, callId])
+  @@map("call_logs")
+  @@schema("erp_operations")
+}
+
+model CallRecording {
+  id        String @id @default(uuid())
+  callLogId String @map("call_log_id")
+  fileUrl   String @map("file_url")
+  format    String
+  size      BigInt
+
+  callLog CallLog @relation(fields: [callLogId], references: [id])
+
+  @@map("call_recordings")
+  @@schema("erp_operations")
+}
+
+model CallTranscript {
+  id             String  @id @default(uuid())
+  callLogId      String  @map("call_log_id")
+  transcriptText String  @map("transcript_text")
+  language       String
+  confidence     Decimal @db.Decimal(5, 4)
+
+  callLog CallLog @relation(fields: [callLogId], references: [id])
+
+  @@map("call_transcripts")
+  @@schema("erp_operations")
+}

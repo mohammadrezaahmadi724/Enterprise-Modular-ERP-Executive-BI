@@ -1,0 +1,52 @@
+{
+  "name": "erp-platform",
+  "version": "6.1.0-wave10-completion",
+  "private": true,
+  "description": "Enterprise Modular ERP & Executive BI — Wave 0 Foundation",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "vitest run",
+    "test:bundle": "tsx tools/load-test/bundle-size.ci.ts",
+    "test:marketing-bundle": "tsx tools/load-test/marketing-bundle.ci.ts",
+    "test:watch": "vitest",
+    "lint": "eslint \"packages/**/*.ts\" \"apps/**/*.ts\" --max-warnings 0",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "typecheck": "pnpm --filter @repo/domain build && pnpm --filter @repo/db-core-adapter build && pnpm --filter @repo/module-sdk build && pnpm --filter @repo/observability build && pnpm --filter @repo/api typecheck",
+    "db:generate": "turbo run db:generate",
+    "db:migrate": "turbo run db:migrate",
+    "db:push": "pnpm --filter @repo/db-platform db:push",
+    "db:push:all": "pnpm db:push && pnpm --filter @repo/db-erp-finance exec prisma db push --accept-data-loss && pnpm --filter @repo/db-erp-operations exec prisma db push --accept-data-loss && pnpm --filter @repo/db-erp-bi-risk exec prisma db push --accept-data-loss && pnpm --filter @repo/db-erp-hr exec prisma db push --accept-data-loss && pnpm --filter @repo/db-alerts exec prisma db push --accept-data-loss",
+    "db:seed": "pnpm --filter @repo/db-platform db:seed",
+    "db:seed:erp": "tsx packages/db-erp-finance/prisma/seed-demo.ts && tsx packages/db-erp-operations/prisma/seed-crm-demo.ts",
+    "db:seed:hr": "tsx packages/db-erp-hr/prisma/seed-hr-demo.ts",
+    "test:e2e:visual:update": "playwright test e2e/visual-dashboard.spec.ts --update-snapshots",
+    "db:generate:all": "pnpm db:generate && pnpm --filter @repo/db-erp-finance db:generate && pnpm --filter @repo/db-erp-operations db:generate && pnpm --filter @repo/db-erp-bi-risk db:generate && pnpm --filter @repo/db-erp-hr db:generate && pnpm --filter @repo/db-alerts db:generate",
+    "test:e2e:smoke": "playwright test e2e/smoke-rtl.spec.ts",
+    "test:e2e:visual": "playwright test e2e/visual-dashboard.spec.ts",
+    "lighthouse:ci": "lhci autorun --config=tools/lighthouse/lighthouserc.json",
+    "migrate": "pnpm --filter @repo/migration-engine migrate -- --dry-run --source=csv --target=postgres",
+    "prepare": "husky || true"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "tsx": "^4.19.2",
+    "@playwright/test": "^1.49.1",
+    "@lhci/cli": "^0.14.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  }
+}

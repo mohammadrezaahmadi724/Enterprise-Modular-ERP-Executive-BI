@@ -1,0 +1,24 @@
+{
+  "name": "@repo/db-erp-hr",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --dir test"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.3",
+    "@repo/contracts": "workspace:*",
+    "@repo/db-erp-finance": "workspace:*",
+    "@repo/db-core-adapter": "workspace:*",
+    "@repo/domain": "workspace:*"
+  },
+  "devDependencies": {
+    "prisma": "^6.1.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

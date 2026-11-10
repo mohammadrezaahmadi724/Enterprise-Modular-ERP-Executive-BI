@@ -1,0 +1,400 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["erp_finance", "erp_workflow"]
+}
+
+enum AccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  REVENUE
+  EXPENSE
+
+  @@schema("erp_finance")
+}
+
+enum JournalEntryStatus {
+  Draft
+  Posted
+  Reversed
+
+  @@schema("erp_finance")
+}
+
+enum FiscalPeriodStatus {
+  Open
+  Closed
+  Locked
+
+  @@schema("erp_finance")
+}
+
+model ChartOfAccount {
+  id          String      @id @default(uuid())
+  tenantId    String      @map("tenant_id")
+  code        String
+  nameFa      String      @map("name_fa")
+  accountType AccountType @map("account_type")
+  parentId    String?     @map("parent_id")
+  isActive    Boolean     @default(true) @map("is_active")
+  createdAt   DateTime    @default(now()) @map("created_at")
+
+  parent   ChartOfAccount?  @relation("CoaTree", fields: [parentId], references: [id])
+  children ChartOfAccount[] @relation("CoaTree")
+  glLines  GlEntry[]
+
+  @@unique([tenantId, code])
+  @@map("chart_of_accounts")
+  @@schema("erp_finance")
+}
+
+model Journal {
+  id        String   @id @default(uuid())
+  tenantId  String   @map("tenant_id")
+  code      String
+  nameFa    String   @map("name_fa")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  entries JournalEntry[]
+
+  @@unique([tenantId, code])
+  @@map("journals")
+  @@schema("erp_finance")
+}
+
+model JournalEntry {
+  id                String             @id @default(uuid())
+  tenantId          String             @map("tenant_id")
+  journalId         String             @map("journal_id")
+  entryNumber       String             @map("entry_number")
+  entryDate         DateTime           @map("entry_date")
+  description       String
+  status            JournalEntryStatus @default(Draft)
+  postedAt          DateTime?          @map("posted_at")
+  reversedByEntryId String?            @map("reversed_by_entry_id")
+  correlationId     String             @map("correlation_id")
+  createdAt         DateTime           @default(now()) @map("created_at")
+
+  journal Journal   @relation(fields: [journalId], references: [id])
+  glLines GlEntry[]
+
+  @@unique([tenantId, journalId, entryNumber])
+  @@map("journal_entries")
+  @@schema("erp_finance")
+}
+
+model GlEntry {
+  id             String   @id @default(uuid())
+  tenantId       String   @map("tenant_id")
+  journalEntryId String   @map("journal_entry_id")
+  accountId      String   @map("account_id")
+  debit          BigInt   @default(0)
+  credit         BigInt   @default(0)
+  currency       String   @default("IRR")
+  posted         Boolean  @default(false)
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  journalEntry JournalEntry   @relation(fields: [journalEntryId], references: [id])
+  account      ChartOfAccount @relation(fields: [accountId], references: [id])
+  lines        GlEntryLine[]
+
+  @@index([journalEntryId])
+  @@map("gl_entries")
+  @@schema("erp_finance")
+}
+
+model GlEntryLine {
+  id          String  @id @default(uuid())
+  tenantId    String  @map("tenant_id")
+  glEntryId   String  @map("gl_entry_id")
+  description String
+  dimension1  String?
+  dimension2  String?
+  debit       BigInt  @default(0)
+  credit      BigInt  @default(0)
+
+  glEntry GlEntry @relation(fields: [glEntryId], references: [id])
+
+  @@map("gl_entry_lines")
+  @@schema("erp_finance")
+}
+
+model FiscalPeriod {
+  id        String             @id @default(uuid())
+  tenantId  String             @map("tenant_id")
+  name      String
+  startDate DateTime           @map("start_date")
+  endDate   DateTime           @map("end_date")
+  status    FiscalPeriodStatus @default(Open)
+
+  closings PeriodClosing[]
+
+  @@unique([tenantId, startDate, endDate])
+  @@map("fiscal_periods")
+  @@schema("erp_finance")
+}
+
+model PeriodClosing {
+  id             String   @id @default(uuid())
+  tenantId       String   @map("tenant_id")
+  fiscalPeriodId String   @map("fiscal_period_id")
+  closedAt       DateTime @map("closed_at")
+  closedBy       String   @map("closed_by")
+  snapshot       Json
+
+  fiscalPeriod FiscalPeriod @relation(fields: [fiscalPeriodId], references: [id])
+
+  @@map("period_closings")
+  @@schema("erp_finance")
+}
+
+enum CheckType {
+  Received
+  Paid
+
+  @@schema("erp_finance")
+}
+
+enum CheckStatus {
+  Pending
+  Cleared
+  Bounced
+  Canceled
+
+  @@schema("erp_finance")
+}
+
+enum TreasuryTxType {
+  Deposit
+  Withdrawal
+  Transfer
+  CheckClear
+
+  @@schema("erp_finance")
+}
+
+model BankAccount {
+  id            String  @id @default(uuid())
+  tenantId      String  @map("tenant_id")
+  nameFa        String  @map("name_fa")
+  bankName      String  @map("bank_name")
+  accountNumber String  @map("account_number")
+  iban          String?
+  currency      String  @default("IRR")
+  glAccountId   String  @map("gl_account_id")
+  isActive      Boolean @default(true) @map("is_active")
+
+  @@map("bank_accounts")
+  @@schema("erp_finance")
+}
+
+model CashBox {
+  id          String  @id @default(uuid())
+  tenantId    String  @map("tenant_id")
+  nameFa      String  @map("name_fa")
+  currency    String  @default("IRR")
+  glAccountId String  @map("gl_account_id")
+  isActive    Boolean @default(true) @map("is_active")
+
+  @@map("cash_boxes")
+  @@schema("erp_finance")
+}
+
+model Check {
+  id            String      @id @default(uuid())
+  tenantId      String      @map("tenant_id")
+  type          CheckType
+  checkNumber   String      @map("check_number")
+  amount        Decimal     @db.Decimal(18, 2)
+  currency      String
+  dueDate       DateTime    @map("due_date")
+  status        CheckStatus @default(Pending)
+  bankAccountId String?     @map("bank_account_id")
+  glEntryId     String?     @map("gl_entry_id")
+  createdAt     DateTime    @default(now()) @map("created_at")
+
+  @@map("checks")
+  @@schema("erp_finance")
+}
+
+model TreasuryTransaction {
+  id              String         @id @default(uuid())
+  tenantId        String         @map("tenant_id")
+  type            TreasuryTxType
+  sourceId        String         @map("source_id")
+  targetId        String?        @map("target_id")
+  amount          Decimal        @db.Decimal(18, 2)
+  currency        String
+  transactionDate DateTime       @map("transaction_date")
+  glEntryId       String?        @map("gl_entry_id")
+  createdAt       DateTime       @default(now()) @map("created_at")
+
+  @@map("treasury_transactions")
+  @@schema("erp_finance")
+}
+
+enum WorkflowInstanceStatus {
+  Running
+  Approved
+  Rejected
+  Escalated
+  Canceled
+
+  @@schema("erp_workflow")
+}
+
+enum WorkflowActionType {
+  Approve
+  Reject
+  Delegate
+  Escalate
+
+  @@schema("erp_workflow")
+}
+
+model WorkflowDefinition {
+  id        String   @id @default(uuid())
+  tenantId  String   @map("tenant_id")
+  code      String
+  nameFa    String   @map("name_fa")
+  version   Int
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  steps     WorkflowStep[]
+  instances WorkflowInstance[]
+
+  @@unique([tenantId, code, version])
+  @@map("workflow_definitions")
+  @@schema("erp_workflow")
+}
+
+model WorkflowStep {
+  id             String  @id @default(uuid())
+  definitionId   String  @map("definition_id")
+  stepOrder      Int     @map("step_order")
+  nameFa         String  @map("name_fa")
+  approverRole   String  @map("approver_role")
+  condition      Json?
+  timeoutHours   Int     @map("timeout_hours")
+  escalationRole String? @map("escalation_role")
+
+  definition WorkflowDefinition @relation(fields: [definitionId], references: [id])
+
+  @@unique([definitionId, stepOrder])
+  @@map("workflow_steps")
+  @@schema("erp_workflow")
+}
+
+model WorkflowInstance {
+  id               String                 @id @default(uuid())
+  tenantId         String                 @map("tenant_id")
+  definitionId     String                 @map("definition_id")
+  entityType       String                 @map("entity_type")
+  entityId         String                 @map("entity_id")
+  status           WorkflowInstanceStatus @default(Running)
+  currentStepOrder Int                    @map("current_step_order")
+  startedAt        DateTime               @default(now()) @map("started_at")
+  completedAt      DateTime?              @map("completed_at")
+  correlationId    String                 @map("correlation_id")
+
+  definition WorkflowDefinition @relation(fields: [definitionId], references: [id])
+  actions    WorkflowAction[]
+
+  @@index([tenantId, entityType, entityId])
+  @@map("workflow_instances")
+  @@schema("erp_workflow")
+}
+
+model WorkflowAction {
+  id         String             @id @default(uuid())
+  instanceId String             @map("instance_id")
+  stepOrder  Int                @map("step_order")
+  action     WorkflowActionType
+  userId     String             @map("user_id")
+  comment    String?
+  actedAt    DateTime           @default(now()) @map("acted_at")
+
+  instance WorkflowInstance @relation(fields: [instanceId], references: [id])
+
+  @@map("workflow_actions")
+  @@schema("erp_workflow")
+}
+
+enum DepreciationMethod {
+  StraightLine
+  DecliningBalance
+  UnitsOfProduction
+
+  @@schema("erp_finance")
+}
+
+enum AssetTransactionType {
+  Acquisition
+  Depreciation
+  Disposal
+  Revaluation
+
+  @@schema("erp_finance")
+}
+
+model FixedAsset {
+  id                     String             @id @default(uuid())
+  tenantId               String             @map("tenant_id")
+  code                   String
+  nameFa                 String             @map("name_fa")
+  acquisitionDate        DateTime           @map("acquisition_date")
+  acquisitionCost        Decimal            @map("acquisition_cost") @db.Decimal(18, 2)
+  currency               String             @default("IRR")
+  depreciationMethod     DepreciationMethod @map("depreciation_method")
+  usefulLifeYears        Int                @map("useful_life_years")
+  salvageValue           Decimal            @map("salvage_value") @db.Decimal(18, 2)
+  glAccountId            String             @map("gl_account_id")
+  isActive               Boolean            @default(true) @map("is_active")
+  totalUnitsOfProduction Decimal?           @map("total_units_of_production") @db.Decimal(18, 4)
+
+  schedules    DepreciationSchedule[]
+  transactions AssetTransaction[]
+
+  @@unique([tenantId, code])
+  @@map("fixed_assets")
+  @@schema("erp_finance")
+}
+
+model DepreciationSchedule {
+  id                      String    @id @default(uuid())
+  fixedAssetId            String    @map("fixed_asset_id")
+  periodDate              DateTime  @map("period_date")
+  depreciationAmount      Decimal   @map("depreciation_amount") @db.Decimal(18, 2)
+  accumulatedDepreciation Decimal   @map("accumulated_depreciation") @db.Decimal(18, 2)
+  postedAt                DateTime? @map("posted_at")
+  glEntryId               String?   @map("gl_entry_id")
+
+  fixedAsset FixedAsset @relation(fields: [fixedAssetId], references: [id])
+
+  @@map("depreciation_schedules")
+  @@schema("erp_finance")
+}
+
+model AssetTransaction {
+  id              String               @id @default(uuid())
+  tenantId        String               @map("tenant_id")
+  fixedAssetId    String               @map("fixed_asset_id")
+  type            AssetTransactionType
+  transactionDate DateTime             @map("transaction_date")
+  amount          Decimal              @db.Decimal(18, 2)
+  glEntryId       String?              @map("gl_entry_id")
+  createdAt       DateTime             @default(now()) @map("created_at")
+
+  fixedAsset FixedAsset @relation(fields: [fixedAssetId], references: [id])
+
+  @@map("asset_transactions")
+  @@schema("erp_finance")
+}

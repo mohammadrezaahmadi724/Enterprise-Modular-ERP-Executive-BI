@@ -1,0 +1,1 @@
+{"version":3,"file":"tenant-context-missing.error.js","sourceRoot":"","sources":["tenant-context-missing.error.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,yBAA0B,SAAQ,KAAK;IACzC,IAAI,GAAG,wBAAwB,CAAC;IACzC,YAAY,OAAO,GAAG,2DAA2D;QAC/E,KAAK,CAAC,OAAO,CAAC,CAAC;QACf,IAAI,CAAC,IAAI,GAAG,2BAA2B,CAAC;IAC1C,CAAC;CACF"}

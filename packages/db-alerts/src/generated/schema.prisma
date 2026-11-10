@@ -1,0 +1,155 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["alerts"]
+}
+
+enum RetentionAction {
+  Archive
+  Anonymize
+  Delete
+
+  @@schema("alerts")
+}
+
+model RetentionPolicy {
+  id            String          @id @default(uuid())
+  tenantId      String          @map("tenant_id")
+  entityType    String          @map("entity_type")
+  retentionDays Int             @map("retention_days")
+  action        RetentionAction
+  isActive      Boolean         @default(true) @map("is_active")
+
+  @@unique([tenantId, entityType])
+  @@map("retention_policies")
+  @@schema("alerts")
+}
+
+enum AlertSeverity {
+  info
+  warning
+  critical
+
+  @@schema("alerts")
+}
+
+enum NotificationStatus {
+  Queued
+  Sent
+  Delivered
+  Failed
+  Bounced
+
+  @@schema("alerts")
+}
+
+enum NotificationChannel {
+  InApp
+  Email
+  SMS
+  WebPush
+
+  @@schema("alerts")
+}
+
+model Alert {
+  id               String        @id @default(uuid())
+  tenantId         String        @map("tenant_id")
+  userId           String?       @map("user_id")
+  roleScope        String?       @map("role_scope")
+  moduleCode       String        @map("module_code")
+  category         String
+  severity         AlertSeverity
+  titleFa          String        @map("title_fa")
+  bodyFa           String        @map("body_fa")
+  actionUrl        String?       @map("action_url")
+  sourceEntityType String?       @map("source_entity_type")
+  sourceEntityId   String?       @map("source_entity_id")
+  deduplicationKey String        @map("deduplication_key")
+  seenAt           DateTime?     @map("seen_at")
+  acknowledgedAt   DateTime?     @map("acknowledged_at")
+  dismissedAt      DateTime?     @map("dismissed_at")
+  snoozedUntil     DateTime?     @map("snoozed_until")
+  expiresAt        DateTime?     @map("expires_at")
+  metadata         Json          @default("{}")
+  createdAt        DateTime      @default(now()) @map("created_at")
+
+  @@index([tenantId, deduplicationKey, createdAt])
+  @@map("alerts")
+  @@schema("alerts")
+}
+
+model AlertRule {
+  id                     String        @id @default(uuid())
+  tenantId               String        @map("tenant_id")
+  moduleCode             String        @map("module_code")
+  eventType              String        @map("event_type")
+  condition              Json
+  severity               AlertSeverity
+  templateKey            String        @map("template_key")
+  recipients             Json
+  deduplicationWindowSec Int           @map("deduplication_window_sec")
+  channels               Json
+  isActive               Boolean       @default(true) @map("is_active")
+
+  @@map("alert_rules")
+  @@schema("alerts")
+}
+
+model UserNotificationPreference {
+  id            String @id @default(uuid())
+  userId        String @map("user_id")
+  tenantId      String @map("tenant_id")
+  channels      Json
+  categoryPrefs Json   @map("category_prefs")
+  quietHours    Json?  @map("quiet_hours")
+
+  @@unique([tenantId, userId])
+  @@map("user_notification_preferences")
+  @@schema("alerts")
+}
+
+model NotificationTemplate {
+  id        String              @id @default(uuid())
+  key       String
+  locale    String              @default("fa-IR")
+  channel   NotificationChannel
+  subject   String?
+  bodyHtml  String              @map("body_html")
+  bodyText  String              @map("body_text")
+  variables Json
+  version   Int                 @default(1)
+  isActive  Boolean             @default(true) @map("is_active")
+
+  @@unique([key, locale, channel, version])
+  @@map("notification_templates")
+  @@schema("alerts")
+}
+
+model NotificationLog {
+  id                String              @id @default(uuid())
+  tenantId          String              @map("tenant_id")
+  userId            String?             @map("user_id")
+  role              String?
+  templateKey       String              @map("template_key")
+  channel           NotificationChannel
+  recipient         String
+  status            NotificationStatus
+  providerMessageId String?             @map("provider_message_id")
+  errorMessage      String?             @map("error_message")
+  idempotencyKey    String              @map("idempotency_key")
+  correlationId     String              @map("correlation_id")
+  sentAt            DateTime?           @map("sent_at")
+  deliveredAt       DateTime?           @map("delivered_at")
+  createdAt         DateTime            @default(now()) @map("created_at")
+
+  @@index([tenantId, idempotencyKey])
+  @@map("notification_logs")
+  @@schema("alerts")
+}

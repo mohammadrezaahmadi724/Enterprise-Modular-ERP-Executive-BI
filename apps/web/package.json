@@ -1,0 +1,40 @@
+{
+  "name": "@repo/web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --dir test"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@react-pdf/renderer": "^4.9.0",
+    "@repo/db-erp-bi-risk": "workspace:^",
+    "@repo/db-erp-operations": "workspace:*",
+    "@repo/db-alerts": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "@tremor/react": "^3.18.7",
+    "jalaali-js": "^2.0.1",
+    "lucide-react": "^0.469.0",
+    "next": "^15.1.2",
+    "next-themes": "^0.4.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-grid-layout": "1.4.4",
+    "react-hook-form": "^7.54.2",
+    "sonner": "^1.7.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.2",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

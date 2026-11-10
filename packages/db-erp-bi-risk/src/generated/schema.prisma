@@ -1,0 +1,146 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["erp_bi_risk"]
+}
+
+model ProjectionFinancialSummary {
+  id                   String   @id @default(uuid())
+  tenantId             String   @map("tenant_id")
+  accountId            String   @map("account_id")
+  periodStart          DateTime @map("period_start")
+  periodEnd            DateTime @map("period_end")
+  totalDebit           BigInt   @map("total_debit")
+  totalCredit          BigInt   @map("total_credit")
+  balance              BigInt
+  lastProcessedEventId String   @map("last_processed_event_id")
+  lastProcessedVersion Int      @map("last_processed_version")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@unique([tenantId, accountId, periodStart])
+  @@map("projection_financial_summary")
+  @@schema("erp_bi_risk")
+}
+
+model ProjectionSalesSummary {
+  id                   String   @id @default(uuid())
+  tenantId             String   @map("tenant_id")
+  periodDate           DateTime @map("period_date")
+  totalOrders          Int      @map("total_orders")
+  totalRevenue         Decimal  @map("total_revenue") @db.Decimal(18, 2)
+  totalRefunds         Decimal  @map("total_refunds") @db.Decimal(18, 2)
+  lastProcessedEventId String   @map("last_processed_event_id")
+  lastProcessedVersion Int      @map("last_processed_version")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@unique([tenantId, periodDate])
+  @@map("projection_sales_summary")
+  @@schema("erp_bi_risk")
+}
+
+model MetricSnapshot {
+  id           String   @id @default(uuid())
+  tenantId     String   @map("tenant_id")
+  metricCode   String   @map("metric_code")
+  snapshotDate DateTime @map("snapshot_date")
+  value        Decimal  @db.Decimal(18, 4)
+  metadata     Json?
+
+  @@unique([tenantId, metricCode, snapshotDate])
+  @@map("metric_snapshots")
+  @@schema("erp_bi_risk")
+}
+
+enum RiskAlgorithm {
+  Threshold
+  ZScore
+  MovingAvgDeviation
+  HHI
+
+  @@schema("erp_bi_risk")
+}
+
+enum FindingSeverity {
+  critical
+  warning
+  stable
+
+  @@schema("erp_bi_risk")
+}
+
+enum FindingTrend {
+  up
+  down
+  flat
+
+  @@schema("erp_bi_risk")
+}
+
+model RiskRule {
+  id         String          @id @default(uuid())
+  code       String          @unique
+  nameFa     String          @map("name_fa")
+  algorithm  RiskAlgorithm
+  config     Json
+  severity   FindingSeverity
+  moduleCode String          @map("module_code")
+  isActive   Boolean         @default(true) @map("is_active")
+
+  tenantRules TenantRiskRule[]
+  findings    RiskFinding[]
+
+  @@map("risk_rules")
+  @@schema("erp_bi_risk")
+}
+
+model TenantRiskRule {
+  id                String   @id @default(uuid())
+  tenantId          String   @map("tenant_id")
+  riskRuleId        String   @map("risk_rule_id")
+  thresholdOverride Decimal? @map("threshold_override") @db.Decimal(18, 4)
+  isActive          Boolean  @default(true) @map("is_active")
+
+  riskRule RiskRule @relation(fields: [riskRuleId], references: [id])
+
+  @@unique([tenantId, riskRuleId])
+  @@map("tenant_risk_rules")
+  @@schema("erp_bi_risk")
+}
+
+model RiskFinding {
+  id               String          @id @default(uuid())
+  tenantId         String          @map("tenant_id")
+  riskRuleId       String          @map("risk_rule_id")
+  detectedAt       DateTime        @default(now()) @map("detected_at")
+  severity         FindingSeverity
+  trend            FindingTrend
+  sourceModule     String          @map("source_module")
+  evidence         Json
+  suggestionFa     String          @map("suggestion_fa")
+  deduplicationKey String          @map("deduplication_key")
+
+  riskRule RiskRule @relation(fields: [riskRuleId], references: [id])
+
+  @@unique([tenantId, deduplicationKey])
+  @@map("risk_findings")
+  @@schema("erp_bi_risk")
+}
+
+model TenantKpiConfig {
+  id        String  @id @default(uuid())
+  tenantId  String  @map("tenant_id")
+  kpiCode   String  @map("kpi_code")
+  position  Json
+  size      Json
+  isVisible Boolean @default(true) @map("is_visible")
+
+  @@unique([tenantId, kpiCode])
+  @@map("tenant_kpi_configs")
+  @@schema("erp_bi_risk")
+}

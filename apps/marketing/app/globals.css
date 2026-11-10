@@ -1,0 +1,80 @@
+@import '../../../packages/ui/src/styles/marketing-tokens.css';
+@import '../../../packages/ui/src/styles/base-plain.css';
+@import '../styles/sakhtar.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'ss01', 'ss02';
+    line-height: 1.6;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    background: var(--gradient-cta);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glass-card {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--glass-border));
+  }
+
+  .skip-link {
+    @apply absolute -top-full right-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:top-4;
+  }
+
+  .sakhtar-header {
+    @apply border-b border-border/80;
+  }
+
+  .est-gradient-text {
+    @apply bg-gradient-to-l from-primary to-primary/60 bg-clip-text text-transparent;
+  }
+
+  .est-module-mini {
+    @apply transition-all duration-200;
+  }
+
+  .est-module-mini:hover {
+    @apply -translate-y-0.5 shadow-md;
+  }
+
+  .meeting-choice-card:hover {
+    @apply bg-muted/40;
+  }
+
+  .sakhtar-network-card {
+    animation: network-float 4s ease-in-out infinite;
+  }
+
+  .sakhtar-network-node-anchor:nth-child(odd) .sakhtar-network-card {
+    animation-delay: 0.6s;
+  }
+}
+
+@keyframes network-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}

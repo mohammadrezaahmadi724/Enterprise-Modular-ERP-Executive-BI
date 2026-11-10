@@ -1,0 +1,4 @@
+source: csv
+target: postgres
+dryRun: true
+tenantId: ${MIGRATION_TENANT_ID}

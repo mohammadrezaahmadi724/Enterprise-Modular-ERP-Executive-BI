@@ -1,0 +1,41 @@
+@import '../../../packages/ui/src/styles/marketing-tokens.css';
+@import '../../../packages/ui/src/styles/base-plain.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'ss01', 'ss02';
+    line-height: 1.6;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    background: var(--gradient-cta);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glass-card {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--glass-border));
+  }
+
+  .skip-link {
+    @apply absolute -top-full right-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:top-4;
+  }
+}

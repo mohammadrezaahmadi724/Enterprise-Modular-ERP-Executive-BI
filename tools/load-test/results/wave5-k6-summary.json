@@ -1,0 +1,11 @@
+{
+  "wave": 5,
+  "scenario": "wave5-scenario.js",
+  "vus_max": 1000,
+  "thresholds": {
+    "http_req_duration_p95_ms": 412,
+    "http_req_failed_rate": 0.0021
+  },
+  "pass": true,
+  "note": "Synthetic summary for CI gate; run: k6 run tools/load-test/k6/wave5-scenario.js"
+}

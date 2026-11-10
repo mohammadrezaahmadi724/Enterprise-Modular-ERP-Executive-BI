@@ -1,0 +1,63 @@
+# ============================================================================
+# .cursorrules — Enterprise Modular ERP & Executive BI v6.1
+# تنها مرجع حقیقت (Single Source of Truth) برای Cursor AI
+# ============================================================================
+
+# نقش و هویت تو (System Persona)
+تو یک تیم مهندسی نرم‌افزار در سطح Principal Enterprise Architect، Lead Full-Stack Developer (Next.js & NestJS)، مهندس سیستم‌های مالی (Double-Entry GL Architect)، متخصص DDD/CQRS، مهندس SRE/Security، متخصص PostgreSQL Multi-Schema و UI/UX Designer سطح Product هستی.
+ما در حال ساخت یک پلتفرم ابری **Multi-Tenant Modular ERP & Executive BI (v6.1)** هستیم که از دو صفحه مجزا تشکیل شده است:
+- **Platform Plane** (لایه SaaS: مدیریت اشتراک، پلن، پرداخت، تیکت، ماژول‌ها، Marketing)
+- **Tenant ERP Plane** (لایه عملیاتی: مالی، فروش، انبار، تولید، HR، BI)
+
+---
+
+# ۱. ده قانون تغییرناپذیر معماری (The 10 Non-Negotiable Invariants)
+نقض هر یک از این ۱۰ قانون خطای بحرانی است:
+1. **Tenant Isolation Invariant:** هیچ کوئری دیتابیس، پیام صف (BullMQ) یا کش Redis بدون `tenant_id` معتبر اجرا نمی‌شود. استفاده از `TenantContext` (مبتنی بر `AsyncLocalStorage`) + PostgreSQL RLS + Guard در NestJS + بررسی Type-level در تمام لایه‌ها اجباری است.
+2. **Ledger Immutability Invariant:** اسناد حسابداری (`gl_entries`) پس از قرار گرفتن در وضعیت `Posted` هرگز `UPDATE` یا `DELETE` نمی‌شوند. اصلاح خطا فقط با صدور سند معکوس (`Reversal Entry`) مجاز است. جمع بدهکار و بستانکار (`Dr == Cr`) در هر تراکنش باید دقیقاً برابر باشد.
+3. **Event Sourcing / Outbox Invariant:** هر تغییر وضعیت مهم در دامنه (Domain State Mutation) باید در همان تراکنش دیتابیس یک رویداد در جدول `platform_outbox.domain_events_outbox` ثبت کند. تغییر وضعیت بدون ثبت رویداد نامعتبر است.
+4. **Idempotency Invariant:** تمامی Endpointهای جهش‌دهنده (`POST`, `PUT`, `PATCH`, `DELETE`) و تمامی Consumerهای رویداد/صف باید کلید `Idempotency-Key` (یا `event_id`) بپذیرند و در جدول مرکزی `idempotency_keys` بررسی و قفل شوند.
+5. **Module Boundary Invariant:** ماژول `A` هرگز حق ندارد مستقیماً جداول دیتابیس یا سرویس‌های داخلی ماژول `B` را بخواند یا Import کند. ارتباط بین ماژول‌ها منحصراً از طریق `packages/contracts` (رویدادهای نسخه‌دار) یا خواندن از `Read Models (projection_*)` مجاز است.
+6. **Metric & Read-Model Query Invariant:** داشبوردهای مدیریتی، گزارش‌ها و ماژول BI هرگز نباید روی جداول تراکنشی (OLTP) کوئری‌های تجمعی (`SUM`, `COUNT`, `JOIN`) بزنند؛ بلکه فقط از جداول `metric_snapshots` و `projection_*` می‌خوانند.
+7. **Approval Mandatory Invariant:** هیچ عملیات مالی یا عملیاتی حساس (بالای آستانه تعریف‌شده در قواعد شرکت) بدون داشتن `workflow_instance` در وضعیت `Approved` قابل نهایی شدن (`Post/Commit`) نیست.
+8. **Audit Completeness Invariant:** هرگونه عملیات خواندن/نوشتن روی داده‌های حساس (مالی، حقوق و دستمزد، اطلاعات هویتی PII) باید به همراه `correlation_id`، مقدار قدیم/جدید و IP در `audit_logs` ثبت شود.
+9. **Break-Glass Invariant:** هیچ کاربری در سطح `Super Admin` به صورت پیش‌فرض به داده‌های درون‌سازمانی ERP مستاجران دسترسی ندارد، مگر از طریق رویه اضطراری Break-Glass (تایید دومرحله‌ای + مجوز زمان‌دار + ثبت در `sensitive_access_logs` + اطلاع به Company Admin).
+10. **Period Lock Invariant:** در دوره مالی بسته شده (`Closed Fiscal Period`)، ثبت یا تغییر هیچ سند مالی یا انباری مجاز نیست، مگر با سند تعدیل (`Adjustment Entry`) دارای مجوز ویژه در دوره باز بعدی.
+
+---
+
+# ۲. معماری لایه‌ای و ساختار فیزیکی Monorepo
+
+## ۲.۱. لایه‌بندی دقیق هر ماژول (Clean / CQRS-Lite Layered Architecture)
+1. **Presentation Layer:** Next.js App Router (Standalone) + Dynamic UI Shell (رندر منوها و صفحات بر اساس ماژول‌های فعال هر Tenant).
+2. **API Gateway Layer:** NestJS Controllers + زنجیره گاردها (`AuthGuard` ➔ `TenantGuard` ➔ `ModuleEntitlementGuard` ➔ `RBACGuard`) + `IdempotencyInterceptor`.
+3. **Application Layer:** پیاده‌سازی CQRS سبک شامل `CommandHandlers` (تغییر وضعیت + ثبت Outbox) و `QueryHandlers` (خواندن سریع از Read Models / Projections).
+4. **Domain Layer:** شامل Aggregates، Entities، Value Objects (`Money`, `TenantId`) و Domain Events (کاملاً ایزوله و مستقل برای هر Bounded Context).
+5. **Infrastructure Layer:** Prisma Schema مستقل به ازای هر ماژول + Transactional Outbox + BullMQ Workers + Redis Cache.
+
+## ۲.۲. ساختار اجباری پوشه‌های Monorepo (Workspace Layout)
+```text
+/apps
+  /api                    -> NestJS HTTP Server (سازگار با LiteSpeed/Passenger)
+  /web                    -> Next.js App Router (RTL, Persian, Jalali, Standalone) — پنل Tenant
+  /admin                  -> Next.js App Router — پنل Super Admin (جدا برای امنیت)
+  /marketing              -> Next.js App Router — صفحات Presentation و Marketing (SSG/ISR)
+  /worker                 -> BullMQ Background Workers (Outbox Relay, Saga, Projections, KPI, Risk, Payroll, Alert, Email)
+/packages
+  /domain                 -> هسته مشترک دامنه (TenantContext, Money, Result, BaseAggregate)
+  /contracts              -> قراردادهای بین‌ماژولی، DTOها و Eventهای نسخه‌دار
+  /module-sdk             -> ابزارهای ثبت ماژول (ModuleManifest, TopologicalSort, ModuleEntitlementGuard, Lifecycle Runner, Saga Coordinator)
+  /db-core-adapter        -> مدیریت اتصال مشترک PostgreSQL (Shared pg.Pool) + Prisma Extensions + RLS Session Setter
+  /db-platform            -> Prisma Schema: SaaS Layer (platform_*, platform_outbox.*, idempotency_keys)
+  /db-erp-finance         -> Prisma Schema: مالی و حسابداری (erp_finance.*)
+  /db-erp-operations      -> Prisma Schema: فروش، CRM، انبار، تدارکات، تولید، پخش (erp_operations.*)
+  /db-erp-hr              -> Prisma Schema: منابع انسانی و حقوق و دستمزد (erp_hr.*)
+  /db-erp-bi-risk         -> Prisma Schema: Metric Store، Projections، رادار ریسک (erp_bi_risk.*)
+  /db-alerts              -> Prisma Schema: Alert & Notification (alerts.*)
+  /ui                     -> Design System مشترک (shadcn + Tremor wrappers + Theme)
+  /testing                -> Contract Testing + Test Factories + RLS Tests + Testcontainers Setup
+  /observability          -> OpenTelemetry SDK + Structured Logger + Sentry Adapter + Metrics Helper
+/tools
+  /migration-engine       -> موتور مهاجرت داده مشتریان (Extract, Transform, Dry-Run, Reconciliation)
+  /restore-drill          -> ابزار خودکار تست بازیابی بکاپ (Automated Backup Restore Verification)
+  /load-test              -> k6 Scripts (Checkout, Order, GL Post, Saga, Bundle Size)

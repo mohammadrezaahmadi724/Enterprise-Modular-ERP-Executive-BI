@@ -1,0 +1,95 @@
+name: Quality
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/erp_test
+      - run: pnpm test
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/erp_test
+      - run: pnpm --filter @repo/worker typecheck
+
+  e2e-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install chromium --with-deps
+      - run: pnpm --filter @repo/web build
+        env:
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:3000
+      - run: pnpm --filter @repo/web start &
+        env:
+          PORT: 3001
+      - run: npx wait-on http://127.0.0.1:3001/dashboard --timeout 120000
+      - run: pnpm test:e2e:smoke
+        env:
+          E2E_BASE_URL: http://127.0.0.1:3001
+
+  e2e-visual:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install chromium --with-deps
+      - run: pnpm --filter @repo/web build
+      - run: pnpm --filter @repo/web start &
+        env:
+          PORT: 3001
+      - run: npx wait-on http://127.0.0.1:3001/dashboard --timeout 120000
+      - run: pnpm test:e2e:visual
+        env:
+          E2E_BASE_URL: http://127.0.0.1:3001
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-screenshots
+          path: |
+            e2e/__screenshots__
+            playwright-report
