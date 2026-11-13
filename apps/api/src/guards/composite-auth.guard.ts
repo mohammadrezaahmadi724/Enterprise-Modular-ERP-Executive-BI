@@ -25,22 +25,28 @@ export class CompositeAuthGuard implements CanActivate {
     const cookieToken = (req as Request & { cookies?: Record<string, string> }).cookies?.access_token;
     const token = auth?.startsWith('Bearer ') ? auth.slice(7) : cookieToken;
 
-    if (!token && process.env.NODE_ENV === 'development' && req.headers['x-super-admin'] === 'true') {
-      const userId = (req.headers['x-user-id'] as string) || '00000000-0000-4000-8000-000000000001';
+    if (!token && process.env.NODE_ENV === 'development') {
+      const userId = req.headers['x-user-id'] as string | undefined;
       const tenantId = (req.headers['x-tenant-id'] as string) || DEMO_TENANT;
+      const superAdminHeader = req.headers['x-super-admin'] === 'true';
+      if (!userId && !superAdminHeader) {
+        // dev بدون هدر — رد
+      } else if (userId || superAdminHeader) {
+      const resolvedUserId = userId || '00000000-0000-4000-8000-000000000001';
       const { permissions, isSuperAdmin } = await resolveDevUserFromHeaders({
-        userId,
+        userId: resolvedUserId,
         tenantId,
-        superAdminHeader: true,
+        superAdminHeader,
       });
       req.user = {
-        sub: userId,
+        sub: resolvedUserId,
         email: 'dev@local',
         isSuperAdmin,
         permissions,
         tenantId,
       };
       return true;
+      }
     }
     if (!token) throw new UnauthorizedException();
     try {

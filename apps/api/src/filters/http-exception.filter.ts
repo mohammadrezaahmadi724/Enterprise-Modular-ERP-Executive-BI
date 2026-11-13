@@ -21,6 +21,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const message =
       exception instanceof HttpException ? exception.getResponse() : 'Internal server error';
 
+    if (status === HttpStatus.INTERNAL_SERVER_ERROR && process.env.NODE_ENV === 'development') {
+      // eslint-disable-next-line no-console
+      console.error('[API 500]', request.method, request.url, exception);
+    }
+
     response.status(status).json({
       statusCode: status,
       message,

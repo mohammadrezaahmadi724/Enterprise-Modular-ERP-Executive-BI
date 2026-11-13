@@ -1,5 +1,10 @@
 import { resolveCatchAll } from '../../../lib/module-catch-all';
 
-export default function DistributionCatchAll({ params }: { params: { slug?: string[] } }) {
-  return resolveCatchAll('distribution', '/distribution', params.slug);
+export default async function DistributionCatchAll({
+  params,
+}: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const { slug } = await params;
+  return resolveCatchAll('distribution', '/distribution', slug);
 }

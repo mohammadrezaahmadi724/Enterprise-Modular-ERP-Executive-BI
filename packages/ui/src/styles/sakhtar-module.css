@@ -1,0 +1,398 @@
+/* شل ماژول ERP — الهام cloud.sakhtar.net/t/demo/inventory */
+
+.smh-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-bottom: 4rem;
+}
+
+.smh-formula {
+  font-size: 0.68rem;
+  color: hsl(var(--muted-foreground));
+  text-align: left;
+}
+
+.smh-demo-note {
+  font-size: 0.72rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(45 70% 75%);
+  background: hsl(45 93% 94%);
+  color: hsl(32 55% 28%);
+}
+
+.dark .smh-demo-note {
+  background: hsl(45 40% 16%);
+  border-color: hsl(45 30% 28%);
+  color: hsl(45 85% 88%);
+}
+
+.smh-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.smh-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.smh-icon {
+  width: 2.65rem;
+  height: 2.65rem;
+  border-radius: 0.85rem;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+}
+
+.smh-theme-inventory .smh-icon {
+  background: linear-gradient(145deg, #8b5e3c, #6b4423);
+}
+
+.smh-theme-sales .smh-icon {
+  background: linear-gradient(145deg, #e11d48, #be123c);
+}
+
+.smh-theme-finance .smh-icon {
+  background: linear-gradient(145deg, #059669, #047857);
+}
+
+.smh-theme-procurement .smh-icon {
+  background: linear-gradient(145deg, #d97706, #b45309);
+}
+
+.smh-theme-hr .smh-icon {
+  background: linear-gradient(145deg, #7c3aed, #5b21b6);
+}
+
+.smh-theme-projects .smh-icon {
+  background: linear-gradient(145deg, #2563eb, #1d4ed8);
+}
+
+.smh-theme-bi .smh-icon {
+  background: linear-gradient(145deg, #0891b2, #0e7490);
+}
+
+.smh-theme-manufacturing .smh-icon {
+  background: linear-gradient(145deg, #475569, #334155);
+}
+
+.smh-theme-distribution .smh-icon {
+  background: linear-gradient(145deg, #ea580c, #c2410c);
+}
+
+.smh-theme-retail .smh-icon {
+  background: linear-gradient(145deg, #db2777, #be185d);
+}
+
+.smh-theme-ai .smh-icon {
+  background: linear-gradient(145deg, #6366f1, #4f46e5);
+}
+
+.smh-theme-qc .smh-icon {
+  background: linear-gradient(145deg, #0d9488, #0f766e);
+}
+
+.smh-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.smh-subtitle {
+  font-size: 0.78rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.smh-cta {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.55rem;
+  background: #9f1239;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 12px rgb(159 18 57 / 0.25);
+  transition: background 0.15s, transform 0.15s;
+}
+
+.smh-cta:hover {
+  background: #881337;
+  transform: translateY(-1px);
+}
+
+.smh-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid hsl(var(--border));
+  scrollbar-width: thin;
+}
+
+.smh-tab {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  color: hsl(var(--muted-foreground));
+  border: 1px solid transparent;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.smh-tab:hover {
+  background: hsl(var(--muted) / 0.55);
+}
+
+.smh-tab.is-active {
+  background: hsl(var(--muted));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.smh-body {
+  min-height: 12rem;
+}
+
+.smh-mascot {
+  position: fixed;
+  bottom: 5.5rem;
+  left: 1.1rem;
+  z-index: 25;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.2);
+  transition: transform 0.15s;
+}
+
+.smh-mascot:hover {
+  transform: scale(1.05);
+}
+
+.smh-theme-inventory .smh-mascot {
+  background: linear-gradient(145deg, #a16207, #854d0e);
+}
+
+.smh-theme-sales .smh-mascot {
+  background: linear-gradient(145deg, #e11d48, #9f1239);
+}
+
+.smh-theme-finance .smh-mascot {
+  background: linear-gradient(145deg, #059669, #047857);
+}
+
+.smh-theme-manufacturing .smh-mascot {
+  background: linear-gradient(145deg, #64748b, #475569);
+}
+
+.smh-theme-distribution .smh-mascot {
+  background: linear-gradient(145deg, #ea580c, #c2410c);
+}
+
+.smh-theme-retail .smh-mascot {
+  background: linear-gradient(145deg, #db2777, #be185d);
+}
+
+.smh-theme-bi .smh-mascot {
+  background: linear-gradient(145deg, #0891b2, #0e7490);
+}
+
+.smh-theme-manufacturing .smh-kpi-primary {
+  background: linear-gradient(145deg, #334155 0%, #1e293b 100%);
+  color: #e2e8f0;
+}
+
+.smh-theme-distribution .smh-kpi-primary {
+  background: linear-gradient(145deg, #c2410c 0%, #9a3412 100%);
+  color: #ffedd5;
+}
+
+.smh-theme-retail .smh-kpi-primary {
+  background: linear-gradient(145deg, #be185d 0%, #9d174d 100%);
+  color: #fce7f3;
+}
+
+.smh-theme-bi .smh-kpi-primary {
+  background: linear-gradient(145deg, #0e7490 0%, #155e75 100%);
+  color: #cffafe;
+}
+
+.smh-theme-ai .smh-mascot {
+  background: linear-gradient(145deg, #6366f1, #4f46e5);
+}
+
+.smh-theme-ai .smh-kpi-primary {
+  background: linear-gradient(145deg, #4f46e5 0%, #3730a3 100%);
+  color: #e0e7ff;
+}
+
+.smh-theme-qc .smh-mascot {
+  background: linear-gradient(145deg, #0d9488, #0f766e);
+}
+
+.smh-theme-qc .smh-kpi-primary {
+  background: linear-gradient(145deg, #0f766e 0%, #115e59 100%);
+  color: #ccfbf1;
+}
+
+.smh-theme-workflows .smh-icon {
+  background: linear-gradient(145deg, #6d28d9, #5b21b6);
+}
+
+.smh-theme-workflows .smh-mascot {
+  background: linear-gradient(145deg, #7c3aed, #6d28d9);
+}
+
+.smh-theme-workflows .smh-kpi-primary {
+  background: linear-gradient(145deg, #5b21b6 0%, #4c1d95 100%);
+  color: #ede9fe;
+}
+
+.smh-theme-sales .smh-kpi-primary {
+  background: linear-gradient(145deg, #be123c 0%, #9f1239 100%);
+  color: #ffe4e6;
+}
+
+.smh-theme-finance .smh-kpi-primary {
+  background: linear-gradient(145deg, #047857 0%, #065f46 100%);
+  color: #d1fae5;
+}
+
+.smh-theme-procurement .smh-kpi-primary {
+  background: linear-gradient(145deg, #b45309 0%, #92400e 100%);
+  color: #ffedd5;
+}
+
+.smh-theme-hr .smh-kpi-primary {
+  background: linear-gradient(145deg, #5b21b6 0%, #4c1d95 100%);
+  color: #ede9fe;
+}
+
+.smh-theme-projects .smh-kpi-primary {
+  background: linear-gradient(145deg, #1d4ed8 0%, #1e40af 100%);
+  color: #dbeafe;
+}
+
+/* کارت دستیار ماژول */
+.smh-ai-card {
+  border-radius: 1rem;
+  border: 1px solid hsl(35 40% 82%);
+  background: linear-gradient(135deg, #fdf8f3 0%, #f5ebe0 55%, #faf6f1 100%);
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 4px 20px rgb(120 53 15 / 0.06);
+}
+
+.dark .smh-ai-card {
+  border-color: hsl(35 20% 28%);
+  background: linear-gradient(135deg, hsl(30 20% 14%), hsl(28 18% 12%));
+}
+
+.smh-ai-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(145deg, #a16207, #854d0e);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.smh-ai-upsell {
+  font-size: 0.72rem;
+  color: hsl(var(--muted-foreground));
+  border-top: 1px dashed hsl(var(--border));
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  width: 100%;
+}
+
+.smh-kpi-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+}
+
+.smh-kpi {
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  min-height: 6.5rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  box-shadow: 0 2px 12px rgb(15 23 42 / 0.04);
+}
+
+.smh-kpi-primary {
+  border: none;
+  color: #fef3c7;
+  background: linear-gradient(145deg, #5c3d2e 0%, #3d2817 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.smh-kpi-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image: linear-gradient(hsl(0 0% 100% / 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(0 0% 100% / 0.15) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.smh-kpi-primary > * {
+  position: relative;
+  z-index: 1;
+}
+
+.smh-kpi-label {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+.smh-kpi-value {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-top: 0.25rem;
+}
+
+.smh-kpi-sub {
+  font-size: 0.68rem;
+  opacity: 0.8;
+  margin-top: 0.35rem;
+}
+
+.smh-kpi-bar {
+  height: 0.35rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.15);
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.smh-kpi-bar > span {
+  display: block;
+  height: 100%;
+  width: 80%;
+  border-radius: 999px;
+  background: rgb(253 230 138 / 0.85);
+}

@@ -1,6 +1,7 @@
 @import '../../../packages/ui/src/styles/marketing-tokens.css';
 @import '../../../packages/ui/src/styles/base-plain.css';
 @import '../styles/sakhtar.css';
+@import '../styles/estimator-wizard.css';
 
 @tailwind base;
 @tailwind components;

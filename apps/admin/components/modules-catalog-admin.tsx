@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type { ModuleCatalogEntry } from '@repo/contracts';
 import { Badge, Button, Card, CardContent, Input, PageHeader } from '@repo/ui';
 import { fetchModuleCatalog, saveModuleCatalog } from '../lib/pricing-admin-api';
+import { CommercialDeskNav } from './commercial-desk-nav';
 
 const fmt = (n: number) => new Intl.NumberFormat('fa-IR').format(n);
 
@@ -44,8 +45,9 @@ export function ModulesCatalogAdmin() {
 
   return (
     <div className="space-y-6" dir="rtl">
+      <CommercialDeskNav />
       <PageHeader
-        title="کاتالوگ ماژول‌های ERP"
+        title="قیمت ماژول‌ها"
         description="قیمت پایه هر ماژول — مستقیماً در /pricing/estimate مارکتینگ و پلن‌ها در صفحه «پلن و برآورد» اعمال می‌شود. درخواست‌های رزرو جلسه در منوی «رزرو جلسه / تیکت»."
         action={
           <Badge variant="secondary" dir="ltr">

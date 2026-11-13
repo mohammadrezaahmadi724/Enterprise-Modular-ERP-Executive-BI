@@ -102,12 +102,20 @@ model Tenant {
   @@schema("platform")
 }
 
+enum UserAccountStatus {
+  Active
+  Suspended
+
+  @@schema("platform")
+}
+
 model User {
   id               String    @id @default(uuid())
   tenantId         String?   @map("tenant_id")
   email            String    @unique
   passwordHash     String    @map("password_hash")
   fullName         String    @map("full_name")
+  accountStatus    UserAccountStatus @default(Active) @map("account_status")
   isSuperAdmin     Boolean   @default(false) @map("is_super_admin")
   twoFactorEnabled Boolean   @default(false) @map("two_factor_enabled")
   twoFactorSecret  String?   @map("two_factor_secret")

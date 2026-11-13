@@ -13,6 +13,8 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 *.tsbuildinfo
+e2e/.stack-status.json
+test-results/
 .data
 .data-test
 packages/*/prisma/migrations/**/migration_lock.toml.bak

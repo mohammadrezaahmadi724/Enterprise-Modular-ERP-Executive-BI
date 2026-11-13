@@ -2,40 +2,37 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } f
 import { AuthGuard } from '../../guards/auth.guard';
 import { SuperAdminGuard } from '../../guards/super-admin.guard';
 import {
-  AdminResource,
-  createAdminResource,
-  deleteAdminResource,
-  listAdminResource,
-  updateAdminResource,
-} from './platform-admin.service';
+  type AdminResource,
+  createAdminResourceCommand,
+  deleteAdminResourceCommand,
+  listAdminResourceQuery,
+  updateAdminResourceCommand,
+} from '../../application/platform/platform-admin.handlers';
 
 @Controller('api/v1/platform/admin')
 @UseGuards(AuthGuard, SuperAdminGuard)
 export class PlatformAdminController {
   @Get(':resource')
-  async list(@Param('resource') resource: AdminResource, @Query('q') q?: string) {
-    const rows = await listAdminResource(resource, q);
-    return { rows };
+  list(@Param('resource') resource: AdminResource, @Query('q') q?: string) {
+    return listAdminResourceQuery(resource, q);
   }
 
   @Post(':resource')
-  async create(@Param('resource') resource: AdminResource, @Body() body: Record<string, unknown>) {
-    const row = await createAdminResource(resource, body);
-    return { row };
+  create(@Param('resource') resource: AdminResource, @Body() body: Record<string, unknown>) {
+    return createAdminResourceCommand(resource, body);
   }
 
   @Patch(':resource/:id')
-  async update(
+  update(
     @Param('resource') resource: AdminResource,
     @Param('id') id: string,
     @Body() body: Record<string, unknown>,
   ) {
-    const row = await updateAdminResource(resource, id, body);
-    return { row };
+    return updateAdminResourceCommand(resource, id, body);
   }
 
   @Delete(':resource/:id')
-  async remove(@Param('resource') resource: AdminResource, @Param('id') id: string) {
-    return deleteAdminResource(resource, id);
+  remove(@Param('resource') resource: AdminResource, @Param('id') id: string) {
+    return deleteAdminResourceCommand(resource, id);
   }
 }

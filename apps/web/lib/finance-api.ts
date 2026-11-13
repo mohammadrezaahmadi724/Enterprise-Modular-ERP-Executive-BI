@@ -1,4 +1,8 @@
-const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://127.0.0.1:3000';
+import { apiBase } from './api-base';
+
+function apiUrl() {
+  return apiBase();
+}
 const TENANT = process.env.NEXT_PUBLIC_DEMO_TENANT_ID ?? '11111111-1111-4111-8111-111111111111';
 
 function headers(idempotency?: string) {
@@ -23,14 +27,68 @@ export type JournalEntry = {
   workflowStatus?: string;
 };
 
+export type FinanceHubResponse = {
+  fiscalPeriod: { label: string; status: string };
+  kpis: {
+    receivablesIrr: number;
+    payablesIrr: number;
+    treasuryIrr: number;
+    overdueArIrr: number;
+    pendingApprovalCount: number;
+  };
+  journalStatus: { draft: number; sent: number; approved: number; posted: number };
+  agingReceivable: Array<{ key: string; labelFa: string; amountIrr: number }>;
+  agingPayable: Array<{ key: string; labelFa: string; amountIrr: number }>;
+  recentJournals: Array<{
+    id: string;
+    number: string;
+    date: string;
+    description: string;
+    debitIrr: string;
+    creditIrr: string;
+    status: string;
+  }>;
+  sources: string[];
+};
+
+export async function fetchFinanceHub(): Promise<FinanceHubResponse> {
+  const res = await fetch(`${apiUrl()}/api/v1/finance/hub`, { headers: headers(), cache: 'no-store' });
+  if (!res.ok) throw new Error(`finance hub: ${res.status}`);
+  return (await res.json()) as FinanceHubResponse;
+}
+
+export type ArOpenItemDto = {
+  docNo: string;
+  customer: string;
+  issueDate: string;
+  dueDate: string;
+  amountToman: number;
+  openToman: number;
+  delayDays: number;
+};
+
+export type ArOpenItemsResponse = {
+  items: ArOpenItemDto[];
+  source: string;
+};
+
+export async function fetchArOpenItems(): Promise<ArOpenItemsResponse> {
+  const res = await fetch(`${apiUrl()}/api/v1/finance/receivables/open-items`, {
+    headers: headers(),
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error(`ar open items: ${res.status}`);
+  return (await res.json()) as ArOpenItemsResponse;
+}
+
 export async function listJournalEntries() {
-  const res = await fetch(`${API}/api/v1/finance/journal/entries`, { headers: headers(), cache: 'no-store' });
+  const res = await fetch(`${apiUrl()}/api/v1/finance/journal/entries`, { headers: headers(), cache: 'no-store' });
   if (!res.ok) throw new Error(`journal list: ${res.status}`);
   return (await res.json()) as { entries: JournalEntry[] };
 }
 
 export async function createJournalDraft(lines: JournalLine[]) {
-  const res = await fetch(`${API}/api/v1/finance/journal/draft`, {
+  const res = await fetch(`${apiUrl()}/api/v1/finance/journal/draft`, {
     method: 'POST',
     headers: headers(),
     body: JSON.stringify({ lines }),
@@ -40,7 +98,7 @@ export async function createJournalDraft(lines: JournalLine[]) {
 }
 
 export async function postJournal(draft: JournalEntry, approver?: { userId: string; role: string }) {
-  const res = await fetch(`${API}/api/v1/finance/journal/post`, {
+  const res = await fetch(`${apiUrl()}/api/v1/finance/journal/post`, {
     method: 'POST',
     headers: headers(draft.id),
     body: JSON.stringify({

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Vazirmatn } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
-import { AdminHeader, AdminSidebar, AppShell, Toaster } from '@repo/ui';
+import { PlatformCloudShell, Toaster } from '@repo/ui';
 import './globals.css';
 
 const vazirmatn = Vazirmatn({
@@ -24,9 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             پرش به محتوا
           </a>
           <div id="main-content">
-            <AppShell sidebar={<AdminSidebar />} header={<AdminHeader />}>
-              {children}
-            </AppShell>
+            <PlatformCloudShell>{children}</PlatformCloudShell>
           </div>
           <Toaster position="top-center" richColors dir="rtl" />
         </ThemeProvider>

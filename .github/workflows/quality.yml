@@ -65,6 +65,49 @@ jobs:
         env:
           E2E_BASE_URL: http://127.0.0.1:3001
 
+  e2e-projects:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: erp_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/erp_test
+      PROJECTS_PERSISTENCE: 'true'
+      AUTH_DB_ENABLED: 'false'
+      AUTH_PERMISSIONS_DB: 'false'
+      REDIS_URL: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install chromium --with-deps
+      - run: pnpm db:generate:all
+      - run: pnpm db:push:all
+      - run: pnpm test:e2e:projects:prepare
+        env:
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:3000
+      - run: pnpm test:e2e:projects
+        env:
+          E2E_BASE_URL: http://127.0.0.1:3001
+          CI: 'true'
+
   e2e-visual:
     runs-on: ubuntu-latest
     steps:

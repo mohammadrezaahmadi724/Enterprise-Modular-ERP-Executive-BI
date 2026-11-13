@@ -22,6 +22,8 @@ export class CompositeTenantGuard implements CanActivate {
     if (!user) return false;
     if (user.isSuperAdmin) return true;
     if (!user.tenantId) throw new ForbiddenException('Tenant required');
-    return TenantContext.get()?.tenantId === user.tenantId || true;
+    const ctx = TenantContext.getOrNull();
+    if (!ctx) return user.isSuperAdmin;
+    return ctx.tenantId === user.tenantId || user.isSuperAdmin;
   }
 }

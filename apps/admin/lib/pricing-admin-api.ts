@@ -1,4 +1,4 @@
-import type { ErpModuleCode, ModuleCatalogEntry } from '@repo/contracts';
+import type { CloudSubscriptionRates, ErpModuleCode, MarketingSiteContent, ModuleCatalogEntry } from '@repo/contracts';
 import { apiBase } from './api-base';
 
 async function apiFetch(input: string, init?: RequestInit) {
@@ -50,6 +50,57 @@ export async function fetchPlansWithModules() {
   const res = await apiFetch(`${apiBase()}/api/v1/platform/pricing/plans`, { headers: headers(), cache: 'no-store' });
   if (!res.ok) throw new Error(`plans: ${res.status}`);
   return (await res.json()) as PlanModulesRow[];
+}
+
+export async function fetchCloudSubscriptionRates() {
+  const res = await apiFetch(`${apiBase()}/api/v1/platform/pricing/cloud-subscription`, {
+    headers: headers(),
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error(`cloud-subscription: ${res.status}`);
+  return (await res.json()) as CloudSubscriptionRates;
+}
+
+export async function saveCloudSubscriptionRates(body: {
+  baseMonthlyTomans?: number;
+  includedSeats?: number;
+  extraSeatTomans?: number;
+  maxSeats?: number;
+  moduleMonthlyTomans?: Partial<Record<ErpModuleCode, number>>;
+  planCode?: string;
+}) {
+  const res = await apiFetch(`${apiBase()}/api/v1/platform/pricing/cloud-subscription`, {
+    method: 'PUT',
+    headers: headers(),
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`cloud save: ${res.status}`);
+  return (await res.json()) as CloudSubscriptionRates;
+}
+
+export async function clearCloudSubscriptionRates() {
+  const res = await apiFetch(`${apiBase()}/api/v1/platform/pricing/cloud-subscription`, {
+    method: 'DELETE',
+    headers: headers(),
+  });
+  if (!res.ok) throw new Error(`cloud clear: ${res.status}`);
+  return (await res.json()) as CloudSubscriptionRates;
+}
+
+export async function fetchMarketingSite() {
+  const res = await apiFetch(`${apiBase()}/api/v1/platform/pricing/site`, { headers: headers(), cache: 'no-store' });
+  if (!res.ok) throw new Error(`site: ${res.status}`);
+  return (await res.json()) as MarketingSiteContent;
+}
+
+export async function saveMarketingSite(body: MarketingSiteContent) {
+  const res = await apiFetch(`${apiBase()}/api/v1/platform/pricing/site`, {
+    method: 'PUT',
+    headers: headers(),
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`site save: ${res.status}`);
+  return (await res.json()) as MarketingSiteContent;
 }
 
 export async function updatePlanModules(

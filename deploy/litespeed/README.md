@@ -28,3 +28,8 @@ LiteSpeed reverse proxy به پورت داخلی هر اپ (3001–3003) یا Pa
 ## Redis (اجباری prod)
 
 Worker و Outbox relay بدون Redis اجرا نمی‌شوند — `REDIS_URL=redis://127.0.0.1:6379`.
+
+## Pars Web Server — پلن هشتم (۴ دامنه)
+
+نگاشت `api` / `app` / `admin` / `www` و چک‌لیست RAM:  
+[`deploy/pars-webserver/PLAN8-4DOMAINS.md`](../pars-webserver/PLAN8-4DOMAINS.md)

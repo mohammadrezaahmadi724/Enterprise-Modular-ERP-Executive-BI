@@ -158,4 +158,25 @@ export function escalate(instanceId: string): WorkflowInstanceRecord {
   return instance;
 }
 
+export function listWorkflowInstances(tenantId: string): WorkflowInstanceRecord[] {
+  return [...instances.values()].filter((i) => i.tenantId === tenantId);
+}
+
+export function getWorkflowInboxSummary(tenantId: string): {
+  pending: number;
+  approved: number;
+  rejected: number;
+  escalated: number;
+  preview: WorkflowInstanceRecord[];
+} {
+  const all = listWorkflowInstances(tenantId);
+  return {
+    pending: all.filter((i) => i.status === 'Running').length,
+    approved: all.filter((i) => i.status === 'Approved').length,
+    rejected: all.filter((i) => i.status === 'Rejected').length,
+    escalated: all.filter((i) => i.status === 'Escalated').length,
+    preview: all.filter((i) => i.status === 'Running').slice(0, 12),
+  };
+}
+
 export { workflowPersistenceEnabled } from './file-store.js';

@@ -6,9 +6,12 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { randomUUID } from 'node:crypto';
 import { TenantContext, IdempotencyConflictError } from '@repo/domain';
+import { IS_PUBLIC_KEY } from '../decorators/access.decorator';
 import {
   hashRequestBody,
   hashUploadMetadata,
@@ -19,6 +22,8 @@ const MUTATING = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
 @Injectable()
 export class IdempotencyInterceptor implements NestInterceptor {
+  constructor(private readonly reflector: Reflector) {}
+
   async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<unknown>> {
     const http = context.switchToHttp();
     const req = http.getRequest<{
@@ -34,17 +39,32 @@ export class IdempotencyInterceptor implements NestInterceptor {
       return next.handle();
     }
 
+    const isPublic =
+      this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+        context.getHandler(),
+        context.getClass(),
+      ]) ?? false;
+
+    const isPlatformPricing =
+      req.path.startsWith('/api/v1/public/pricing') || req.path.startsWith('/api/v1/public/leads');
+
+    if (isPublic && isPlatformPricing) {
+      return next.handle();
+    }
+
     let idempotencyKey = req.headers['idempotency-key'];
     if (!idempotencyKey || Array.isArray(idempotencyKey)) {
       const fallback = req.headers['x-correlation-id'];
       if (typeof fallback === 'string' && fallback.length > 0) {
         idempotencyKey = fallback;
+      } else if (isPublic) {
+        idempotencyKey = randomUUID();
       } else {
         throw new BadRequestException('Idempotency-Key header is required');
       }
     }
 
-    const tenantId = TenantContext.requireTenantId();
+    const tenantId = TenantContext.getOrNull()?.tenantId ?? TenantContext.requireTenantId();
     const endpoint = req.path;
     const requestHash = req.file
       ? hashUploadMetadata({

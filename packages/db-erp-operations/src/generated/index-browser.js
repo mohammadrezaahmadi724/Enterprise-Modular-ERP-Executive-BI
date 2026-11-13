@@ -176,6 +176,19 @@ exports.Prisma.InventoryBalanceScalarFieldEnum = {
   version: 'version'
 };
 
+exports.Prisma.InventoryLotScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  productId: 'productId',
+  warehouseId: 'warehouseId',
+  lotNumber: 'lotNumber',
+  quantity: 'quantity',
+  expiryDate: 'expiryDate',
+  status: 'status',
+  receivedAt: 'receivedAt',
+  version: 'version'
+};
+
 exports.Prisma.StockMovementScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
@@ -186,6 +199,25 @@ exports.Prisma.StockMovementScalarFieldEnum = {
   referenceType: 'referenceType',
   referenceId: 'referenceId',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.WmsStockDocumentScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  docNo: 'docNo',
+  kind: 'kind',
+  body: 'body',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.WmsReservationRecordScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  reservationCode: 'reservationCode',
+  body: 'body',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SalesOrderScalarFieldEnum = {
@@ -711,17 +743,81 @@ exports.Prisma.CallTranscriptScalarFieldEnum = {
   confidence: 'confidence'
 };
 
+exports.Prisma.ErpProjectScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  code: 'code',
+  name: 'name',
+  deadline: 'deadline',
+  status: 'status',
+  delayDays: 'delayDays',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ErpProjectTaskScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  number: 'number',
+  title: 'title',
+  projectCode: 'projectCode',
+  assigneeName: 'assigneeName',
+  assigneeInitials: 'assigneeInitials',
+  deadline: 'deadline',
+  status: 'status',
+  priority: 'priority',
+  overdue: 'overdue',
+  unassigned: 'unassigned',
+  checklistDone: 'checklistDone',
+  checklistTotal: 'checklistTotal',
+  loggedMinutes: 'loggedMinutes',
+  loggedHours: 'loggedHours',
+  linkType: 'linkType',
+  linkRef: 'linkRef',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ErpProjectMemberScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  projectCode: 'projectCode',
+  memberName: 'memberName',
+  roleFa: 'roleFa',
+  initials: 'initials'
+};
+
+exports.Prisma.ErpMasterRecordScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  kind: 'kind',
+  code: 'code',
+  name: 'name',
+  status: 'status',
+  payload: 'payload',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ErpTenantBrandingScalarFieldEnum = {
+  tenantId: 'tenantId',
+  logoUrl: 'logoUrl',
+  stampUrl: 'stampUrl',
+  signatureUrl: 'signatureUrl',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
 };
 
-exports.Prisma.NullableJsonNullValueInput = {
-  DbNull: Prisma.DbNull,
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
-exports.Prisma.JsonNullValueInput = {
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
 };
 
@@ -748,6 +844,13 @@ exports.LeadStatus = exports.$Enums.LeadStatus = {
   Converted: 'Converted'
 };
 
+exports.InventoryLotStatus = exports.$Enums.InventoryLotStatus = {
+  Active: 'Active',
+  Expired: 'Expired',
+  Quarantine: 'Quarantine',
+  Blocked: 'Blocked'
+};
+
 exports.MovementType = exports.$Enums.MovementType = {
   In: 'In',
   Out: 'Out',
@@ -755,6 +858,12 @@ exports.MovementType = exports.$Enums.MovementType = {
   Adjustment: 'Adjustment',
   Reserve: 'Reserve',
   Release: 'Release'
+};
+
+exports.WmsDocumentKind = exports.$Enums.WmsDocumentKind = {
+  Receipt: 'Receipt',
+  Issue: 'Issue',
+  Transfer: 'Transfer'
 };
 
 exports.SalesOrderStatus = exports.$Enums.SalesOrderStatus = {
@@ -883,13 +992,42 @@ exports.CallDirection = exports.$Enums.CallDirection = {
   Outbound: 'Outbound'
 };
 
+exports.ErpProjectStatus = exports.$Enums.ErpProjectStatus = {
+  active: 'active',
+  on_hold: 'on_hold',
+  completed: 'completed',
+  canceled: 'canceled'
+};
+
+exports.ErpProjectTaskStatus = exports.$Enums.ErpProjectTaskStatus = {
+  not_started: 'not_started',
+  in_progress: 'in_progress',
+  done: 'done'
+};
+
+exports.ErpMasterKind = exports.$Enums.ErpMasterKind = {
+  unit: 'unit',
+  tax: 'tax',
+  warehouse_location: 'warehouse_location',
+  price_list: 'price_list',
+  ops_item: 'ops_item'
+};
+
+exports.ErpMasterStatus = exports.$Enums.ErpMasterStatus = {
+  active: 'active',
+  inactive: 'inactive'
+};
+
 exports.Prisma.ModelName = {
   Contact: 'Contact',
   Lead: 'Lead',
   Product: 'Product',
   Warehouse: 'Warehouse',
   InventoryBalance: 'InventoryBalance',
+  InventoryLot: 'InventoryLot',
   StockMovement: 'StockMovement',
+  WmsStockDocument: 'WmsStockDocument',
+  WmsReservationRecord: 'WmsReservationRecord',
   SalesOrder: 'SalesOrder',
   SalesOrderLine: 'SalesOrderLine',
   TenantSetting: 'TenantSetting',
@@ -942,7 +1080,12 @@ exports.Prisma.ModelName = {
   SipAccount: 'SipAccount',
   CallLog: 'CallLog',
   CallRecording: 'CallRecording',
-  CallTranscript: 'CallTranscript'
+  CallTranscript: 'CallTranscript',
+  ErpProject: 'ErpProject',
+  ErpProjectTask: 'ErpProjectTask',
+  ErpProjectMember: 'ErpProjectMember',
+  ErpMasterRecord: 'ErpMasterRecord',
+  ErpTenantBranding: 'ErpTenantBranding'
 };
 
 /**

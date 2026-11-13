@@ -1,5 +1,5 @@
-import { ErpScreenByHref } from '../../../components/erp-screen-by-href';
+import { WorkflowsMyTasksClient } from '../../../components/workflows/WorkflowsMyTasksClient';
 
 export default function MyTasksPage() {
-  return <ErpScreenByHref href="/workflows/my-tasks" />;
+  return <WorkflowsMyTasksClient />;
 }

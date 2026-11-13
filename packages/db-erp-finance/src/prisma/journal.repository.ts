@@ -1,15 +1,16 @@
 import { randomUUID } from 'node:crypto';
-import { TenantContext } from '@repo/domain';
+import { PeriodLockedError, TenantContext } from '@repo/domain';
 import type { JournalEntryDraft, GlLineInput } from '../gl/ledger.service.js';
 import { financePersistenceEnabled, financePrisma } from './client.js';
 import { financeTransaction } from './rls.js';
-import { rlsSessionEnabled } from '@repo/db-core-adapter';
+import { rlsSessionEnabled, withRlsRead } from '@repo/db-core-adapter';
 
 const DEMO_JOURNAL_ID = 'j0000000-0000-4000-8000-000000000001';
 
 export const DEMO_ACCOUNT_IDS = {
   '1101': 'a0000000-0000-4000-8000-000000001101',
   '2101': 'a0000000-0000-4000-8000-000000002101',
+  '5101': 'a0000000-0000-4000-8000-000000005101',
 } as const;
 
 export async function ensureFinanceTenantBootstrap(tenantId: string): Promise<void> {
@@ -20,9 +21,10 @@ export async function ensureFinanceTenantBootstrap(tenantId: string): Promise<vo
       data: { id: DEMO_JOURNAL_ID, tenantId, code: 'GEN', nameFa: 'روزنامه عمومی' },
     });
   }
-  for (const [code, id, type] of [
-    ['1101', DEMO_ACCOUNT_IDS['1101'], 'ASSET'],
-    ['2101', DEMO_ACCOUNT_IDS['2101'], 'LIABILITY'],
+  for (const [code, id, type, nameFa] of [
+    ['1101', DEMO_ACCOUNT_IDS['1101'], 'ASSET', 'صندوق'],
+    ['2101', DEMO_ACCOUNT_IDS['2101'], 'LIABILITY', 'بستانکاران'],
+    ['5101', DEMO_ACCOUNT_IDS['5101'], 'EXPENSE', 'هزینه حقوق'],
   ] as const) {
     await financePrisma.chartOfAccount.upsert({
       where: { tenantId_code: { tenantId, code } },
@@ -31,7 +33,7 @@ export async function ensureFinanceTenantBootstrap(tenantId: string): Promise<vo
         id,
         tenantId,
         code,
-        nameFa: code === '1101' ? 'صندوق' : 'بستانکاران',
+        nameFa,
         accountType: type,
       },
     });
@@ -70,11 +72,17 @@ function toDraft(row: {
 export async function listJournalDraftsPrisma(tenantId: string): Promise<JournalEntryDraft[]> {
   if (!financePersistenceEnabled()) return [];
   await ensureFinanceTenantBootstrap(tenantId);
-  const rows = await financePrisma.journalEntry.findMany({
-    where: { tenantId },
-    orderBy: { createdAt: 'desc' },
-    include: { glLines: true },
-  });
+  const query = (client: typeof financePrisma) =>
+    client.journalEntry.findMany({
+      where: { tenantId },
+      orderBy: { createdAt: 'desc' },
+      include: { glLines: true },
+    });
+  const rows = rlsSessionEnabled()
+    ? ((await withRlsRead(financePrisma, (tx) => query(tx as typeof financePrisma))) as Awaited<
+        ReturnType<typeof query>
+      >)
+    : await query(financePrisma);
   return rows.map(toDraft);
 }
 
@@ -109,10 +117,30 @@ export async function createJournalDraftPrisma(
       })),
     },
   };
+  const write = async (tx: import('../generated/index.js').Prisma.TransactionClient) => {
+    await assertFiscalPeriodOpen(tx, tenantId, data.entryDate);
+    return tx.journalEntry.create({ data, include: { glLines: true } });
+  };
   const entry = rlsSessionEnabled()
-    ? await financeTransaction((tx) => tx.journalEntry.create({ data, include: { glLines: true } }))
-    : await financePrisma.journalEntry.create({ data, include: { glLines: true } });
+    ? await financeTransaction(write)
+    : await financePrisma.$transaction(write);
   return toDraft(entry);
+}
+
+async function assertFiscalPeriodOpen(
+  tx: import('../generated/index.js').Prisma.TransactionClient,
+  tenantId: string,
+  entryDate: Date,
+): Promise<void> {
+  const closed = await tx.fiscalPeriod.findFirst({
+    where: {
+      tenantId,
+      startDate: { lte: entryDate },
+      endDate: { gte: entryDate },
+      status: { in: ['Closed', 'Locked'] },
+    },
+  });
+  if (closed) throw new PeriodLockedError(closed.status);
 }
 
 export async function postJournalDraftPrisma(entryId: string): Promise<JournalEntryDraft> {
@@ -124,6 +152,7 @@ export async function postJournalDraftPrisma(entryId: string): Promise<JournalEn
     if (current.status === 'Posted') {
       return current;
     }
+    await assertFiscalPeriodOpen(tx, current.tenantId, current.entryDate);
     const updated = await tx.journalEntry.update({
       where: { id: entryId },
       data: { status: 'Posted', postedAt: new Date() },

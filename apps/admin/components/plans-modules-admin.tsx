@@ -9,6 +9,7 @@ import {
   updatePlanModules,
   type PlanModulesRow,
 } from '../lib/pricing-admin-api';
+import { createAdminRow } from '../lib/admin-api';
 
 const fmt = (n: number) => new Intl.NumberFormat('fa-IR').format(n);
 
@@ -18,6 +19,8 @@ export function PlansModulesAdmin() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [newPlanCode, setNewPlanCode] = useState('');
+  const [newPlanName, setNewPlanName] = useState('');
 
   const selected = useMemo(() => plans.find((p) => p.id === selectedId) ?? plans[0], [plans, selectedId]);
 
@@ -74,6 +77,53 @@ export function PlansModulesAdmin() {
         title="پلن‌ها و ماژول‌های اشتراک"
         description="هم‌تراز با برآورد مارکتینگ: ماژول‌های شامل هر پلن و قیمت اختصاصی. کاتالوگ پایه از صفحه «قیمت ماژول‌ها»."
       />
+      <Card>
+        <CardContent className="flex flex-wrap gap-3 items-end pt-6" id="plan-create-panel">
+          <label className="text-sm space-y-1">
+            <span className="text-muted-foreground">کد پلن جدید</span>
+            <Input
+              aria-label="کد پلن جدید"
+              placeholder="مثلاً QA_PLAN_01"
+              value={newPlanCode}
+              className="w-40"
+              onChange={(e) => setNewPlanCode(e.target.value.toUpperCase())}
+            />
+          </label>
+          <label className="text-sm space-y-1">
+            <span className="text-muted-foreground">نام فارسی پلن</span>
+            <Input
+              aria-label="نام فارسی پلن"
+              placeholder="پلن آزمایشی QA"
+              value={newPlanName}
+              className="w-48"
+              onChange={(e) => setNewPlanName(e.target.value)}
+            />
+          </label>
+          <Button
+            size="sm"
+            disabled={!newPlanCode.trim() || !newPlanName.trim() || saving}
+            onClick={() => {
+              void (async () => {
+                setSaving(true);
+                setError(null);
+                try {
+                  await createAdminRow('plans', { code: newPlanCode.trim(), name: newPlanName.trim() });
+                  const p = await fetchPlansWithModules();
+                  setPlans(p);
+                  setNewPlanCode('');
+                  setNewPlanName('');
+                } catch (e) {
+                  setError(e instanceof Error ? e.message : 'خطا');
+                } finally {
+                  setSaving(false);
+                }
+              })();
+            }}
+          >
+            + پلن جدید
+          </Button>
+        </CardContent>
+      </Card>
       {error ? (
         <p className="text-sm text-destructive rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2">
           {error}
@@ -129,7 +179,7 @@ export function PlansModulesAdmin() {
                     </span>
                     <div className="text-xs text-muted-foreground pl-6">کاتالوگ: {fmt(m.listPriceIrr)} ریال</div>
                     <div className="pl-6">
-                      <span className="text-xs text-muted-foreground block mb-1">قیمت در این پلن (ریال)</span>
+                      <span className="text-xs text-muted-foreground block mb-1">قیمت ماهانه در این پلن (تومان — برآورد ابری)</span>
                       <Input
                         type="number"
                         value={displayPrice}

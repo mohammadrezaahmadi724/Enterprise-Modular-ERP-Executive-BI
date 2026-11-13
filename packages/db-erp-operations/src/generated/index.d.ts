@@ -39,10 +39,25 @@ export type Warehouse = $Result.DefaultSelection<Prisma.$WarehousePayload>
  */
 export type InventoryBalance = $Result.DefaultSelection<Prisma.$InventoryBalancePayload>
 /**
+ * Model InventoryLot
+ * 
+ */
+export type InventoryLot = $Result.DefaultSelection<Prisma.$InventoryLotPayload>
+/**
  * Model StockMovement
  * 
  */
 export type StockMovement = $Result.DefaultSelection<Prisma.$StockMovementPayload>
+/**
+ * Model WmsStockDocument
+ * 
+ */
+export type WmsStockDocument = $Result.DefaultSelection<Prisma.$WmsStockDocumentPayload>
+/**
+ * Model WmsReservationRecord
+ * 
+ */
+export type WmsReservationRecord = $Result.DefaultSelection<Prisma.$WmsReservationRecordPayload>
 /**
  * Model SalesOrder
  * 
@@ -308,6 +323,31 @@ export type CallRecording = $Result.DefaultSelection<Prisma.$CallRecordingPayloa
  * 
  */
 export type CallTranscript = $Result.DefaultSelection<Prisma.$CallTranscriptPayload>
+/**
+ * Model ErpProject
+ * 
+ */
+export type ErpProject = $Result.DefaultSelection<Prisma.$ErpProjectPayload>
+/**
+ * Model ErpProjectTask
+ * 
+ */
+export type ErpProjectTask = $Result.DefaultSelection<Prisma.$ErpProjectTaskPayload>
+/**
+ * Model ErpProjectMember
+ * 
+ */
+export type ErpProjectMember = $Result.DefaultSelection<Prisma.$ErpProjectMemberPayload>
+/**
+ * Model ErpMasterRecord
+ * 
+ */
+export type ErpMasterRecord = $Result.DefaultSelection<Prisma.$ErpMasterRecordPayload>
+/**
+ * Model ErpTenantBranding
+ * 
+ */
+export type ErpTenantBranding = $Result.DefaultSelection<Prisma.$ErpTenantBrandingPayload>
 
 /**
  * Enums
@@ -344,6 +384,25 @@ export const SalesOrderStatus: {
 };
 
 export type SalesOrderStatus = (typeof SalesOrderStatus)[keyof typeof SalesOrderStatus]
+
+
+export const InventoryLotStatus: {
+  Active: 'Active',
+  Expired: 'Expired',
+  Quarantine: 'Quarantine',
+  Blocked: 'Blocked'
+};
+
+export type InventoryLotStatus = (typeof InventoryLotStatus)[keyof typeof InventoryLotStatus]
+
+
+export const WmsDocumentKind: {
+  Receipt: 'Receipt',
+  Issue: 'Issue',
+  Transfer: 'Transfer'
+};
+
+export type WmsDocumentKind = (typeof WmsDocumentKind)[keyof typeof WmsDocumentKind]
 
 
 export const PurchaseRequestStatus: {
@@ -518,6 +577,44 @@ export const SurveyQuestionType: {
 
 export type SurveyQuestionType = (typeof SurveyQuestionType)[keyof typeof SurveyQuestionType]
 
+
+export const ErpProjectStatus: {
+  active: 'active',
+  on_hold: 'on_hold',
+  completed: 'completed',
+  canceled: 'canceled'
+};
+
+export type ErpProjectStatus = (typeof ErpProjectStatus)[keyof typeof ErpProjectStatus]
+
+
+export const ErpProjectTaskStatus: {
+  not_started: 'not_started',
+  in_progress: 'in_progress',
+  done: 'done'
+};
+
+export type ErpProjectTaskStatus = (typeof ErpProjectTaskStatus)[keyof typeof ErpProjectTaskStatus]
+
+
+export const ErpMasterKind: {
+  unit: 'unit',
+  tax: 'tax',
+  warehouse_location: 'warehouse_location',
+  price_list: 'price_list',
+  ops_item: 'ops_item'
+};
+
+export type ErpMasterKind = (typeof ErpMasterKind)[keyof typeof ErpMasterKind]
+
+
+export const ErpMasterStatus: {
+  active: 'active',
+  inactive: 'inactive'
+};
+
+export type ErpMasterStatus = (typeof ErpMasterStatus)[keyof typeof ErpMasterStatus]
+
 }
 
 export type LeadStatus = $Enums.LeadStatus
@@ -531,6 +628,14 @@ export const MovementType: typeof $Enums.MovementType
 export type SalesOrderStatus = $Enums.SalesOrderStatus
 
 export const SalesOrderStatus: typeof $Enums.SalesOrderStatus
+
+export type InventoryLotStatus = $Enums.InventoryLotStatus
+
+export const InventoryLotStatus: typeof $Enums.InventoryLotStatus
+
+export type WmsDocumentKind = $Enums.WmsDocumentKind
+
+export const WmsDocumentKind: typeof $Enums.WmsDocumentKind
 
 export type PurchaseRequestStatus = $Enums.PurchaseRequestStatus
 
@@ -603,6 +708,22 @@ export const CallDirection: typeof $Enums.CallDirection
 export type SurveyQuestionType = $Enums.SurveyQuestionType
 
 export const SurveyQuestionType: typeof $Enums.SurveyQuestionType
+
+export type ErpProjectStatus = $Enums.ErpProjectStatus
+
+export const ErpProjectStatus: typeof $Enums.ErpProjectStatus
+
+export type ErpProjectTaskStatus = $Enums.ErpProjectTaskStatus
+
+export const ErpProjectTaskStatus: typeof $Enums.ErpProjectTaskStatus
+
+export type ErpMasterKind = $Enums.ErpMasterKind
+
+export const ErpMasterKind: typeof $Enums.ErpMasterKind
+
+export type ErpMasterStatus = $Enums.ErpMasterStatus
+
+export const ErpMasterStatus: typeof $Enums.ErpMasterStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -773,6 +894,16 @@ export class PrismaClient<
   get inventoryBalance(): Prisma.InventoryBalanceDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.inventoryLot`: Exposes CRUD operations for the **InventoryLot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InventoryLots
+    * const inventoryLots = await prisma.inventoryLot.findMany()
+    * ```
+    */
+  get inventoryLot(): Prisma.InventoryLotDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.stockMovement`: Exposes CRUD operations for the **StockMovement** model.
     * Example usage:
     * ```ts
@@ -781,6 +912,26 @@ export class PrismaClient<
     * ```
     */
   get stockMovement(): Prisma.StockMovementDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wmsStockDocument`: Exposes CRUD operations for the **WmsStockDocument** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WmsStockDocuments
+    * const wmsStockDocuments = await prisma.wmsStockDocument.findMany()
+    * ```
+    */
+  get wmsStockDocument(): Prisma.WmsStockDocumentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wmsReservationRecord`: Exposes CRUD operations for the **WmsReservationRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WmsReservationRecords
+    * const wmsReservationRecords = await prisma.wmsReservationRecord.findMany()
+    * ```
+    */
+  get wmsReservationRecord(): Prisma.WmsReservationRecordDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.salesOrder`: Exposes CRUD operations for the **SalesOrder** model.
@@ -1311,6 +1462,56 @@ export class PrismaClient<
     * ```
     */
   get callTranscript(): Prisma.CallTranscriptDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.erpProject`: Exposes CRUD operations for the **ErpProject** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ErpProjects
+    * const erpProjects = await prisma.erpProject.findMany()
+    * ```
+    */
+  get erpProject(): Prisma.ErpProjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.erpProjectTask`: Exposes CRUD operations for the **ErpProjectTask** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ErpProjectTasks
+    * const erpProjectTasks = await prisma.erpProjectTask.findMany()
+    * ```
+    */
+  get erpProjectTask(): Prisma.ErpProjectTaskDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.erpProjectMember`: Exposes CRUD operations for the **ErpProjectMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ErpProjectMembers
+    * const erpProjectMembers = await prisma.erpProjectMember.findMany()
+    * ```
+    */
+  get erpProjectMember(): Prisma.ErpProjectMemberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.erpMasterRecord`: Exposes CRUD operations for the **ErpMasterRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ErpMasterRecords
+    * const erpMasterRecords = await prisma.erpMasterRecord.findMany()
+    * ```
+    */
+  get erpMasterRecord(): Prisma.ErpMasterRecordDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.erpTenantBranding`: Exposes CRUD operations for the **ErpTenantBranding** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ErpTenantBrandings
+    * const erpTenantBrandings = await prisma.erpTenantBranding.findMany()
+    * ```
+    */
+  get erpTenantBranding(): Prisma.ErpTenantBrandingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1757,7 +1958,10 @@ export namespace Prisma {
     Product: 'Product',
     Warehouse: 'Warehouse',
     InventoryBalance: 'InventoryBalance',
+    InventoryLot: 'InventoryLot',
     StockMovement: 'StockMovement',
+    WmsStockDocument: 'WmsStockDocument',
+    WmsReservationRecord: 'WmsReservationRecord',
     SalesOrder: 'SalesOrder',
     SalesOrderLine: 'SalesOrderLine',
     TenantSetting: 'TenantSetting',
@@ -1810,7 +2014,12 @@ export namespace Prisma {
     SipAccount: 'SipAccount',
     CallLog: 'CallLog',
     CallRecording: 'CallRecording',
-    CallTranscript: 'CallTranscript'
+    CallTranscript: 'CallTranscript',
+    ErpProject: 'ErpProject',
+    ErpProjectTask: 'ErpProjectTask',
+    ErpProjectMember: 'ErpProjectMember',
+    ErpMasterRecord: 'ErpMasterRecord',
+    ErpTenantBranding: 'ErpTenantBranding'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1829,7 +2038,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "contact" | "lead" | "product" | "warehouse" | "inventoryBalance" | "stockMovement" | "salesOrder" | "salesOrderLine" | "tenantSetting" | "purchaseRequest" | "purchaseRequestLine" | "supplier" | "quote" | "purchaseOrder" | "purchaseOrderLine" | "goodsReceipt" | "goodsReceiptLine" | "area" | "route" | "fleetVehicle" | "driver" | "routePlan" | "visit" | "delivery" | "settlement" | "bom" | "bomLine" | "productionOrder" | "workCenter" | "wip" | "qcInspection" | "batchTraceability" | "warehouseZone" | "bin" | "putawayTask" | "pickingTask" | "stockCount" | "stockCountLine" | "stockAdjustment" | "qualityInspection" | "posTerminal" | "posShift" | "posTransaction" | "posCashManagement" | "aiConversation" | "aiMessage" | "aiAnalysisResult" | "workflowLog" | "usageRecord" | "message" | "messageChannel" | "channelConfig" | "survey" | "surveyQuestion" | "surveyResponse" | "sipAccount" | "callLog" | "callRecording" | "callTranscript"
+      modelProps: "contact" | "lead" | "product" | "warehouse" | "inventoryBalance" | "inventoryLot" | "stockMovement" | "wmsStockDocument" | "wmsReservationRecord" | "salesOrder" | "salesOrderLine" | "tenantSetting" | "purchaseRequest" | "purchaseRequestLine" | "supplier" | "quote" | "purchaseOrder" | "purchaseOrderLine" | "goodsReceipt" | "goodsReceiptLine" | "area" | "route" | "fleetVehicle" | "driver" | "routePlan" | "visit" | "delivery" | "settlement" | "bom" | "bomLine" | "productionOrder" | "workCenter" | "wip" | "qcInspection" | "batchTraceability" | "warehouseZone" | "bin" | "putawayTask" | "pickingTask" | "stockCount" | "stockCountLine" | "stockAdjustment" | "qualityInspection" | "posTerminal" | "posShift" | "posTransaction" | "posCashManagement" | "aiConversation" | "aiMessage" | "aiAnalysisResult" | "workflowLog" | "usageRecord" | "message" | "messageChannel" | "channelConfig" | "survey" | "surveyQuestion" | "surveyResponse" | "sipAccount" | "callLog" | "callRecording" | "callTranscript" | "erpProject" | "erpProjectTask" | "erpProjectMember" | "erpMasterRecord" | "erpTenantBranding"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2203,6 +2412,80 @@ export namespace Prisma {
           }
         }
       }
+      InventoryLot: {
+        payload: Prisma.$InventoryLotPayload<ExtArgs>
+        fields: Prisma.InventoryLotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InventoryLotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InventoryLotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>
+          }
+          findFirst: {
+            args: Prisma.InventoryLotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InventoryLotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>
+          }
+          findMany: {
+            args: Prisma.InventoryLotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>[]
+          }
+          create: {
+            args: Prisma.InventoryLotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>
+          }
+          createMany: {
+            args: Prisma.InventoryLotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InventoryLotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>[]
+          }
+          delete: {
+            args: Prisma.InventoryLotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>
+          }
+          update: {
+            args: Prisma.InventoryLotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>
+          }
+          deleteMany: {
+            args: Prisma.InventoryLotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InventoryLotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InventoryLotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>[]
+          }
+          upsert: {
+            args: Prisma.InventoryLotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryLotPayload>
+          }
+          aggregate: {
+            args: Prisma.InventoryLotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInventoryLot>
+          }
+          groupBy: {
+            args: Prisma.InventoryLotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InventoryLotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InventoryLotCountArgs<ExtArgs>
+            result: $Utils.Optional<InventoryLotCountAggregateOutputType> | number
+          }
+        }
+      }
       StockMovement: {
         payload: Prisma.$StockMovementPayload<ExtArgs>
         fields: Prisma.StockMovementFieldRefs
@@ -2274,6 +2557,154 @@ export namespace Prisma {
           count: {
             args: Prisma.StockMovementCountArgs<ExtArgs>
             result: $Utils.Optional<StockMovementCountAggregateOutputType> | number
+          }
+        }
+      }
+      WmsStockDocument: {
+        payload: Prisma.$WmsStockDocumentPayload<ExtArgs>
+        fields: Prisma.WmsStockDocumentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WmsStockDocumentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WmsStockDocumentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>
+          }
+          findFirst: {
+            args: Prisma.WmsStockDocumentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WmsStockDocumentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>
+          }
+          findMany: {
+            args: Prisma.WmsStockDocumentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>[]
+          }
+          create: {
+            args: Prisma.WmsStockDocumentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>
+          }
+          createMany: {
+            args: Prisma.WmsStockDocumentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WmsStockDocumentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>[]
+          }
+          delete: {
+            args: Prisma.WmsStockDocumentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>
+          }
+          update: {
+            args: Prisma.WmsStockDocumentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>
+          }
+          deleteMany: {
+            args: Prisma.WmsStockDocumentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WmsStockDocumentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WmsStockDocumentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>[]
+          }
+          upsert: {
+            args: Prisma.WmsStockDocumentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsStockDocumentPayload>
+          }
+          aggregate: {
+            args: Prisma.WmsStockDocumentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWmsStockDocument>
+          }
+          groupBy: {
+            args: Prisma.WmsStockDocumentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WmsStockDocumentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WmsStockDocumentCountArgs<ExtArgs>
+            result: $Utils.Optional<WmsStockDocumentCountAggregateOutputType> | number
+          }
+        }
+      }
+      WmsReservationRecord: {
+        payload: Prisma.$WmsReservationRecordPayload<ExtArgs>
+        fields: Prisma.WmsReservationRecordFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WmsReservationRecordFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WmsReservationRecordFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>
+          }
+          findFirst: {
+            args: Prisma.WmsReservationRecordFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WmsReservationRecordFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>
+          }
+          findMany: {
+            args: Prisma.WmsReservationRecordFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>[]
+          }
+          create: {
+            args: Prisma.WmsReservationRecordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>
+          }
+          createMany: {
+            args: Prisma.WmsReservationRecordCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WmsReservationRecordCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>[]
+          }
+          delete: {
+            args: Prisma.WmsReservationRecordDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>
+          }
+          update: {
+            args: Prisma.WmsReservationRecordUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>
+          }
+          deleteMany: {
+            args: Prisma.WmsReservationRecordDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WmsReservationRecordUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WmsReservationRecordUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>[]
+          }
+          upsert: {
+            args: Prisma.WmsReservationRecordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WmsReservationRecordPayload>
+          }
+          aggregate: {
+            args: Prisma.WmsReservationRecordAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWmsReservationRecord>
+          }
+          groupBy: {
+            args: Prisma.WmsReservationRecordGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WmsReservationRecordGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WmsReservationRecordCountArgs<ExtArgs>
+            result: $Utils.Optional<WmsReservationRecordCountAggregateOutputType> | number
           }
         }
       }
@@ -6199,6 +6630,376 @@ export namespace Prisma {
           }
         }
       }
+      ErpProject: {
+        payload: Prisma.$ErpProjectPayload<ExtArgs>
+        fields: Prisma.ErpProjectFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ErpProjectFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ErpProjectFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>
+          }
+          findFirst: {
+            args: Prisma.ErpProjectFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ErpProjectFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>
+          }
+          findMany: {
+            args: Prisma.ErpProjectFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>[]
+          }
+          create: {
+            args: Prisma.ErpProjectCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>
+          }
+          createMany: {
+            args: Prisma.ErpProjectCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ErpProjectCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>[]
+          }
+          delete: {
+            args: Prisma.ErpProjectDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>
+          }
+          update: {
+            args: Prisma.ErpProjectUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>
+          }
+          deleteMany: {
+            args: Prisma.ErpProjectDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ErpProjectUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ErpProjectUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>[]
+          }
+          upsert: {
+            args: Prisma.ErpProjectUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectPayload>
+          }
+          aggregate: {
+            args: Prisma.ErpProjectAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateErpProject>
+          }
+          groupBy: {
+            args: Prisma.ErpProjectGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ErpProjectGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ErpProjectCountArgs<ExtArgs>
+            result: $Utils.Optional<ErpProjectCountAggregateOutputType> | number
+          }
+        }
+      }
+      ErpProjectTask: {
+        payload: Prisma.$ErpProjectTaskPayload<ExtArgs>
+        fields: Prisma.ErpProjectTaskFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ErpProjectTaskFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ErpProjectTaskFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>
+          }
+          findFirst: {
+            args: Prisma.ErpProjectTaskFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ErpProjectTaskFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>
+          }
+          findMany: {
+            args: Prisma.ErpProjectTaskFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>[]
+          }
+          create: {
+            args: Prisma.ErpProjectTaskCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>
+          }
+          createMany: {
+            args: Prisma.ErpProjectTaskCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ErpProjectTaskCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>[]
+          }
+          delete: {
+            args: Prisma.ErpProjectTaskDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>
+          }
+          update: {
+            args: Prisma.ErpProjectTaskUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>
+          }
+          deleteMany: {
+            args: Prisma.ErpProjectTaskDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ErpProjectTaskUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ErpProjectTaskUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>[]
+          }
+          upsert: {
+            args: Prisma.ErpProjectTaskUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectTaskPayload>
+          }
+          aggregate: {
+            args: Prisma.ErpProjectTaskAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateErpProjectTask>
+          }
+          groupBy: {
+            args: Prisma.ErpProjectTaskGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ErpProjectTaskGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ErpProjectTaskCountArgs<ExtArgs>
+            result: $Utils.Optional<ErpProjectTaskCountAggregateOutputType> | number
+          }
+        }
+      }
+      ErpProjectMember: {
+        payload: Prisma.$ErpProjectMemberPayload<ExtArgs>
+        fields: Prisma.ErpProjectMemberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ErpProjectMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ErpProjectMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>
+          }
+          findFirst: {
+            args: Prisma.ErpProjectMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ErpProjectMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>
+          }
+          findMany: {
+            args: Prisma.ErpProjectMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>[]
+          }
+          create: {
+            args: Prisma.ErpProjectMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>
+          }
+          createMany: {
+            args: Prisma.ErpProjectMemberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ErpProjectMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>[]
+          }
+          delete: {
+            args: Prisma.ErpProjectMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>
+          }
+          update: {
+            args: Prisma.ErpProjectMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>
+          }
+          deleteMany: {
+            args: Prisma.ErpProjectMemberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ErpProjectMemberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ErpProjectMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>[]
+          }
+          upsert: {
+            args: Prisma.ErpProjectMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpProjectMemberPayload>
+          }
+          aggregate: {
+            args: Prisma.ErpProjectMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateErpProjectMember>
+          }
+          groupBy: {
+            args: Prisma.ErpProjectMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ErpProjectMemberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ErpProjectMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<ErpProjectMemberCountAggregateOutputType> | number
+          }
+        }
+      }
+      ErpMasterRecord: {
+        payload: Prisma.$ErpMasterRecordPayload<ExtArgs>
+        fields: Prisma.ErpMasterRecordFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ErpMasterRecordFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ErpMasterRecordFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>
+          }
+          findFirst: {
+            args: Prisma.ErpMasterRecordFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ErpMasterRecordFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>
+          }
+          findMany: {
+            args: Prisma.ErpMasterRecordFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>[]
+          }
+          create: {
+            args: Prisma.ErpMasterRecordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>
+          }
+          createMany: {
+            args: Prisma.ErpMasterRecordCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ErpMasterRecordCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>[]
+          }
+          delete: {
+            args: Prisma.ErpMasterRecordDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>
+          }
+          update: {
+            args: Prisma.ErpMasterRecordUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>
+          }
+          deleteMany: {
+            args: Prisma.ErpMasterRecordDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ErpMasterRecordUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ErpMasterRecordUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>[]
+          }
+          upsert: {
+            args: Prisma.ErpMasterRecordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpMasterRecordPayload>
+          }
+          aggregate: {
+            args: Prisma.ErpMasterRecordAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateErpMasterRecord>
+          }
+          groupBy: {
+            args: Prisma.ErpMasterRecordGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ErpMasterRecordGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ErpMasterRecordCountArgs<ExtArgs>
+            result: $Utils.Optional<ErpMasterRecordCountAggregateOutputType> | number
+          }
+        }
+      }
+      ErpTenantBranding: {
+        payload: Prisma.$ErpTenantBrandingPayload<ExtArgs>
+        fields: Prisma.ErpTenantBrandingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ErpTenantBrandingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ErpTenantBrandingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>
+          }
+          findFirst: {
+            args: Prisma.ErpTenantBrandingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ErpTenantBrandingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>
+          }
+          findMany: {
+            args: Prisma.ErpTenantBrandingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>[]
+          }
+          create: {
+            args: Prisma.ErpTenantBrandingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>
+          }
+          createMany: {
+            args: Prisma.ErpTenantBrandingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ErpTenantBrandingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>[]
+          }
+          delete: {
+            args: Prisma.ErpTenantBrandingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>
+          }
+          update: {
+            args: Prisma.ErpTenantBrandingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>
+          }
+          deleteMany: {
+            args: Prisma.ErpTenantBrandingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ErpTenantBrandingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ErpTenantBrandingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>[]
+          }
+          upsert: {
+            args: Prisma.ErpTenantBrandingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ErpTenantBrandingPayload>
+          }
+          aggregate: {
+            args: Prisma.ErpTenantBrandingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateErpTenantBranding>
+          }
+          groupBy: {
+            args: Prisma.ErpTenantBrandingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ErpTenantBrandingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ErpTenantBrandingCountArgs<ExtArgs>
+            result: $Utils.Optional<ErpTenantBrandingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -6300,7 +7101,10 @@ export namespace Prisma {
     product?: ProductOmit
     warehouse?: WarehouseOmit
     inventoryBalance?: InventoryBalanceOmit
+    inventoryLot?: InventoryLotOmit
     stockMovement?: StockMovementOmit
+    wmsStockDocument?: WmsStockDocumentOmit
+    wmsReservationRecord?: WmsReservationRecordOmit
     salesOrder?: SalesOrderOmit
     salesOrderLine?: SalesOrderLineOmit
     tenantSetting?: TenantSettingOmit
@@ -6354,6 +7158,11 @@ export namespace Prisma {
     callLog?: CallLogOmit
     callRecording?: CallRecordingOmit
     callTranscript?: CallTranscriptOmit
+    erpProject?: ErpProjectOmit
+    erpProjectTask?: ErpProjectTaskOmit
+    erpProjectMember?: ErpProjectMemberOmit
+    erpMasterRecord?: ErpMasterRecordOmit
+    erpTenantBranding?: ErpTenantBrandingOmit
   }
 
   /* Types for Logging */
@@ -7314,6 +8123,37 @@ export namespace Prisma {
    */
   export type CallLogCountOutputTypeCountTranscriptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CallTranscriptWhereInput
+  }
+
+
+  /**
+   * Count Type ErpProjectCountOutputType
+   */
+
+  export type ErpProjectCountOutputType = {
+    tasks: number
+  }
+
+  export type ErpProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tasks?: boolean | ErpProjectCountOutputTypeCountTasksArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ErpProjectCountOutputType without action
+   */
+  export type ErpProjectCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectCountOutputType
+     */
+    select?: ErpProjectCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ErpProjectCountOutputType without action
+   */
+  export type ErpProjectCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ErpProjectTaskWhereInput
   }
 
 
@@ -12809,6 +13649,1104 @@ export namespace Prisma {
 
 
   /**
+   * Model InventoryLot
+   */
+
+  export type AggregateInventoryLot = {
+    _count: InventoryLotCountAggregateOutputType | null
+    _avg: InventoryLotAvgAggregateOutputType | null
+    _sum: InventoryLotSumAggregateOutputType | null
+    _min: InventoryLotMinAggregateOutputType | null
+    _max: InventoryLotMaxAggregateOutputType | null
+  }
+
+  export type InventoryLotAvgAggregateOutputType = {
+    quantity: number | null
+    version: number | null
+  }
+
+  export type InventoryLotSumAggregateOutputType = {
+    quantity: bigint | null
+    version: number | null
+  }
+
+  export type InventoryLotMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    productId: string | null
+    warehouseId: string | null
+    lotNumber: string | null
+    quantity: bigint | null
+    expiryDate: Date | null
+    status: $Enums.InventoryLotStatus | null
+    receivedAt: Date | null
+    version: number | null
+  }
+
+  export type InventoryLotMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    productId: string | null
+    warehouseId: string | null
+    lotNumber: string | null
+    quantity: bigint | null
+    expiryDate: Date | null
+    status: $Enums.InventoryLotStatus | null
+    receivedAt: Date | null
+    version: number | null
+  }
+
+  export type InventoryLotCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    productId: number
+    warehouseId: number
+    lotNumber: number
+    quantity: number
+    expiryDate: number
+    status: number
+    receivedAt: number
+    version: number
+    _all: number
+  }
+
+
+  export type InventoryLotAvgAggregateInputType = {
+    quantity?: true
+    version?: true
+  }
+
+  export type InventoryLotSumAggregateInputType = {
+    quantity?: true
+    version?: true
+  }
+
+  export type InventoryLotMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    productId?: true
+    warehouseId?: true
+    lotNumber?: true
+    quantity?: true
+    expiryDate?: true
+    status?: true
+    receivedAt?: true
+    version?: true
+  }
+
+  export type InventoryLotMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    productId?: true
+    warehouseId?: true
+    lotNumber?: true
+    quantity?: true
+    expiryDate?: true
+    status?: true
+    receivedAt?: true
+    version?: true
+  }
+
+  export type InventoryLotCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    productId?: true
+    warehouseId?: true
+    lotNumber?: true
+    quantity?: true
+    expiryDate?: true
+    status?: true
+    receivedAt?: true
+    version?: true
+    _all?: true
+  }
+
+  export type InventoryLotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InventoryLot to aggregate.
+     */
+    where?: InventoryLotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InventoryLots to fetch.
+     */
+    orderBy?: InventoryLotOrderByWithRelationInput | InventoryLotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InventoryLotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InventoryLots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InventoryLots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InventoryLots
+    **/
+    _count?: true | InventoryLotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InventoryLotAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InventoryLotSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InventoryLotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InventoryLotMaxAggregateInputType
+  }
+
+  export type GetInventoryLotAggregateType<T extends InventoryLotAggregateArgs> = {
+        [P in keyof T & keyof AggregateInventoryLot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInventoryLot[P]>
+      : GetScalarType<T[P], AggregateInventoryLot[P]>
+  }
+
+
+
+
+  export type InventoryLotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InventoryLotWhereInput
+    orderBy?: InventoryLotOrderByWithAggregationInput | InventoryLotOrderByWithAggregationInput[]
+    by: InventoryLotScalarFieldEnum[] | InventoryLotScalarFieldEnum
+    having?: InventoryLotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InventoryLotCountAggregateInputType | true
+    _avg?: InventoryLotAvgAggregateInputType
+    _sum?: InventoryLotSumAggregateInputType
+    _min?: InventoryLotMinAggregateInputType
+    _max?: InventoryLotMaxAggregateInputType
+  }
+
+  export type InventoryLotGroupByOutputType = {
+    id: string
+    tenantId: string
+    productId: string
+    warehouseId: string
+    lotNumber: string
+    quantity: bigint
+    expiryDate: Date | null
+    status: $Enums.InventoryLotStatus
+    receivedAt: Date
+    version: number
+    _count: InventoryLotCountAggregateOutputType | null
+    _avg: InventoryLotAvgAggregateOutputType | null
+    _sum: InventoryLotSumAggregateOutputType | null
+    _min: InventoryLotMinAggregateOutputType | null
+    _max: InventoryLotMaxAggregateOutputType | null
+  }
+
+  type GetInventoryLotGroupByPayload<T extends InventoryLotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InventoryLotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InventoryLotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InventoryLotGroupByOutputType[P]>
+            : GetScalarType<T[P], InventoryLotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InventoryLotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    productId?: boolean
+    warehouseId?: boolean
+    lotNumber?: boolean
+    quantity?: boolean
+    expiryDate?: boolean
+    status?: boolean
+    receivedAt?: boolean
+    version?: boolean
+  }, ExtArgs["result"]["inventoryLot"]>
+
+  export type InventoryLotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    productId?: boolean
+    warehouseId?: boolean
+    lotNumber?: boolean
+    quantity?: boolean
+    expiryDate?: boolean
+    status?: boolean
+    receivedAt?: boolean
+    version?: boolean
+  }, ExtArgs["result"]["inventoryLot"]>
+
+  export type InventoryLotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    productId?: boolean
+    warehouseId?: boolean
+    lotNumber?: boolean
+    quantity?: boolean
+    expiryDate?: boolean
+    status?: boolean
+    receivedAt?: boolean
+    version?: boolean
+  }, ExtArgs["result"]["inventoryLot"]>
+
+  export type InventoryLotSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    productId?: boolean
+    warehouseId?: boolean
+    lotNumber?: boolean
+    quantity?: boolean
+    expiryDate?: boolean
+    status?: boolean
+    receivedAt?: boolean
+    version?: boolean
+  }
+
+  export type InventoryLotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "productId" | "warehouseId" | "lotNumber" | "quantity" | "expiryDate" | "status" | "receivedAt" | "version", ExtArgs["result"]["inventoryLot"]>
+
+  export type $InventoryLotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InventoryLot"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      productId: string
+      warehouseId: string
+      lotNumber: string
+      quantity: bigint
+      expiryDate: Date | null
+      status: $Enums.InventoryLotStatus
+      receivedAt: Date
+      version: number
+    }, ExtArgs["result"]["inventoryLot"]>
+    composites: {}
+  }
+
+  type InventoryLotGetPayload<S extends boolean | null | undefined | InventoryLotDefaultArgs> = $Result.GetResult<Prisma.$InventoryLotPayload, S>
+
+  type InventoryLotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InventoryLotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InventoryLotCountAggregateInputType | true
+    }
+
+  export interface InventoryLotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InventoryLot'], meta: { name: 'InventoryLot' } }
+    /**
+     * Find zero or one InventoryLot that matches the filter.
+     * @param {InventoryLotFindUniqueArgs} args - Arguments to find a InventoryLot
+     * @example
+     * // Get one InventoryLot
+     * const inventoryLot = await prisma.inventoryLot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InventoryLotFindUniqueArgs>(args: SelectSubset<T, InventoryLotFindUniqueArgs<ExtArgs>>): Prisma__InventoryLotClient<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InventoryLot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InventoryLotFindUniqueOrThrowArgs} args - Arguments to find a InventoryLot
+     * @example
+     * // Get one InventoryLot
+     * const inventoryLot = await prisma.inventoryLot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InventoryLotFindUniqueOrThrowArgs>(args: SelectSubset<T, InventoryLotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InventoryLotClient<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InventoryLot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryLotFindFirstArgs} args - Arguments to find a InventoryLot
+     * @example
+     * // Get one InventoryLot
+     * const inventoryLot = await prisma.inventoryLot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InventoryLotFindFirstArgs>(args?: SelectSubset<T, InventoryLotFindFirstArgs<ExtArgs>>): Prisma__InventoryLotClient<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InventoryLot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryLotFindFirstOrThrowArgs} args - Arguments to find a InventoryLot
+     * @example
+     * // Get one InventoryLot
+     * const inventoryLot = await prisma.inventoryLot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InventoryLotFindFirstOrThrowArgs>(args?: SelectSubset<T, InventoryLotFindFirstOrThrowArgs<ExtArgs>>): Prisma__InventoryLotClient<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InventoryLots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryLotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InventoryLots
+     * const inventoryLots = await prisma.inventoryLot.findMany()
+     * 
+     * // Get first 10 InventoryLots
+     * const inventoryLots = await prisma.inventoryLot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inventoryLotWithIdOnly = await prisma.inventoryLot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InventoryLotFindManyArgs>(args?: SelectSubset<T, InventoryLotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InventoryLot.
+     * @param {InventoryLotCreateArgs} args - Arguments to create a InventoryLot.
+     * @example
+     * // Create one InventoryLot
+     * const InventoryLot = await prisma.inventoryLot.create({
+     *   data: {
+     *     // ... data to create a InventoryLot
+     *   }
+     * })
+     * 
+     */
+    create<T extends InventoryLotCreateArgs>(args: SelectSubset<T, InventoryLotCreateArgs<ExtArgs>>): Prisma__InventoryLotClient<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InventoryLots.
+     * @param {InventoryLotCreateManyArgs} args - Arguments to create many InventoryLots.
+     * @example
+     * // Create many InventoryLots
+     * const inventoryLot = await prisma.inventoryLot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InventoryLotCreateManyArgs>(args?: SelectSubset<T, InventoryLotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InventoryLots and returns the data saved in the database.
+     * @param {InventoryLotCreateManyAndReturnArgs} args - Arguments to create many InventoryLots.
+     * @example
+     * // Create many InventoryLots
+     * const inventoryLot = await prisma.inventoryLot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InventoryLots and only return the `id`
+     * const inventoryLotWithIdOnly = await prisma.inventoryLot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InventoryLotCreateManyAndReturnArgs>(args?: SelectSubset<T, InventoryLotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InventoryLot.
+     * @param {InventoryLotDeleteArgs} args - Arguments to delete one InventoryLot.
+     * @example
+     * // Delete one InventoryLot
+     * const InventoryLot = await prisma.inventoryLot.delete({
+     *   where: {
+     *     // ... filter to delete one InventoryLot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InventoryLotDeleteArgs>(args: SelectSubset<T, InventoryLotDeleteArgs<ExtArgs>>): Prisma__InventoryLotClient<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InventoryLot.
+     * @param {InventoryLotUpdateArgs} args - Arguments to update one InventoryLot.
+     * @example
+     * // Update one InventoryLot
+     * const inventoryLot = await prisma.inventoryLot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InventoryLotUpdateArgs>(args: SelectSubset<T, InventoryLotUpdateArgs<ExtArgs>>): Prisma__InventoryLotClient<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InventoryLots.
+     * @param {InventoryLotDeleteManyArgs} args - Arguments to filter InventoryLots to delete.
+     * @example
+     * // Delete a few InventoryLots
+     * const { count } = await prisma.inventoryLot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InventoryLotDeleteManyArgs>(args?: SelectSubset<T, InventoryLotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InventoryLots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryLotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InventoryLots
+     * const inventoryLot = await prisma.inventoryLot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InventoryLotUpdateManyArgs>(args: SelectSubset<T, InventoryLotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InventoryLots and returns the data updated in the database.
+     * @param {InventoryLotUpdateManyAndReturnArgs} args - Arguments to update many InventoryLots.
+     * @example
+     * // Update many InventoryLots
+     * const inventoryLot = await prisma.inventoryLot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InventoryLots and only return the `id`
+     * const inventoryLotWithIdOnly = await prisma.inventoryLot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InventoryLotUpdateManyAndReturnArgs>(args: SelectSubset<T, InventoryLotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InventoryLot.
+     * @param {InventoryLotUpsertArgs} args - Arguments to update or create a InventoryLot.
+     * @example
+     * // Update or create a InventoryLot
+     * const inventoryLot = await prisma.inventoryLot.upsert({
+     *   create: {
+     *     // ... data to create a InventoryLot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InventoryLot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InventoryLotUpsertArgs>(args: SelectSubset<T, InventoryLotUpsertArgs<ExtArgs>>): Prisma__InventoryLotClient<$Result.GetResult<Prisma.$InventoryLotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InventoryLots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryLotCountArgs} args - Arguments to filter InventoryLots to count.
+     * @example
+     * // Count the number of InventoryLots
+     * const count = await prisma.inventoryLot.count({
+     *   where: {
+     *     // ... the filter for the InventoryLots we want to count
+     *   }
+     * })
+    **/
+    count<T extends InventoryLotCountArgs>(
+      args?: Subset<T, InventoryLotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InventoryLotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InventoryLot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryLotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InventoryLotAggregateArgs>(args: Subset<T, InventoryLotAggregateArgs>): Prisma.PrismaPromise<GetInventoryLotAggregateType<T>>
+
+    /**
+     * Group by InventoryLot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryLotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InventoryLotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InventoryLotGroupByArgs['orderBy'] }
+        : { orderBy?: InventoryLotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InventoryLotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInventoryLotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InventoryLot model
+   */
+  readonly fields: InventoryLotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InventoryLot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InventoryLotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InventoryLot model
+   */
+  interface InventoryLotFieldRefs {
+    readonly id: FieldRef<"InventoryLot", 'String'>
+    readonly tenantId: FieldRef<"InventoryLot", 'String'>
+    readonly productId: FieldRef<"InventoryLot", 'String'>
+    readonly warehouseId: FieldRef<"InventoryLot", 'String'>
+    readonly lotNumber: FieldRef<"InventoryLot", 'String'>
+    readonly quantity: FieldRef<"InventoryLot", 'BigInt'>
+    readonly expiryDate: FieldRef<"InventoryLot", 'DateTime'>
+    readonly status: FieldRef<"InventoryLot", 'InventoryLotStatus'>
+    readonly receivedAt: FieldRef<"InventoryLot", 'DateTime'>
+    readonly version: FieldRef<"InventoryLot", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InventoryLot findUnique
+   */
+  export type InventoryLotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * Filter, which InventoryLot to fetch.
+     */
+    where: InventoryLotWhereUniqueInput
+  }
+
+  /**
+   * InventoryLot findUniqueOrThrow
+   */
+  export type InventoryLotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * Filter, which InventoryLot to fetch.
+     */
+    where: InventoryLotWhereUniqueInput
+  }
+
+  /**
+   * InventoryLot findFirst
+   */
+  export type InventoryLotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * Filter, which InventoryLot to fetch.
+     */
+    where?: InventoryLotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InventoryLots to fetch.
+     */
+    orderBy?: InventoryLotOrderByWithRelationInput | InventoryLotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InventoryLots.
+     */
+    cursor?: InventoryLotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InventoryLots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InventoryLots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InventoryLots.
+     */
+    distinct?: InventoryLotScalarFieldEnum | InventoryLotScalarFieldEnum[]
+  }
+
+  /**
+   * InventoryLot findFirstOrThrow
+   */
+  export type InventoryLotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * Filter, which InventoryLot to fetch.
+     */
+    where?: InventoryLotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InventoryLots to fetch.
+     */
+    orderBy?: InventoryLotOrderByWithRelationInput | InventoryLotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InventoryLots.
+     */
+    cursor?: InventoryLotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InventoryLots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InventoryLots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InventoryLots.
+     */
+    distinct?: InventoryLotScalarFieldEnum | InventoryLotScalarFieldEnum[]
+  }
+
+  /**
+   * InventoryLot findMany
+   */
+  export type InventoryLotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * Filter, which InventoryLots to fetch.
+     */
+    where?: InventoryLotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InventoryLots to fetch.
+     */
+    orderBy?: InventoryLotOrderByWithRelationInput | InventoryLotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InventoryLots.
+     */
+    cursor?: InventoryLotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InventoryLots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InventoryLots.
+     */
+    skip?: number
+    distinct?: InventoryLotScalarFieldEnum | InventoryLotScalarFieldEnum[]
+  }
+
+  /**
+   * InventoryLot create
+   */
+  export type InventoryLotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * The data needed to create a InventoryLot.
+     */
+    data: XOR<InventoryLotCreateInput, InventoryLotUncheckedCreateInput>
+  }
+
+  /**
+   * InventoryLot createMany
+   */
+  export type InventoryLotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InventoryLots.
+     */
+    data: InventoryLotCreateManyInput | InventoryLotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InventoryLot createManyAndReturn
+   */
+  export type InventoryLotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * The data used to create many InventoryLots.
+     */
+    data: InventoryLotCreateManyInput | InventoryLotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InventoryLot update
+   */
+  export type InventoryLotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * The data needed to update a InventoryLot.
+     */
+    data: XOR<InventoryLotUpdateInput, InventoryLotUncheckedUpdateInput>
+    /**
+     * Choose, which InventoryLot to update.
+     */
+    where: InventoryLotWhereUniqueInput
+  }
+
+  /**
+   * InventoryLot updateMany
+   */
+  export type InventoryLotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InventoryLots.
+     */
+    data: XOR<InventoryLotUpdateManyMutationInput, InventoryLotUncheckedUpdateManyInput>
+    /**
+     * Filter which InventoryLots to update
+     */
+    where?: InventoryLotWhereInput
+    /**
+     * Limit how many InventoryLots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InventoryLot updateManyAndReturn
+   */
+  export type InventoryLotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * The data used to update InventoryLots.
+     */
+    data: XOR<InventoryLotUpdateManyMutationInput, InventoryLotUncheckedUpdateManyInput>
+    /**
+     * Filter which InventoryLots to update
+     */
+    where?: InventoryLotWhereInput
+    /**
+     * Limit how many InventoryLots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InventoryLot upsert
+   */
+  export type InventoryLotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * The filter to search for the InventoryLot to update in case it exists.
+     */
+    where: InventoryLotWhereUniqueInput
+    /**
+     * In case the InventoryLot found by the `where` argument doesn't exist, create a new InventoryLot with this data.
+     */
+    create: XOR<InventoryLotCreateInput, InventoryLotUncheckedCreateInput>
+    /**
+     * In case the InventoryLot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InventoryLotUpdateInput, InventoryLotUncheckedUpdateInput>
+  }
+
+  /**
+   * InventoryLot delete
+   */
+  export type InventoryLotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+    /**
+     * Filter which InventoryLot to delete.
+     */
+    where: InventoryLotWhereUniqueInput
+  }
+
+  /**
+   * InventoryLot deleteMany
+   */
+  export type InventoryLotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InventoryLots to delete
+     */
+    where?: InventoryLotWhereInput
+    /**
+     * Limit how many InventoryLots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InventoryLot without action
+   */
+  export type InventoryLotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryLot
+     */
+    select?: InventoryLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryLot
+     */
+    omit?: InventoryLotOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model StockMovement
    */
 
@@ -13886,6 +15824,2027 @@ export namespace Prisma {
      * Omit specific fields from the StockMovement
      */
     omit?: StockMovementOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WmsStockDocument
+   */
+
+  export type AggregateWmsStockDocument = {
+    _count: WmsStockDocumentCountAggregateOutputType | null
+    _min: WmsStockDocumentMinAggregateOutputType | null
+    _max: WmsStockDocumentMaxAggregateOutputType | null
+  }
+
+  export type WmsStockDocumentMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    docNo: string | null
+    kind: $Enums.WmsDocumentKind | null
+    createdAt: Date | null
+  }
+
+  export type WmsStockDocumentMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    docNo: string | null
+    kind: $Enums.WmsDocumentKind | null
+    createdAt: Date | null
+  }
+
+  export type WmsStockDocumentCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    docNo: number
+    kind: number
+    body: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type WmsStockDocumentMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    docNo?: true
+    kind?: true
+    createdAt?: true
+  }
+
+  export type WmsStockDocumentMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    docNo?: true
+    kind?: true
+    createdAt?: true
+  }
+
+  export type WmsStockDocumentCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    docNo?: true
+    kind?: true
+    body?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type WmsStockDocumentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WmsStockDocument to aggregate.
+     */
+    where?: WmsStockDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WmsStockDocuments to fetch.
+     */
+    orderBy?: WmsStockDocumentOrderByWithRelationInput | WmsStockDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WmsStockDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WmsStockDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WmsStockDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WmsStockDocuments
+    **/
+    _count?: true | WmsStockDocumentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WmsStockDocumentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WmsStockDocumentMaxAggregateInputType
+  }
+
+  export type GetWmsStockDocumentAggregateType<T extends WmsStockDocumentAggregateArgs> = {
+        [P in keyof T & keyof AggregateWmsStockDocument]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWmsStockDocument[P]>
+      : GetScalarType<T[P], AggregateWmsStockDocument[P]>
+  }
+
+
+
+
+  export type WmsStockDocumentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WmsStockDocumentWhereInput
+    orderBy?: WmsStockDocumentOrderByWithAggregationInput | WmsStockDocumentOrderByWithAggregationInput[]
+    by: WmsStockDocumentScalarFieldEnum[] | WmsStockDocumentScalarFieldEnum
+    having?: WmsStockDocumentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WmsStockDocumentCountAggregateInputType | true
+    _min?: WmsStockDocumentMinAggregateInputType
+    _max?: WmsStockDocumentMaxAggregateInputType
+  }
+
+  export type WmsStockDocumentGroupByOutputType = {
+    id: string
+    tenantId: string
+    docNo: string
+    kind: $Enums.WmsDocumentKind
+    body: JsonValue
+    createdAt: Date
+    _count: WmsStockDocumentCountAggregateOutputType | null
+    _min: WmsStockDocumentMinAggregateOutputType | null
+    _max: WmsStockDocumentMaxAggregateOutputType | null
+  }
+
+  type GetWmsStockDocumentGroupByPayload<T extends WmsStockDocumentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WmsStockDocumentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WmsStockDocumentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WmsStockDocumentGroupByOutputType[P]>
+            : GetScalarType<T[P], WmsStockDocumentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WmsStockDocumentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    docNo?: boolean
+    kind?: boolean
+    body?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["wmsStockDocument"]>
+
+  export type WmsStockDocumentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    docNo?: boolean
+    kind?: boolean
+    body?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["wmsStockDocument"]>
+
+  export type WmsStockDocumentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    docNo?: boolean
+    kind?: boolean
+    body?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["wmsStockDocument"]>
+
+  export type WmsStockDocumentSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    docNo?: boolean
+    kind?: boolean
+    body?: boolean
+    createdAt?: boolean
+  }
+
+  export type WmsStockDocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "docNo" | "kind" | "body" | "createdAt", ExtArgs["result"]["wmsStockDocument"]>
+
+  export type $WmsStockDocumentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WmsStockDocument"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      docNo: string
+      kind: $Enums.WmsDocumentKind
+      body: Prisma.JsonValue
+      createdAt: Date
+    }, ExtArgs["result"]["wmsStockDocument"]>
+    composites: {}
+  }
+
+  type WmsStockDocumentGetPayload<S extends boolean | null | undefined | WmsStockDocumentDefaultArgs> = $Result.GetResult<Prisma.$WmsStockDocumentPayload, S>
+
+  type WmsStockDocumentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WmsStockDocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WmsStockDocumentCountAggregateInputType | true
+    }
+
+  export interface WmsStockDocumentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WmsStockDocument'], meta: { name: 'WmsStockDocument' } }
+    /**
+     * Find zero or one WmsStockDocument that matches the filter.
+     * @param {WmsStockDocumentFindUniqueArgs} args - Arguments to find a WmsStockDocument
+     * @example
+     * // Get one WmsStockDocument
+     * const wmsStockDocument = await prisma.wmsStockDocument.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WmsStockDocumentFindUniqueArgs>(args: SelectSubset<T, WmsStockDocumentFindUniqueArgs<ExtArgs>>): Prisma__WmsStockDocumentClient<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WmsStockDocument that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WmsStockDocumentFindUniqueOrThrowArgs} args - Arguments to find a WmsStockDocument
+     * @example
+     * // Get one WmsStockDocument
+     * const wmsStockDocument = await prisma.wmsStockDocument.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WmsStockDocumentFindUniqueOrThrowArgs>(args: SelectSubset<T, WmsStockDocumentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WmsStockDocumentClient<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WmsStockDocument that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsStockDocumentFindFirstArgs} args - Arguments to find a WmsStockDocument
+     * @example
+     * // Get one WmsStockDocument
+     * const wmsStockDocument = await prisma.wmsStockDocument.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WmsStockDocumentFindFirstArgs>(args?: SelectSubset<T, WmsStockDocumentFindFirstArgs<ExtArgs>>): Prisma__WmsStockDocumentClient<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WmsStockDocument that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsStockDocumentFindFirstOrThrowArgs} args - Arguments to find a WmsStockDocument
+     * @example
+     * // Get one WmsStockDocument
+     * const wmsStockDocument = await prisma.wmsStockDocument.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WmsStockDocumentFindFirstOrThrowArgs>(args?: SelectSubset<T, WmsStockDocumentFindFirstOrThrowArgs<ExtArgs>>): Prisma__WmsStockDocumentClient<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WmsStockDocuments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsStockDocumentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WmsStockDocuments
+     * const wmsStockDocuments = await prisma.wmsStockDocument.findMany()
+     * 
+     * // Get first 10 WmsStockDocuments
+     * const wmsStockDocuments = await prisma.wmsStockDocument.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wmsStockDocumentWithIdOnly = await prisma.wmsStockDocument.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WmsStockDocumentFindManyArgs>(args?: SelectSubset<T, WmsStockDocumentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WmsStockDocument.
+     * @param {WmsStockDocumentCreateArgs} args - Arguments to create a WmsStockDocument.
+     * @example
+     * // Create one WmsStockDocument
+     * const WmsStockDocument = await prisma.wmsStockDocument.create({
+     *   data: {
+     *     // ... data to create a WmsStockDocument
+     *   }
+     * })
+     * 
+     */
+    create<T extends WmsStockDocumentCreateArgs>(args: SelectSubset<T, WmsStockDocumentCreateArgs<ExtArgs>>): Prisma__WmsStockDocumentClient<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WmsStockDocuments.
+     * @param {WmsStockDocumentCreateManyArgs} args - Arguments to create many WmsStockDocuments.
+     * @example
+     * // Create many WmsStockDocuments
+     * const wmsStockDocument = await prisma.wmsStockDocument.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WmsStockDocumentCreateManyArgs>(args?: SelectSubset<T, WmsStockDocumentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WmsStockDocuments and returns the data saved in the database.
+     * @param {WmsStockDocumentCreateManyAndReturnArgs} args - Arguments to create many WmsStockDocuments.
+     * @example
+     * // Create many WmsStockDocuments
+     * const wmsStockDocument = await prisma.wmsStockDocument.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WmsStockDocuments and only return the `id`
+     * const wmsStockDocumentWithIdOnly = await prisma.wmsStockDocument.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WmsStockDocumentCreateManyAndReturnArgs>(args?: SelectSubset<T, WmsStockDocumentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WmsStockDocument.
+     * @param {WmsStockDocumentDeleteArgs} args - Arguments to delete one WmsStockDocument.
+     * @example
+     * // Delete one WmsStockDocument
+     * const WmsStockDocument = await prisma.wmsStockDocument.delete({
+     *   where: {
+     *     // ... filter to delete one WmsStockDocument
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WmsStockDocumentDeleteArgs>(args: SelectSubset<T, WmsStockDocumentDeleteArgs<ExtArgs>>): Prisma__WmsStockDocumentClient<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WmsStockDocument.
+     * @param {WmsStockDocumentUpdateArgs} args - Arguments to update one WmsStockDocument.
+     * @example
+     * // Update one WmsStockDocument
+     * const wmsStockDocument = await prisma.wmsStockDocument.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WmsStockDocumentUpdateArgs>(args: SelectSubset<T, WmsStockDocumentUpdateArgs<ExtArgs>>): Prisma__WmsStockDocumentClient<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WmsStockDocuments.
+     * @param {WmsStockDocumentDeleteManyArgs} args - Arguments to filter WmsStockDocuments to delete.
+     * @example
+     * // Delete a few WmsStockDocuments
+     * const { count } = await prisma.wmsStockDocument.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WmsStockDocumentDeleteManyArgs>(args?: SelectSubset<T, WmsStockDocumentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WmsStockDocuments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsStockDocumentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WmsStockDocuments
+     * const wmsStockDocument = await prisma.wmsStockDocument.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WmsStockDocumentUpdateManyArgs>(args: SelectSubset<T, WmsStockDocumentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WmsStockDocuments and returns the data updated in the database.
+     * @param {WmsStockDocumentUpdateManyAndReturnArgs} args - Arguments to update many WmsStockDocuments.
+     * @example
+     * // Update many WmsStockDocuments
+     * const wmsStockDocument = await prisma.wmsStockDocument.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WmsStockDocuments and only return the `id`
+     * const wmsStockDocumentWithIdOnly = await prisma.wmsStockDocument.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WmsStockDocumentUpdateManyAndReturnArgs>(args: SelectSubset<T, WmsStockDocumentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WmsStockDocument.
+     * @param {WmsStockDocumentUpsertArgs} args - Arguments to update or create a WmsStockDocument.
+     * @example
+     * // Update or create a WmsStockDocument
+     * const wmsStockDocument = await prisma.wmsStockDocument.upsert({
+     *   create: {
+     *     // ... data to create a WmsStockDocument
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WmsStockDocument we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WmsStockDocumentUpsertArgs>(args: SelectSubset<T, WmsStockDocumentUpsertArgs<ExtArgs>>): Prisma__WmsStockDocumentClient<$Result.GetResult<Prisma.$WmsStockDocumentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WmsStockDocuments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsStockDocumentCountArgs} args - Arguments to filter WmsStockDocuments to count.
+     * @example
+     * // Count the number of WmsStockDocuments
+     * const count = await prisma.wmsStockDocument.count({
+     *   where: {
+     *     // ... the filter for the WmsStockDocuments we want to count
+     *   }
+     * })
+    **/
+    count<T extends WmsStockDocumentCountArgs>(
+      args?: Subset<T, WmsStockDocumentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WmsStockDocumentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WmsStockDocument.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsStockDocumentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WmsStockDocumentAggregateArgs>(args: Subset<T, WmsStockDocumentAggregateArgs>): Prisma.PrismaPromise<GetWmsStockDocumentAggregateType<T>>
+
+    /**
+     * Group by WmsStockDocument.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsStockDocumentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WmsStockDocumentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WmsStockDocumentGroupByArgs['orderBy'] }
+        : { orderBy?: WmsStockDocumentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WmsStockDocumentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWmsStockDocumentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WmsStockDocument model
+   */
+  readonly fields: WmsStockDocumentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WmsStockDocument.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WmsStockDocumentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WmsStockDocument model
+   */
+  interface WmsStockDocumentFieldRefs {
+    readonly id: FieldRef<"WmsStockDocument", 'String'>
+    readonly tenantId: FieldRef<"WmsStockDocument", 'String'>
+    readonly docNo: FieldRef<"WmsStockDocument", 'String'>
+    readonly kind: FieldRef<"WmsStockDocument", 'WmsDocumentKind'>
+    readonly body: FieldRef<"WmsStockDocument", 'Json'>
+    readonly createdAt: FieldRef<"WmsStockDocument", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WmsStockDocument findUnique
+   */
+  export type WmsStockDocumentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsStockDocument to fetch.
+     */
+    where: WmsStockDocumentWhereUniqueInput
+  }
+
+  /**
+   * WmsStockDocument findUniqueOrThrow
+   */
+  export type WmsStockDocumentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsStockDocument to fetch.
+     */
+    where: WmsStockDocumentWhereUniqueInput
+  }
+
+  /**
+   * WmsStockDocument findFirst
+   */
+  export type WmsStockDocumentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsStockDocument to fetch.
+     */
+    where?: WmsStockDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WmsStockDocuments to fetch.
+     */
+    orderBy?: WmsStockDocumentOrderByWithRelationInput | WmsStockDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WmsStockDocuments.
+     */
+    cursor?: WmsStockDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WmsStockDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WmsStockDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WmsStockDocuments.
+     */
+    distinct?: WmsStockDocumentScalarFieldEnum | WmsStockDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * WmsStockDocument findFirstOrThrow
+   */
+  export type WmsStockDocumentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsStockDocument to fetch.
+     */
+    where?: WmsStockDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WmsStockDocuments to fetch.
+     */
+    orderBy?: WmsStockDocumentOrderByWithRelationInput | WmsStockDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WmsStockDocuments.
+     */
+    cursor?: WmsStockDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WmsStockDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WmsStockDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WmsStockDocuments.
+     */
+    distinct?: WmsStockDocumentScalarFieldEnum | WmsStockDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * WmsStockDocument findMany
+   */
+  export type WmsStockDocumentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsStockDocuments to fetch.
+     */
+    where?: WmsStockDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WmsStockDocuments to fetch.
+     */
+    orderBy?: WmsStockDocumentOrderByWithRelationInput | WmsStockDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WmsStockDocuments.
+     */
+    cursor?: WmsStockDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WmsStockDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WmsStockDocuments.
+     */
+    skip?: number
+    distinct?: WmsStockDocumentScalarFieldEnum | WmsStockDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * WmsStockDocument create
+   */
+  export type WmsStockDocumentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * The data needed to create a WmsStockDocument.
+     */
+    data: XOR<WmsStockDocumentCreateInput, WmsStockDocumentUncheckedCreateInput>
+  }
+
+  /**
+   * WmsStockDocument createMany
+   */
+  export type WmsStockDocumentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WmsStockDocuments.
+     */
+    data: WmsStockDocumentCreateManyInput | WmsStockDocumentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WmsStockDocument createManyAndReturn
+   */
+  export type WmsStockDocumentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * The data used to create many WmsStockDocuments.
+     */
+    data: WmsStockDocumentCreateManyInput | WmsStockDocumentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WmsStockDocument update
+   */
+  export type WmsStockDocumentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * The data needed to update a WmsStockDocument.
+     */
+    data: XOR<WmsStockDocumentUpdateInput, WmsStockDocumentUncheckedUpdateInput>
+    /**
+     * Choose, which WmsStockDocument to update.
+     */
+    where: WmsStockDocumentWhereUniqueInput
+  }
+
+  /**
+   * WmsStockDocument updateMany
+   */
+  export type WmsStockDocumentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WmsStockDocuments.
+     */
+    data: XOR<WmsStockDocumentUpdateManyMutationInput, WmsStockDocumentUncheckedUpdateManyInput>
+    /**
+     * Filter which WmsStockDocuments to update
+     */
+    where?: WmsStockDocumentWhereInput
+    /**
+     * Limit how many WmsStockDocuments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WmsStockDocument updateManyAndReturn
+   */
+  export type WmsStockDocumentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * The data used to update WmsStockDocuments.
+     */
+    data: XOR<WmsStockDocumentUpdateManyMutationInput, WmsStockDocumentUncheckedUpdateManyInput>
+    /**
+     * Filter which WmsStockDocuments to update
+     */
+    where?: WmsStockDocumentWhereInput
+    /**
+     * Limit how many WmsStockDocuments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WmsStockDocument upsert
+   */
+  export type WmsStockDocumentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * The filter to search for the WmsStockDocument to update in case it exists.
+     */
+    where: WmsStockDocumentWhereUniqueInput
+    /**
+     * In case the WmsStockDocument found by the `where` argument doesn't exist, create a new WmsStockDocument with this data.
+     */
+    create: XOR<WmsStockDocumentCreateInput, WmsStockDocumentUncheckedCreateInput>
+    /**
+     * In case the WmsStockDocument was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WmsStockDocumentUpdateInput, WmsStockDocumentUncheckedUpdateInput>
+  }
+
+  /**
+   * WmsStockDocument delete
+   */
+  export type WmsStockDocumentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+    /**
+     * Filter which WmsStockDocument to delete.
+     */
+    where: WmsStockDocumentWhereUniqueInput
+  }
+
+  /**
+   * WmsStockDocument deleteMany
+   */
+  export type WmsStockDocumentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WmsStockDocuments to delete
+     */
+    where?: WmsStockDocumentWhereInput
+    /**
+     * Limit how many WmsStockDocuments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WmsStockDocument without action
+   */
+  export type WmsStockDocumentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsStockDocument
+     */
+    select?: WmsStockDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsStockDocument
+     */
+    omit?: WmsStockDocumentOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WmsReservationRecord
+   */
+
+  export type AggregateWmsReservationRecord = {
+    _count: WmsReservationRecordCountAggregateOutputType | null
+    _min: WmsReservationRecordMinAggregateOutputType | null
+    _max: WmsReservationRecordMaxAggregateOutputType | null
+  }
+
+  export type WmsReservationRecordMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    reservationCode: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WmsReservationRecordMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    reservationCode: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WmsReservationRecordCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    reservationCode: number
+    body: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WmsReservationRecordMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    reservationCode?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WmsReservationRecordMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    reservationCode?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WmsReservationRecordCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    reservationCode?: true
+    body?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WmsReservationRecordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WmsReservationRecord to aggregate.
+     */
+    where?: WmsReservationRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WmsReservationRecords to fetch.
+     */
+    orderBy?: WmsReservationRecordOrderByWithRelationInput | WmsReservationRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WmsReservationRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WmsReservationRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WmsReservationRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WmsReservationRecords
+    **/
+    _count?: true | WmsReservationRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WmsReservationRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WmsReservationRecordMaxAggregateInputType
+  }
+
+  export type GetWmsReservationRecordAggregateType<T extends WmsReservationRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateWmsReservationRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWmsReservationRecord[P]>
+      : GetScalarType<T[P], AggregateWmsReservationRecord[P]>
+  }
+
+
+
+
+  export type WmsReservationRecordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WmsReservationRecordWhereInput
+    orderBy?: WmsReservationRecordOrderByWithAggregationInput | WmsReservationRecordOrderByWithAggregationInput[]
+    by: WmsReservationRecordScalarFieldEnum[] | WmsReservationRecordScalarFieldEnum
+    having?: WmsReservationRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WmsReservationRecordCountAggregateInputType | true
+    _min?: WmsReservationRecordMinAggregateInputType
+    _max?: WmsReservationRecordMaxAggregateInputType
+  }
+
+  export type WmsReservationRecordGroupByOutputType = {
+    id: string
+    tenantId: string
+    reservationCode: string
+    body: JsonValue
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: WmsReservationRecordCountAggregateOutputType | null
+    _min: WmsReservationRecordMinAggregateOutputType | null
+    _max: WmsReservationRecordMaxAggregateOutputType | null
+  }
+
+  type GetWmsReservationRecordGroupByPayload<T extends WmsReservationRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WmsReservationRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WmsReservationRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WmsReservationRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], WmsReservationRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WmsReservationRecordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    reservationCode?: boolean
+    body?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["wmsReservationRecord"]>
+
+  export type WmsReservationRecordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    reservationCode?: boolean
+    body?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["wmsReservationRecord"]>
+
+  export type WmsReservationRecordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    reservationCode?: boolean
+    body?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["wmsReservationRecord"]>
+
+  export type WmsReservationRecordSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    reservationCode?: boolean
+    body?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WmsReservationRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "reservationCode" | "body" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["wmsReservationRecord"]>
+
+  export type $WmsReservationRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WmsReservationRecord"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      reservationCode: string
+      body: Prisma.JsonValue
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["wmsReservationRecord"]>
+    composites: {}
+  }
+
+  type WmsReservationRecordGetPayload<S extends boolean | null | undefined | WmsReservationRecordDefaultArgs> = $Result.GetResult<Prisma.$WmsReservationRecordPayload, S>
+
+  type WmsReservationRecordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WmsReservationRecordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WmsReservationRecordCountAggregateInputType | true
+    }
+
+  export interface WmsReservationRecordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WmsReservationRecord'], meta: { name: 'WmsReservationRecord' } }
+    /**
+     * Find zero or one WmsReservationRecord that matches the filter.
+     * @param {WmsReservationRecordFindUniqueArgs} args - Arguments to find a WmsReservationRecord
+     * @example
+     * // Get one WmsReservationRecord
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WmsReservationRecordFindUniqueArgs>(args: SelectSubset<T, WmsReservationRecordFindUniqueArgs<ExtArgs>>): Prisma__WmsReservationRecordClient<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WmsReservationRecord that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WmsReservationRecordFindUniqueOrThrowArgs} args - Arguments to find a WmsReservationRecord
+     * @example
+     * // Get one WmsReservationRecord
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WmsReservationRecordFindUniqueOrThrowArgs>(args: SelectSubset<T, WmsReservationRecordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WmsReservationRecordClient<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WmsReservationRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsReservationRecordFindFirstArgs} args - Arguments to find a WmsReservationRecord
+     * @example
+     * // Get one WmsReservationRecord
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WmsReservationRecordFindFirstArgs>(args?: SelectSubset<T, WmsReservationRecordFindFirstArgs<ExtArgs>>): Prisma__WmsReservationRecordClient<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WmsReservationRecord that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsReservationRecordFindFirstOrThrowArgs} args - Arguments to find a WmsReservationRecord
+     * @example
+     * // Get one WmsReservationRecord
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WmsReservationRecordFindFirstOrThrowArgs>(args?: SelectSubset<T, WmsReservationRecordFindFirstOrThrowArgs<ExtArgs>>): Prisma__WmsReservationRecordClient<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WmsReservationRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsReservationRecordFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WmsReservationRecords
+     * const wmsReservationRecords = await prisma.wmsReservationRecord.findMany()
+     * 
+     * // Get first 10 WmsReservationRecords
+     * const wmsReservationRecords = await prisma.wmsReservationRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wmsReservationRecordWithIdOnly = await prisma.wmsReservationRecord.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WmsReservationRecordFindManyArgs>(args?: SelectSubset<T, WmsReservationRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WmsReservationRecord.
+     * @param {WmsReservationRecordCreateArgs} args - Arguments to create a WmsReservationRecord.
+     * @example
+     * // Create one WmsReservationRecord
+     * const WmsReservationRecord = await prisma.wmsReservationRecord.create({
+     *   data: {
+     *     // ... data to create a WmsReservationRecord
+     *   }
+     * })
+     * 
+     */
+    create<T extends WmsReservationRecordCreateArgs>(args: SelectSubset<T, WmsReservationRecordCreateArgs<ExtArgs>>): Prisma__WmsReservationRecordClient<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WmsReservationRecords.
+     * @param {WmsReservationRecordCreateManyArgs} args - Arguments to create many WmsReservationRecords.
+     * @example
+     * // Create many WmsReservationRecords
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WmsReservationRecordCreateManyArgs>(args?: SelectSubset<T, WmsReservationRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WmsReservationRecords and returns the data saved in the database.
+     * @param {WmsReservationRecordCreateManyAndReturnArgs} args - Arguments to create many WmsReservationRecords.
+     * @example
+     * // Create many WmsReservationRecords
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WmsReservationRecords and only return the `id`
+     * const wmsReservationRecordWithIdOnly = await prisma.wmsReservationRecord.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WmsReservationRecordCreateManyAndReturnArgs>(args?: SelectSubset<T, WmsReservationRecordCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WmsReservationRecord.
+     * @param {WmsReservationRecordDeleteArgs} args - Arguments to delete one WmsReservationRecord.
+     * @example
+     * // Delete one WmsReservationRecord
+     * const WmsReservationRecord = await prisma.wmsReservationRecord.delete({
+     *   where: {
+     *     // ... filter to delete one WmsReservationRecord
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WmsReservationRecordDeleteArgs>(args: SelectSubset<T, WmsReservationRecordDeleteArgs<ExtArgs>>): Prisma__WmsReservationRecordClient<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WmsReservationRecord.
+     * @param {WmsReservationRecordUpdateArgs} args - Arguments to update one WmsReservationRecord.
+     * @example
+     * // Update one WmsReservationRecord
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WmsReservationRecordUpdateArgs>(args: SelectSubset<T, WmsReservationRecordUpdateArgs<ExtArgs>>): Prisma__WmsReservationRecordClient<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WmsReservationRecords.
+     * @param {WmsReservationRecordDeleteManyArgs} args - Arguments to filter WmsReservationRecords to delete.
+     * @example
+     * // Delete a few WmsReservationRecords
+     * const { count } = await prisma.wmsReservationRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WmsReservationRecordDeleteManyArgs>(args?: SelectSubset<T, WmsReservationRecordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WmsReservationRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsReservationRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WmsReservationRecords
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WmsReservationRecordUpdateManyArgs>(args: SelectSubset<T, WmsReservationRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WmsReservationRecords and returns the data updated in the database.
+     * @param {WmsReservationRecordUpdateManyAndReturnArgs} args - Arguments to update many WmsReservationRecords.
+     * @example
+     * // Update many WmsReservationRecords
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WmsReservationRecords and only return the `id`
+     * const wmsReservationRecordWithIdOnly = await prisma.wmsReservationRecord.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WmsReservationRecordUpdateManyAndReturnArgs>(args: SelectSubset<T, WmsReservationRecordUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WmsReservationRecord.
+     * @param {WmsReservationRecordUpsertArgs} args - Arguments to update or create a WmsReservationRecord.
+     * @example
+     * // Update or create a WmsReservationRecord
+     * const wmsReservationRecord = await prisma.wmsReservationRecord.upsert({
+     *   create: {
+     *     // ... data to create a WmsReservationRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WmsReservationRecord we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WmsReservationRecordUpsertArgs>(args: SelectSubset<T, WmsReservationRecordUpsertArgs<ExtArgs>>): Prisma__WmsReservationRecordClient<$Result.GetResult<Prisma.$WmsReservationRecordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WmsReservationRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsReservationRecordCountArgs} args - Arguments to filter WmsReservationRecords to count.
+     * @example
+     * // Count the number of WmsReservationRecords
+     * const count = await prisma.wmsReservationRecord.count({
+     *   where: {
+     *     // ... the filter for the WmsReservationRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends WmsReservationRecordCountArgs>(
+      args?: Subset<T, WmsReservationRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WmsReservationRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WmsReservationRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsReservationRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WmsReservationRecordAggregateArgs>(args: Subset<T, WmsReservationRecordAggregateArgs>): Prisma.PrismaPromise<GetWmsReservationRecordAggregateType<T>>
+
+    /**
+     * Group by WmsReservationRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WmsReservationRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WmsReservationRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WmsReservationRecordGroupByArgs['orderBy'] }
+        : { orderBy?: WmsReservationRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WmsReservationRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWmsReservationRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WmsReservationRecord model
+   */
+  readonly fields: WmsReservationRecordFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WmsReservationRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WmsReservationRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WmsReservationRecord model
+   */
+  interface WmsReservationRecordFieldRefs {
+    readonly id: FieldRef<"WmsReservationRecord", 'String'>
+    readonly tenantId: FieldRef<"WmsReservationRecord", 'String'>
+    readonly reservationCode: FieldRef<"WmsReservationRecord", 'String'>
+    readonly body: FieldRef<"WmsReservationRecord", 'Json'>
+    readonly status: FieldRef<"WmsReservationRecord", 'String'>
+    readonly createdAt: FieldRef<"WmsReservationRecord", 'DateTime'>
+    readonly updatedAt: FieldRef<"WmsReservationRecord", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WmsReservationRecord findUnique
+   */
+  export type WmsReservationRecordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsReservationRecord to fetch.
+     */
+    where: WmsReservationRecordWhereUniqueInput
+  }
+
+  /**
+   * WmsReservationRecord findUniqueOrThrow
+   */
+  export type WmsReservationRecordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsReservationRecord to fetch.
+     */
+    where: WmsReservationRecordWhereUniqueInput
+  }
+
+  /**
+   * WmsReservationRecord findFirst
+   */
+  export type WmsReservationRecordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsReservationRecord to fetch.
+     */
+    where?: WmsReservationRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WmsReservationRecords to fetch.
+     */
+    orderBy?: WmsReservationRecordOrderByWithRelationInput | WmsReservationRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WmsReservationRecords.
+     */
+    cursor?: WmsReservationRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WmsReservationRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WmsReservationRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WmsReservationRecords.
+     */
+    distinct?: WmsReservationRecordScalarFieldEnum | WmsReservationRecordScalarFieldEnum[]
+  }
+
+  /**
+   * WmsReservationRecord findFirstOrThrow
+   */
+  export type WmsReservationRecordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsReservationRecord to fetch.
+     */
+    where?: WmsReservationRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WmsReservationRecords to fetch.
+     */
+    orderBy?: WmsReservationRecordOrderByWithRelationInput | WmsReservationRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WmsReservationRecords.
+     */
+    cursor?: WmsReservationRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WmsReservationRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WmsReservationRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WmsReservationRecords.
+     */
+    distinct?: WmsReservationRecordScalarFieldEnum | WmsReservationRecordScalarFieldEnum[]
+  }
+
+  /**
+   * WmsReservationRecord findMany
+   */
+  export type WmsReservationRecordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which WmsReservationRecords to fetch.
+     */
+    where?: WmsReservationRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WmsReservationRecords to fetch.
+     */
+    orderBy?: WmsReservationRecordOrderByWithRelationInput | WmsReservationRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WmsReservationRecords.
+     */
+    cursor?: WmsReservationRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WmsReservationRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WmsReservationRecords.
+     */
+    skip?: number
+    distinct?: WmsReservationRecordScalarFieldEnum | WmsReservationRecordScalarFieldEnum[]
+  }
+
+  /**
+   * WmsReservationRecord create
+   */
+  export type WmsReservationRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * The data needed to create a WmsReservationRecord.
+     */
+    data: XOR<WmsReservationRecordCreateInput, WmsReservationRecordUncheckedCreateInput>
+  }
+
+  /**
+   * WmsReservationRecord createMany
+   */
+  export type WmsReservationRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WmsReservationRecords.
+     */
+    data: WmsReservationRecordCreateManyInput | WmsReservationRecordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WmsReservationRecord createManyAndReturn
+   */
+  export type WmsReservationRecordCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * The data used to create many WmsReservationRecords.
+     */
+    data: WmsReservationRecordCreateManyInput | WmsReservationRecordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WmsReservationRecord update
+   */
+  export type WmsReservationRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * The data needed to update a WmsReservationRecord.
+     */
+    data: XOR<WmsReservationRecordUpdateInput, WmsReservationRecordUncheckedUpdateInput>
+    /**
+     * Choose, which WmsReservationRecord to update.
+     */
+    where: WmsReservationRecordWhereUniqueInput
+  }
+
+  /**
+   * WmsReservationRecord updateMany
+   */
+  export type WmsReservationRecordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WmsReservationRecords.
+     */
+    data: XOR<WmsReservationRecordUpdateManyMutationInput, WmsReservationRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which WmsReservationRecords to update
+     */
+    where?: WmsReservationRecordWhereInput
+    /**
+     * Limit how many WmsReservationRecords to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WmsReservationRecord updateManyAndReturn
+   */
+  export type WmsReservationRecordUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * The data used to update WmsReservationRecords.
+     */
+    data: XOR<WmsReservationRecordUpdateManyMutationInput, WmsReservationRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which WmsReservationRecords to update
+     */
+    where?: WmsReservationRecordWhereInput
+    /**
+     * Limit how many WmsReservationRecords to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WmsReservationRecord upsert
+   */
+  export type WmsReservationRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * The filter to search for the WmsReservationRecord to update in case it exists.
+     */
+    where: WmsReservationRecordWhereUniqueInput
+    /**
+     * In case the WmsReservationRecord found by the `where` argument doesn't exist, create a new WmsReservationRecord with this data.
+     */
+    create: XOR<WmsReservationRecordCreateInput, WmsReservationRecordUncheckedCreateInput>
+    /**
+     * In case the WmsReservationRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WmsReservationRecordUpdateInput, WmsReservationRecordUncheckedUpdateInput>
+  }
+
+  /**
+   * WmsReservationRecord delete
+   */
+  export type WmsReservationRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
+    /**
+     * Filter which WmsReservationRecord to delete.
+     */
+    where: WmsReservationRecordWhereUniqueInput
+  }
+
+  /**
+   * WmsReservationRecord deleteMany
+   */
+  export type WmsReservationRecordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WmsReservationRecords to delete
+     */
+    where?: WmsReservationRecordWhereInput
+    /**
+     * Limit how many WmsReservationRecords to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WmsReservationRecord without action
+   */
+  export type WmsReservationRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WmsReservationRecord
+     */
+    select?: WmsReservationRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WmsReservationRecord
+     */
+    omit?: WmsReservationRecordOmit<ExtArgs> | null
   }
 
 
@@ -72593,6 +76552,5522 @@ export namespace Prisma {
 
 
   /**
+   * Model ErpProject
+   */
+
+  export type AggregateErpProject = {
+    _count: ErpProjectCountAggregateOutputType | null
+    _avg: ErpProjectAvgAggregateOutputType | null
+    _sum: ErpProjectSumAggregateOutputType | null
+    _min: ErpProjectMinAggregateOutputType | null
+    _max: ErpProjectMaxAggregateOutputType | null
+  }
+
+  export type ErpProjectAvgAggregateOutputType = {
+    delayDays: number | null
+  }
+
+  export type ErpProjectSumAggregateOutputType = {
+    delayDays: number | null
+  }
+
+  export type ErpProjectMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    code: string | null
+    name: string | null
+    deadline: string | null
+    status: $Enums.ErpProjectStatus | null
+    delayDays: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ErpProjectMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    code: string | null
+    name: string | null
+    deadline: string | null
+    status: $Enums.ErpProjectStatus | null
+    delayDays: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ErpProjectCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    code: number
+    name: number
+    deadline: number
+    status: number
+    delayDays: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ErpProjectAvgAggregateInputType = {
+    delayDays?: true
+  }
+
+  export type ErpProjectSumAggregateInputType = {
+    delayDays?: true
+  }
+
+  export type ErpProjectMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    code?: true
+    name?: true
+    deadline?: true
+    status?: true
+    delayDays?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ErpProjectMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    code?: true
+    name?: true
+    deadline?: true
+    status?: true
+    delayDays?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ErpProjectCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    code?: true
+    name?: true
+    deadline?: true
+    status?: true
+    delayDays?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ErpProjectAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpProject to aggregate.
+     */
+    where?: ErpProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjects to fetch.
+     */
+    orderBy?: ErpProjectOrderByWithRelationInput | ErpProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ErpProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ErpProjects
+    **/
+    _count?: true | ErpProjectCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ErpProjectAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ErpProjectSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ErpProjectMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ErpProjectMaxAggregateInputType
+  }
+
+  export type GetErpProjectAggregateType<T extends ErpProjectAggregateArgs> = {
+        [P in keyof T & keyof AggregateErpProject]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateErpProject[P]>
+      : GetScalarType<T[P], AggregateErpProject[P]>
+  }
+
+
+
+
+  export type ErpProjectGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ErpProjectWhereInput
+    orderBy?: ErpProjectOrderByWithAggregationInput | ErpProjectOrderByWithAggregationInput[]
+    by: ErpProjectScalarFieldEnum[] | ErpProjectScalarFieldEnum
+    having?: ErpProjectScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ErpProjectCountAggregateInputType | true
+    _avg?: ErpProjectAvgAggregateInputType
+    _sum?: ErpProjectSumAggregateInputType
+    _min?: ErpProjectMinAggregateInputType
+    _max?: ErpProjectMaxAggregateInputType
+  }
+
+  export type ErpProjectGroupByOutputType = {
+    id: string
+    tenantId: string
+    code: string
+    name: string
+    deadline: string | null
+    status: $Enums.ErpProjectStatus
+    delayDays: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ErpProjectCountAggregateOutputType | null
+    _avg: ErpProjectAvgAggregateOutputType | null
+    _sum: ErpProjectSumAggregateOutputType | null
+    _min: ErpProjectMinAggregateOutputType | null
+    _max: ErpProjectMaxAggregateOutputType | null
+  }
+
+  type GetErpProjectGroupByPayload<T extends ErpProjectGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ErpProjectGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ErpProjectGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ErpProjectGroupByOutputType[P]>
+            : GetScalarType<T[P], ErpProjectGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ErpProjectSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    code?: boolean
+    name?: boolean
+    deadline?: boolean
+    status?: boolean
+    delayDays?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tasks?: boolean | ErpProject$tasksArgs<ExtArgs>
+    _count?: boolean | ErpProjectCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["erpProject"]>
+
+  export type ErpProjectSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    code?: boolean
+    name?: boolean
+    deadline?: boolean
+    status?: boolean
+    delayDays?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["erpProject"]>
+
+  export type ErpProjectSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    code?: boolean
+    name?: boolean
+    deadline?: boolean
+    status?: boolean
+    delayDays?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["erpProject"]>
+
+  export type ErpProjectSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    code?: boolean
+    name?: boolean
+    deadline?: boolean
+    status?: boolean
+    delayDays?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ErpProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "code" | "name" | "deadline" | "status" | "delayDays" | "createdAt" | "updatedAt", ExtArgs["result"]["erpProject"]>
+  export type ErpProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tasks?: boolean | ErpProject$tasksArgs<ExtArgs>
+    _count?: boolean | ErpProjectCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ErpProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ErpProjectIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ErpProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ErpProject"
+    objects: {
+      tasks: Prisma.$ErpProjectTaskPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      code: string
+      name: string
+      deadline: string | null
+      status: $Enums.ErpProjectStatus
+      delayDays: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["erpProject"]>
+    composites: {}
+  }
+
+  type ErpProjectGetPayload<S extends boolean | null | undefined | ErpProjectDefaultArgs> = $Result.GetResult<Prisma.$ErpProjectPayload, S>
+
+  type ErpProjectCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ErpProjectFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ErpProjectCountAggregateInputType | true
+    }
+
+  export interface ErpProjectDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ErpProject'], meta: { name: 'ErpProject' } }
+    /**
+     * Find zero or one ErpProject that matches the filter.
+     * @param {ErpProjectFindUniqueArgs} args - Arguments to find a ErpProject
+     * @example
+     * // Get one ErpProject
+     * const erpProject = await prisma.erpProject.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ErpProjectFindUniqueArgs>(args: SelectSubset<T, ErpProjectFindUniqueArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ErpProject that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ErpProjectFindUniqueOrThrowArgs} args - Arguments to find a ErpProject
+     * @example
+     * // Get one ErpProject
+     * const erpProject = await prisma.erpProject.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ErpProjectFindUniqueOrThrowArgs>(args: SelectSubset<T, ErpProjectFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpProject that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectFindFirstArgs} args - Arguments to find a ErpProject
+     * @example
+     * // Get one ErpProject
+     * const erpProject = await prisma.erpProject.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ErpProjectFindFirstArgs>(args?: SelectSubset<T, ErpProjectFindFirstArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpProject that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectFindFirstOrThrowArgs} args - Arguments to find a ErpProject
+     * @example
+     * // Get one ErpProject
+     * const erpProject = await prisma.erpProject.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ErpProjectFindFirstOrThrowArgs>(args?: SelectSubset<T, ErpProjectFindFirstOrThrowArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ErpProjects that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ErpProjects
+     * const erpProjects = await prisma.erpProject.findMany()
+     * 
+     * // Get first 10 ErpProjects
+     * const erpProjects = await prisma.erpProject.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const erpProjectWithIdOnly = await prisma.erpProject.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ErpProjectFindManyArgs>(args?: SelectSubset<T, ErpProjectFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ErpProject.
+     * @param {ErpProjectCreateArgs} args - Arguments to create a ErpProject.
+     * @example
+     * // Create one ErpProject
+     * const ErpProject = await prisma.erpProject.create({
+     *   data: {
+     *     // ... data to create a ErpProject
+     *   }
+     * })
+     * 
+     */
+    create<T extends ErpProjectCreateArgs>(args: SelectSubset<T, ErpProjectCreateArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ErpProjects.
+     * @param {ErpProjectCreateManyArgs} args - Arguments to create many ErpProjects.
+     * @example
+     * // Create many ErpProjects
+     * const erpProject = await prisma.erpProject.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ErpProjectCreateManyArgs>(args?: SelectSubset<T, ErpProjectCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ErpProjects and returns the data saved in the database.
+     * @param {ErpProjectCreateManyAndReturnArgs} args - Arguments to create many ErpProjects.
+     * @example
+     * // Create many ErpProjects
+     * const erpProject = await prisma.erpProject.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ErpProjects and only return the `id`
+     * const erpProjectWithIdOnly = await prisma.erpProject.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ErpProjectCreateManyAndReturnArgs>(args?: SelectSubset<T, ErpProjectCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ErpProject.
+     * @param {ErpProjectDeleteArgs} args - Arguments to delete one ErpProject.
+     * @example
+     * // Delete one ErpProject
+     * const ErpProject = await prisma.erpProject.delete({
+     *   where: {
+     *     // ... filter to delete one ErpProject
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ErpProjectDeleteArgs>(args: SelectSubset<T, ErpProjectDeleteArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ErpProject.
+     * @param {ErpProjectUpdateArgs} args - Arguments to update one ErpProject.
+     * @example
+     * // Update one ErpProject
+     * const erpProject = await prisma.erpProject.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ErpProjectUpdateArgs>(args: SelectSubset<T, ErpProjectUpdateArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ErpProjects.
+     * @param {ErpProjectDeleteManyArgs} args - Arguments to filter ErpProjects to delete.
+     * @example
+     * // Delete a few ErpProjects
+     * const { count } = await prisma.erpProject.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ErpProjectDeleteManyArgs>(args?: SelectSubset<T, ErpProjectDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpProjects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ErpProjects
+     * const erpProject = await prisma.erpProject.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ErpProjectUpdateManyArgs>(args: SelectSubset<T, ErpProjectUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpProjects and returns the data updated in the database.
+     * @param {ErpProjectUpdateManyAndReturnArgs} args - Arguments to update many ErpProjects.
+     * @example
+     * // Update many ErpProjects
+     * const erpProject = await prisma.erpProject.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ErpProjects and only return the `id`
+     * const erpProjectWithIdOnly = await prisma.erpProject.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ErpProjectUpdateManyAndReturnArgs>(args: SelectSubset<T, ErpProjectUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ErpProject.
+     * @param {ErpProjectUpsertArgs} args - Arguments to update or create a ErpProject.
+     * @example
+     * // Update or create a ErpProject
+     * const erpProject = await prisma.erpProject.upsert({
+     *   create: {
+     *     // ... data to create a ErpProject
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ErpProject we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ErpProjectUpsertArgs>(args: SelectSubset<T, ErpProjectUpsertArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ErpProjects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectCountArgs} args - Arguments to filter ErpProjects to count.
+     * @example
+     * // Count the number of ErpProjects
+     * const count = await prisma.erpProject.count({
+     *   where: {
+     *     // ... the filter for the ErpProjects we want to count
+     *   }
+     * })
+    **/
+    count<T extends ErpProjectCountArgs>(
+      args?: Subset<T, ErpProjectCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ErpProjectCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ErpProject.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ErpProjectAggregateArgs>(args: Subset<T, ErpProjectAggregateArgs>): Prisma.PrismaPromise<GetErpProjectAggregateType<T>>
+
+    /**
+     * Group by ErpProject.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ErpProjectGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ErpProjectGroupByArgs['orderBy'] }
+        : { orderBy?: ErpProjectGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ErpProjectGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetErpProjectGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ErpProject model
+   */
+  readonly fields: ErpProjectFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ErpProject.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ErpProjectClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tasks<T extends ErpProject$tasksArgs<ExtArgs> = {}>(args?: Subset<T, ErpProject$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ErpProject model
+   */
+  interface ErpProjectFieldRefs {
+    readonly id: FieldRef<"ErpProject", 'String'>
+    readonly tenantId: FieldRef<"ErpProject", 'String'>
+    readonly code: FieldRef<"ErpProject", 'String'>
+    readonly name: FieldRef<"ErpProject", 'String'>
+    readonly deadline: FieldRef<"ErpProject", 'String'>
+    readonly status: FieldRef<"ErpProject", 'ErpProjectStatus'>
+    readonly delayDays: FieldRef<"ErpProject", 'Int'>
+    readonly createdAt: FieldRef<"ErpProject", 'DateTime'>
+    readonly updatedAt: FieldRef<"ErpProject", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ErpProject findUnique
+   */
+  export type ErpProjectFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProject to fetch.
+     */
+    where: ErpProjectWhereUniqueInput
+  }
+
+  /**
+   * ErpProject findUniqueOrThrow
+   */
+  export type ErpProjectFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProject to fetch.
+     */
+    where: ErpProjectWhereUniqueInput
+  }
+
+  /**
+   * ErpProject findFirst
+   */
+  export type ErpProjectFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProject to fetch.
+     */
+    where?: ErpProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjects to fetch.
+     */
+    orderBy?: ErpProjectOrderByWithRelationInput | ErpProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpProjects.
+     */
+    cursor?: ErpProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpProjects.
+     */
+    distinct?: ErpProjectScalarFieldEnum | ErpProjectScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProject findFirstOrThrow
+   */
+  export type ErpProjectFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProject to fetch.
+     */
+    where?: ErpProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjects to fetch.
+     */
+    orderBy?: ErpProjectOrderByWithRelationInput | ErpProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpProjects.
+     */
+    cursor?: ErpProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpProjects.
+     */
+    distinct?: ErpProjectScalarFieldEnum | ErpProjectScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProject findMany
+   */
+  export type ErpProjectFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProjects to fetch.
+     */
+    where?: ErpProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjects to fetch.
+     */
+    orderBy?: ErpProjectOrderByWithRelationInput | ErpProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ErpProjects.
+     */
+    cursor?: ErpProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjects.
+     */
+    skip?: number
+    distinct?: ErpProjectScalarFieldEnum | ErpProjectScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProject create
+   */
+  export type ErpProjectCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ErpProject.
+     */
+    data: XOR<ErpProjectCreateInput, ErpProjectUncheckedCreateInput>
+  }
+
+  /**
+   * ErpProject createMany
+   */
+  export type ErpProjectCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ErpProjects.
+     */
+    data: ErpProjectCreateManyInput | ErpProjectCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpProject createManyAndReturn
+   */
+  export type ErpProjectCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * The data used to create many ErpProjects.
+     */
+    data: ErpProjectCreateManyInput | ErpProjectCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpProject update
+   */
+  export type ErpProjectUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ErpProject.
+     */
+    data: XOR<ErpProjectUpdateInput, ErpProjectUncheckedUpdateInput>
+    /**
+     * Choose, which ErpProject to update.
+     */
+    where: ErpProjectWhereUniqueInput
+  }
+
+  /**
+   * ErpProject updateMany
+   */
+  export type ErpProjectUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ErpProjects.
+     */
+    data: XOR<ErpProjectUpdateManyMutationInput, ErpProjectUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpProjects to update
+     */
+    where?: ErpProjectWhereInput
+    /**
+     * Limit how many ErpProjects to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpProject updateManyAndReturn
+   */
+  export type ErpProjectUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * The data used to update ErpProjects.
+     */
+    data: XOR<ErpProjectUpdateManyMutationInput, ErpProjectUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpProjects to update
+     */
+    where?: ErpProjectWhereInput
+    /**
+     * Limit how many ErpProjects to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpProject upsert
+   */
+  export type ErpProjectUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ErpProject to update in case it exists.
+     */
+    where: ErpProjectWhereUniqueInput
+    /**
+     * In case the ErpProject found by the `where` argument doesn't exist, create a new ErpProject with this data.
+     */
+    create: XOR<ErpProjectCreateInput, ErpProjectUncheckedCreateInput>
+    /**
+     * In case the ErpProject was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ErpProjectUpdateInput, ErpProjectUncheckedUpdateInput>
+  }
+
+  /**
+   * ErpProject delete
+   */
+  export type ErpProjectDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    /**
+     * Filter which ErpProject to delete.
+     */
+    where: ErpProjectWhereUniqueInput
+  }
+
+  /**
+   * ErpProject deleteMany
+   */
+  export type ErpProjectDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpProjects to delete
+     */
+    where?: ErpProjectWhereInput
+    /**
+     * Limit how many ErpProjects to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpProject.tasks
+   */
+  export type ErpProject$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    where?: ErpProjectTaskWhereInput
+    orderBy?: ErpProjectTaskOrderByWithRelationInput | ErpProjectTaskOrderByWithRelationInput[]
+    cursor?: ErpProjectTaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ErpProjectTaskScalarFieldEnum | ErpProjectTaskScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProject without action
+   */
+  export type ErpProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ErpProjectTask
+   */
+
+  export type AggregateErpProjectTask = {
+    _count: ErpProjectTaskCountAggregateOutputType | null
+    _avg: ErpProjectTaskAvgAggregateOutputType | null
+    _sum: ErpProjectTaskSumAggregateOutputType | null
+    _min: ErpProjectTaskMinAggregateOutputType | null
+    _max: ErpProjectTaskMaxAggregateOutputType | null
+  }
+
+  export type ErpProjectTaskAvgAggregateOutputType = {
+    checklistDone: number | null
+    checklistTotal: number | null
+    loggedMinutes: number | null
+  }
+
+  export type ErpProjectTaskSumAggregateOutputType = {
+    checklistDone: number | null
+    checklistTotal: number | null
+    loggedMinutes: number | null
+  }
+
+  export type ErpProjectTaskMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    number: string | null
+    title: string | null
+    projectCode: string | null
+    assigneeName: string | null
+    assigneeInitials: string | null
+    deadline: string | null
+    status: $Enums.ErpProjectTaskStatus | null
+    priority: string | null
+    overdue: boolean | null
+    unassigned: boolean | null
+    checklistDone: number | null
+    checklistTotal: number | null
+    loggedMinutes: number | null
+    loggedHours: string | null
+    linkType: string | null
+    linkRef: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ErpProjectTaskMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    number: string | null
+    title: string | null
+    projectCode: string | null
+    assigneeName: string | null
+    assigneeInitials: string | null
+    deadline: string | null
+    status: $Enums.ErpProjectTaskStatus | null
+    priority: string | null
+    overdue: boolean | null
+    unassigned: boolean | null
+    checklistDone: number | null
+    checklistTotal: number | null
+    loggedMinutes: number | null
+    loggedHours: string | null
+    linkType: string | null
+    linkRef: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ErpProjectTaskCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    number: number
+    title: number
+    projectCode: number
+    assigneeName: number
+    assigneeInitials: number
+    deadline: number
+    status: number
+    priority: number
+    overdue: number
+    unassigned: number
+    checklistDone: number
+    checklistTotal: number
+    loggedMinutes: number
+    loggedHours: number
+    linkType: number
+    linkRef: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ErpProjectTaskAvgAggregateInputType = {
+    checklistDone?: true
+    checklistTotal?: true
+    loggedMinutes?: true
+  }
+
+  export type ErpProjectTaskSumAggregateInputType = {
+    checklistDone?: true
+    checklistTotal?: true
+    loggedMinutes?: true
+  }
+
+  export type ErpProjectTaskMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    number?: true
+    title?: true
+    projectCode?: true
+    assigneeName?: true
+    assigneeInitials?: true
+    deadline?: true
+    status?: true
+    priority?: true
+    overdue?: true
+    unassigned?: true
+    checklistDone?: true
+    checklistTotal?: true
+    loggedMinutes?: true
+    loggedHours?: true
+    linkType?: true
+    linkRef?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ErpProjectTaskMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    number?: true
+    title?: true
+    projectCode?: true
+    assigneeName?: true
+    assigneeInitials?: true
+    deadline?: true
+    status?: true
+    priority?: true
+    overdue?: true
+    unassigned?: true
+    checklistDone?: true
+    checklistTotal?: true
+    loggedMinutes?: true
+    loggedHours?: true
+    linkType?: true
+    linkRef?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ErpProjectTaskCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    number?: true
+    title?: true
+    projectCode?: true
+    assigneeName?: true
+    assigneeInitials?: true
+    deadline?: true
+    status?: true
+    priority?: true
+    overdue?: true
+    unassigned?: true
+    checklistDone?: true
+    checklistTotal?: true
+    loggedMinutes?: true
+    loggedHours?: true
+    linkType?: true
+    linkRef?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ErpProjectTaskAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpProjectTask to aggregate.
+     */
+    where?: ErpProjectTaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjectTasks to fetch.
+     */
+    orderBy?: ErpProjectTaskOrderByWithRelationInput | ErpProjectTaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ErpProjectTaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjectTasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjectTasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ErpProjectTasks
+    **/
+    _count?: true | ErpProjectTaskCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ErpProjectTaskAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ErpProjectTaskSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ErpProjectTaskMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ErpProjectTaskMaxAggregateInputType
+  }
+
+  export type GetErpProjectTaskAggregateType<T extends ErpProjectTaskAggregateArgs> = {
+        [P in keyof T & keyof AggregateErpProjectTask]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateErpProjectTask[P]>
+      : GetScalarType<T[P], AggregateErpProjectTask[P]>
+  }
+
+
+
+
+  export type ErpProjectTaskGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ErpProjectTaskWhereInput
+    orderBy?: ErpProjectTaskOrderByWithAggregationInput | ErpProjectTaskOrderByWithAggregationInput[]
+    by: ErpProjectTaskScalarFieldEnum[] | ErpProjectTaskScalarFieldEnum
+    having?: ErpProjectTaskScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ErpProjectTaskCountAggregateInputType | true
+    _avg?: ErpProjectTaskAvgAggregateInputType
+    _sum?: ErpProjectTaskSumAggregateInputType
+    _min?: ErpProjectTaskMinAggregateInputType
+    _max?: ErpProjectTaskMaxAggregateInputType
+  }
+
+  export type ErpProjectTaskGroupByOutputType = {
+    id: string
+    tenantId: string
+    number: string
+    title: string
+    projectCode: string | null
+    assigneeName: string | null
+    assigneeInitials: string | null
+    deadline: string | null
+    status: $Enums.ErpProjectTaskStatus
+    priority: string
+    overdue: boolean
+    unassigned: boolean
+    checklistDone: number | null
+    checklistTotal: number | null
+    loggedMinutes: number | null
+    loggedHours: string | null
+    linkType: string | null
+    linkRef: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ErpProjectTaskCountAggregateOutputType | null
+    _avg: ErpProjectTaskAvgAggregateOutputType | null
+    _sum: ErpProjectTaskSumAggregateOutputType | null
+    _min: ErpProjectTaskMinAggregateOutputType | null
+    _max: ErpProjectTaskMaxAggregateOutputType | null
+  }
+
+  type GetErpProjectTaskGroupByPayload<T extends ErpProjectTaskGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ErpProjectTaskGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ErpProjectTaskGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ErpProjectTaskGroupByOutputType[P]>
+            : GetScalarType<T[P], ErpProjectTaskGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ErpProjectTaskSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    number?: boolean
+    title?: boolean
+    projectCode?: boolean
+    assigneeName?: boolean
+    assigneeInitials?: boolean
+    deadline?: boolean
+    status?: boolean
+    priority?: boolean
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: boolean
+    checklistTotal?: boolean
+    loggedMinutes?: boolean
+    loggedHours?: boolean
+    linkType?: boolean
+    linkRef?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    project?: boolean | ErpProjectTask$projectArgs<ExtArgs>
+  }, ExtArgs["result"]["erpProjectTask"]>
+
+  export type ErpProjectTaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    number?: boolean
+    title?: boolean
+    projectCode?: boolean
+    assigneeName?: boolean
+    assigneeInitials?: boolean
+    deadline?: boolean
+    status?: boolean
+    priority?: boolean
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: boolean
+    checklistTotal?: boolean
+    loggedMinutes?: boolean
+    loggedHours?: boolean
+    linkType?: boolean
+    linkRef?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    project?: boolean | ErpProjectTask$projectArgs<ExtArgs>
+  }, ExtArgs["result"]["erpProjectTask"]>
+
+  export type ErpProjectTaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    number?: boolean
+    title?: boolean
+    projectCode?: boolean
+    assigneeName?: boolean
+    assigneeInitials?: boolean
+    deadline?: boolean
+    status?: boolean
+    priority?: boolean
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: boolean
+    checklistTotal?: boolean
+    loggedMinutes?: boolean
+    loggedHours?: boolean
+    linkType?: boolean
+    linkRef?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    project?: boolean | ErpProjectTask$projectArgs<ExtArgs>
+  }, ExtArgs["result"]["erpProjectTask"]>
+
+  export type ErpProjectTaskSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    number?: boolean
+    title?: boolean
+    projectCode?: boolean
+    assigneeName?: boolean
+    assigneeInitials?: boolean
+    deadline?: boolean
+    status?: boolean
+    priority?: boolean
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: boolean
+    checklistTotal?: boolean
+    loggedMinutes?: boolean
+    loggedHours?: boolean
+    linkType?: boolean
+    linkRef?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ErpProjectTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "number" | "title" | "projectCode" | "assigneeName" | "assigneeInitials" | "deadline" | "status" | "priority" | "overdue" | "unassigned" | "checklistDone" | "checklistTotal" | "loggedMinutes" | "loggedHours" | "linkType" | "linkRef" | "createdAt" | "updatedAt", ExtArgs["result"]["erpProjectTask"]>
+  export type ErpProjectTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ErpProjectTask$projectArgs<ExtArgs>
+  }
+  export type ErpProjectTaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ErpProjectTask$projectArgs<ExtArgs>
+  }
+  export type ErpProjectTaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ErpProjectTask$projectArgs<ExtArgs>
+  }
+
+  export type $ErpProjectTaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ErpProjectTask"
+    objects: {
+      project: Prisma.$ErpProjectPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      number: string
+      title: string
+      projectCode: string | null
+      assigneeName: string | null
+      assigneeInitials: string | null
+      deadline: string | null
+      status: $Enums.ErpProjectTaskStatus
+      priority: string
+      overdue: boolean
+      unassigned: boolean
+      checklistDone: number | null
+      checklistTotal: number | null
+      loggedMinutes: number | null
+      loggedHours: string | null
+      linkType: string | null
+      linkRef: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["erpProjectTask"]>
+    composites: {}
+  }
+
+  type ErpProjectTaskGetPayload<S extends boolean | null | undefined | ErpProjectTaskDefaultArgs> = $Result.GetResult<Prisma.$ErpProjectTaskPayload, S>
+
+  type ErpProjectTaskCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ErpProjectTaskFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ErpProjectTaskCountAggregateInputType | true
+    }
+
+  export interface ErpProjectTaskDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ErpProjectTask'], meta: { name: 'ErpProjectTask' } }
+    /**
+     * Find zero or one ErpProjectTask that matches the filter.
+     * @param {ErpProjectTaskFindUniqueArgs} args - Arguments to find a ErpProjectTask
+     * @example
+     * // Get one ErpProjectTask
+     * const erpProjectTask = await prisma.erpProjectTask.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ErpProjectTaskFindUniqueArgs>(args: SelectSubset<T, ErpProjectTaskFindUniqueArgs<ExtArgs>>): Prisma__ErpProjectTaskClient<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ErpProjectTask that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ErpProjectTaskFindUniqueOrThrowArgs} args - Arguments to find a ErpProjectTask
+     * @example
+     * // Get one ErpProjectTask
+     * const erpProjectTask = await prisma.erpProjectTask.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ErpProjectTaskFindUniqueOrThrowArgs>(args: SelectSubset<T, ErpProjectTaskFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ErpProjectTaskClient<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpProjectTask that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectTaskFindFirstArgs} args - Arguments to find a ErpProjectTask
+     * @example
+     * // Get one ErpProjectTask
+     * const erpProjectTask = await prisma.erpProjectTask.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ErpProjectTaskFindFirstArgs>(args?: SelectSubset<T, ErpProjectTaskFindFirstArgs<ExtArgs>>): Prisma__ErpProjectTaskClient<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpProjectTask that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectTaskFindFirstOrThrowArgs} args - Arguments to find a ErpProjectTask
+     * @example
+     * // Get one ErpProjectTask
+     * const erpProjectTask = await prisma.erpProjectTask.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ErpProjectTaskFindFirstOrThrowArgs>(args?: SelectSubset<T, ErpProjectTaskFindFirstOrThrowArgs<ExtArgs>>): Prisma__ErpProjectTaskClient<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ErpProjectTasks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectTaskFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ErpProjectTasks
+     * const erpProjectTasks = await prisma.erpProjectTask.findMany()
+     * 
+     * // Get first 10 ErpProjectTasks
+     * const erpProjectTasks = await prisma.erpProjectTask.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const erpProjectTaskWithIdOnly = await prisma.erpProjectTask.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ErpProjectTaskFindManyArgs>(args?: SelectSubset<T, ErpProjectTaskFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ErpProjectTask.
+     * @param {ErpProjectTaskCreateArgs} args - Arguments to create a ErpProjectTask.
+     * @example
+     * // Create one ErpProjectTask
+     * const ErpProjectTask = await prisma.erpProjectTask.create({
+     *   data: {
+     *     // ... data to create a ErpProjectTask
+     *   }
+     * })
+     * 
+     */
+    create<T extends ErpProjectTaskCreateArgs>(args: SelectSubset<T, ErpProjectTaskCreateArgs<ExtArgs>>): Prisma__ErpProjectTaskClient<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ErpProjectTasks.
+     * @param {ErpProjectTaskCreateManyArgs} args - Arguments to create many ErpProjectTasks.
+     * @example
+     * // Create many ErpProjectTasks
+     * const erpProjectTask = await prisma.erpProjectTask.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ErpProjectTaskCreateManyArgs>(args?: SelectSubset<T, ErpProjectTaskCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ErpProjectTasks and returns the data saved in the database.
+     * @param {ErpProjectTaskCreateManyAndReturnArgs} args - Arguments to create many ErpProjectTasks.
+     * @example
+     * // Create many ErpProjectTasks
+     * const erpProjectTask = await prisma.erpProjectTask.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ErpProjectTasks and only return the `id`
+     * const erpProjectTaskWithIdOnly = await prisma.erpProjectTask.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ErpProjectTaskCreateManyAndReturnArgs>(args?: SelectSubset<T, ErpProjectTaskCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ErpProjectTask.
+     * @param {ErpProjectTaskDeleteArgs} args - Arguments to delete one ErpProjectTask.
+     * @example
+     * // Delete one ErpProjectTask
+     * const ErpProjectTask = await prisma.erpProjectTask.delete({
+     *   where: {
+     *     // ... filter to delete one ErpProjectTask
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ErpProjectTaskDeleteArgs>(args: SelectSubset<T, ErpProjectTaskDeleteArgs<ExtArgs>>): Prisma__ErpProjectTaskClient<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ErpProjectTask.
+     * @param {ErpProjectTaskUpdateArgs} args - Arguments to update one ErpProjectTask.
+     * @example
+     * // Update one ErpProjectTask
+     * const erpProjectTask = await prisma.erpProjectTask.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ErpProjectTaskUpdateArgs>(args: SelectSubset<T, ErpProjectTaskUpdateArgs<ExtArgs>>): Prisma__ErpProjectTaskClient<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ErpProjectTasks.
+     * @param {ErpProjectTaskDeleteManyArgs} args - Arguments to filter ErpProjectTasks to delete.
+     * @example
+     * // Delete a few ErpProjectTasks
+     * const { count } = await prisma.erpProjectTask.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ErpProjectTaskDeleteManyArgs>(args?: SelectSubset<T, ErpProjectTaskDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpProjectTasks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectTaskUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ErpProjectTasks
+     * const erpProjectTask = await prisma.erpProjectTask.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ErpProjectTaskUpdateManyArgs>(args: SelectSubset<T, ErpProjectTaskUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpProjectTasks and returns the data updated in the database.
+     * @param {ErpProjectTaskUpdateManyAndReturnArgs} args - Arguments to update many ErpProjectTasks.
+     * @example
+     * // Update many ErpProjectTasks
+     * const erpProjectTask = await prisma.erpProjectTask.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ErpProjectTasks and only return the `id`
+     * const erpProjectTaskWithIdOnly = await prisma.erpProjectTask.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ErpProjectTaskUpdateManyAndReturnArgs>(args: SelectSubset<T, ErpProjectTaskUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ErpProjectTask.
+     * @param {ErpProjectTaskUpsertArgs} args - Arguments to update or create a ErpProjectTask.
+     * @example
+     * // Update or create a ErpProjectTask
+     * const erpProjectTask = await prisma.erpProjectTask.upsert({
+     *   create: {
+     *     // ... data to create a ErpProjectTask
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ErpProjectTask we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ErpProjectTaskUpsertArgs>(args: SelectSubset<T, ErpProjectTaskUpsertArgs<ExtArgs>>): Prisma__ErpProjectTaskClient<$Result.GetResult<Prisma.$ErpProjectTaskPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ErpProjectTasks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectTaskCountArgs} args - Arguments to filter ErpProjectTasks to count.
+     * @example
+     * // Count the number of ErpProjectTasks
+     * const count = await prisma.erpProjectTask.count({
+     *   where: {
+     *     // ... the filter for the ErpProjectTasks we want to count
+     *   }
+     * })
+    **/
+    count<T extends ErpProjectTaskCountArgs>(
+      args?: Subset<T, ErpProjectTaskCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ErpProjectTaskCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ErpProjectTask.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectTaskAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ErpProjectTaskAggregateArgs>(args: Subset<T, ErpProjectTaskAggregateArgs>): Prisma.PrismaPromise<GetErpProjectTaskAggregateType<T>>
+
+    /**
+     * Group by ErpProjectTask.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectTaskGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ErpProjectTaskGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ErpProjectTaskGroupByArgs['orderBy'] }
+        : { orderBy?: ErpProjectTaskGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ErpProjectTaskGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetErpProjectTaskGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ErpProjectTask model
+   */
+  readonly fields: ErpProjectTaskFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ErpProjectTask.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ErpProjectTaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    project<T extends ErpProjectTask$projectArgs<ExtArgs> = {}>(args?: Subset<T, ErpProjectTask$projectArgs<ExtArgs>>): Prisma__ErpProjectClient<$Result.GetResult<Prisma.$ErpProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ErpProjectTask model
+   */
+  interface ErpProjectTaskFieldRefs {
+    readonly id: FieldRef<"ErpProjectTask", 'String'>
+    readonly tenantId: FieldRef<"ErpProjectTask", 'String'>
+    readonly number: FieldRef<"ErpProjectTask", 'String'>
+    readonly title: FieldRef<"ErpProjectTask", 'String'>
+    readonly projectCode: FieldRef<"ErpProjectTask", 'String'>
+    readonly assigneeName: FieldRef<"ErpProjectTask", 'String'>
+    readonly assigneeInitials: FieldRef<"ErpProjectTask", 'String'>
+    readonly deadline: FieldRef<"ErpProjectTask", 'String'>
+    readonly status: FieldRef<"ErpProjectTask", 'ErpProjectTaskStatus'>
+    readonly priority: FieldRef<"ErpProjectTask", 'String'>
+    readonly overdue: FieldRef<"ErpProjectTask", 'Boolean'>
+    readonly unassigned: FieldRef<"ErpProjectTask", 'Boolean'>
+    readonly checklistDone: FieldRef<"ErpProjectTask", 'Int'>
+    readonly checklistTotal: FieldRef<"ErpProjectTask", 'Int'>
+    readonly loggedMinutes: FieldRef<"ErpProjectTask", 'Int'>
+    readonly loggedHours: FieldRef<"ErpProjectTask", 'String'>
+    readonly linkType: FieldRef<"ErpProjectTask", 'String'>
+    readonly linkRef: FieldRef<"ErpProjectTask", 'String'>
+    readonly createdAt: FieldRef<"ErpProjectTask", 'DateTime'>
+    readonly updatedAt: FieldRef<"ErpProjectTask", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ErpProjectTask findUnique
+   */
+  export type ErpProjectTaskFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectTask to fetch.
+     */
+    where: ErpProjectTaskWhereUniqueInput
+  }
+
+  /**
+   * ErpProjectTask findUniqueOrThrow
+   */
+  export type ErpProjectTaskFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectTask to fetch.
+     */
+    where: ErpProjectTaskWhereUniqueInput
+  }
+
+  /**
+   * ErpProjectTask findFirst
+   */
+  export type ErpProjectTaskFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectTask to fetch.
+     */
+    where?: ErpProjectTaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjectTasks to fetch.
+     */
+    orderBy?: ErpProjectTaskOrderByWithRelationInput | ErpProjectTaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpProjectTasks.
+     */
+    cursor?: ErpProjectTaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjectTasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjectTasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpProjectTasks.
+     */
+    distinct?: ErpProjectTaskScalarFieldEnum | ErpProjectTaskScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProjectTask findFirstOrThrow
+   */
+  export type ErpProjectTaskFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectTask to fetch.
+     */
+    where?: ErpProjectTaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjectTasks to fetch.
+     */
+    orderBy?: ErpProjectTaskOrderByWithRelationInput | ErpProjectTaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpProjectTasks.
+     */
+    cursor?: ErpProjectTaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjectTasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjectTasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpProjectTasks.
+     */
+    distinct?: ErpProjectTaskScalarFieldEnum | ErpProjectTaskScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProjectTask findMany
+   */
+  export type ErpProjectTaskFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectTasks to fetch.
+     */
+    where?: ErpProjectTaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjectTasks to fetch.
+     */
+    orderBy?: ErpProjectTaskOrderByWithRelationInput | ErpProjectTaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ErpProjectTasks.
+     */
+    cursor?: ErpProjectTaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjectTasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjectTasks.
+     */
+    skip?: number
+    distinct?: ErpProjectTaskScalarFieldEnum | ErpProjectTaskScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProjectTask create
+   */
+  export type ErpProjectTaskCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ErpProjectTask.
+     */
+    data: XOR<ErpProjectTaskCreateInput, ErpProjectTaskUncheckedCreateInput>
+  }
+
+  /**
+   * ErpProjectTask createMany
+   */
+  export type ErpProjectTaskCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ErpProjectTasks.
+     */
+    data: ErpProjectTaskCreateManyInput | ErpProjectTaskCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpProjectTask createManyAndReturn
+   */
+  export type ErpProjectTaskCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * The data used to create many ErpProjectTasks.
+     */
+    data: ErpProjectTaskCreateManyInput | ErpProjectTaskCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ErpProjectTask update
+   */
+  export type ErpProjectTaskUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ErpProjectTask.
+     */
+    data: XOR<ErpProjectTaskUpdateInput, ErpProjectTaskUncheckedUpdateInput>
+    /**
+     * Choose, which ErpProjectTask to update.
+     */
+    where: ErpProjectTaskWhereUniqueInput
+  }
+
+  /**
+   * ErpProjectTask updateMany
+   */
+  export type ErpProjectTaskUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ErpProjectTasks.
+     */
+    data: XOR<ErpProjectTaskUpdateManyMutationInput, ErpProjectTaskUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpProjectTasks to update
+     */
+    where?: ErpProjectTaskWhereInput
+    /**
+     * Limit how many ErpProjectTasks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpProjectTask updateManyAndReturn
+   */
+  export type ErpProjectTaskUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * The data used to update ErpProjectTasks.
+     */
+    data: XOR<ErpProjectTaskUpdateManyMutationInput, ErpProjectTaskUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpProjectTasks to update
+     */
+    where?: ErpProjectTaskWhereInput
+    /**
+     * Limit how many ErpProjectTasks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ErpProjectTask upsert
+   */
+  export type ErpProjectTaskUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ErpProjectTask to update in case it exists.
+     */
+    where: ErpProjectTaskWhereUniqueInput
+    /**
+     * In case the ErpProjectTask found by the `where` argument doesn't exist, create a new ErpProjectTask with this data.
+     */
+    create: XOR<ErpProjectTaskCreateInput, ErpProjectTaskUncheckedCreateInput>
+    /**
+     * In case the ErpProjectTask was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ErpProjectTaskUpdateInput, ErpProjectTaskUncheckedUpdateInput>
+  }
+
+  /**
+   * ErpProjectTask delete
+   */
+  export type ErpProjectTaskDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+    /**
+     * Filter which ErpProjectTask to delete.
+     */
+    where: ErpProjectTaskWhereUniqueInput
+  }
+
+  /**
+   * ErpProjectTask deleteMany
+   */
+  export type ErpProjectTaskDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpProjectTasks to delete
+     */
+    where?: ErpProjectTaskWhereInput
+    /**
+     * Limit how many ErpProjectTasks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpProjectTask.project
+   */
+  export type ErpProjectTask$projectArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProject
+     */
+    select?: ErpProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProject
+     */
+    omit?: ErpProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectInclude<ExtArgs> | null
+    where?: ErpProjectWhereInput
+  }
+
+  /**
+   * ErpProjectTask without action
+   */
+  export type ErpProjectTaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectTask
+     */
+    select?: ErpProjectTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectTask
+     */
+    omit?: ErpProjectTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ErpProjectTaskInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ErpProjectMember
+   */
+
+  export type AggregateErpProjectMember = {
+    _count: ErpProjectMemberCountAggregateOutputType | null
+    _min: ErpProjectMemberMinAggregateOutputType | null
+    _max: ErpProjectMemberMaxAggregateOutputType | null
+  }
+
+  export type ErpProjectMemberMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    projectCode: string | null
+    memberName: string | null
+    roleFa: string | null
+    initials: string | null
+  }
+
+  export type ErpProjectMemberMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    projectCode: string | null
+    memberName: string | null
+    roleFa: string | null
+    initials: string | null
+  }
+
+  export type ErpProjectMemberCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    projectCode: number
+    memberName: number
+    roleFa: number
+    initials: number
+    _all: number
+  }
+
+
+  export type ErpProjectMemberMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    projectCode?: true
+    memberName?: true
+    roleFa?: true
+    initials?: true
+  }
+
+  export type ErpProjectMemberMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    projectCode?: true
+    memberName?: true
+    roleFa?: true
+    initials?: true
+  }
+
+  export type ErpProjectMemberCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    projectCode?: true
+    memberName?: true
+    roleFa?: true
+    initials?: true
+    _all?: true
+  }
+
+  export type ErpProjectMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpProjectMember to aggregate.
+     */
+    where?: ErpProjectMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjectMembers to fetch.
+     */
+    orderBy?: ErpProjectMemberOrderByWithRelationInput | ErpProjectMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ErpProjectMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjectMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjectMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ErpProjectMembers
+    **/
+    _count?: true | ErpProjectMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ErpProjectMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ErpProjectMemberMaxAggregateInputType
+  }
+
+  export type GetErpProjectMemberAggregateType<T extends ErpProjectMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateErpProjectMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateErpProjectMember[P]>
+      : GetScalarType<T[P], AggregateErpProjectMember[P]>
+  }
+
+
+
+
+  export type ErpProjectMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ErpProjectMemberWhereInput
+    orderBy?: ErpProjectMemberOrderByWithAggregationInput | ErpProjectMemberOrderByWithAggregationInput[]
+    by: ErpProjectMemberScalarFieldEnum[] | ErpProjectMemberScalarFieldEnum
+    having?: ErpProjectMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ErpProjectMemberCountAggregateInputType | true
+    _min?: ErpProjectMemberMinAggregateInputType
+    _max?: ErpProjectMemberMaxAggregateInputType
+  }
+
+  export type ErpProjectMemberGroupByOutputType = {
+    id: string
+    tenantId: string
+    projectCode: string
+    memberName: string
+    roleFa: string
+    initials: string | null
+    _count: ErpProjectMemberCountAggregateOutputType | null
+    _min: ErpProjectMemberMinAggregateOutputType | null
+    _max: ErpProjectMemberMaxAggregateOutputType | null
+  }
+
+  type GetErpProjectMemberGroupByPayload<T extends ErpProjectMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ErpProjectMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ErpProjectMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ErpProjectMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], ErpProjectMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ErpProjectMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    projectCode?: boolean
+    memberName?: boolean
+    roleFa?: boolean
+    initials?: boolean
+  }, ExtArgs["result"]["erpProjectMember"]>
+
+  export type ErpProjectMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    projectCode?: boolean
+    memberName?: boolean
+    roleFa?: boolean
+    initials?: boolean
+  }, ExtArgs["result"]["erpProjectMember"]>
+
+  export type ErpProjectMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    projectCode?: boolean
+    memberName?: boolean
+    roleFa?: boolean
+    initials?: boolean
+  }, ExtArgs["result"]["erpProjectMember"]>
+
+  export type ErpProjectMemberSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    projectCode?: boolean
+    memberName?: boolean
+    roleFa?: boolean
+    initials?: boolean
+  }
+
+  export type ErpProjectMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "projectCode" | "memberName" | "roleFa" | "initials", ExtArgs["result"]["erpProjectMember"]>
+
+  export type $ErpProjectMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ErpProjectMember"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      projectCode: string
+      memberName: string
+      roleFa: string
+      initials: string | null
+    }, ExtArgs["result"]["erpProjectMember"]>
+    composites: {}
+  }
+
+  type ErpProjectMemberGetPayload<S extends boolean | null | undefined | ErpProjectMemberDefaultArgs> = $Result.GetResult<Prisma.$ErpProjectMemberPayload, S>
+
+  type ErpProjectMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ErpProjectMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ErpProjectMemberCountAggregateInputType | true
+    }
+
+  export interface ErpProjectMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ErpProjectMember'], meta: { name: 'ErpProjectMember' } }
+    /**
+     * Find zero or one ErpProjectMember that matches the filter.
+     * @param {ErpProjectMemberFindUniqueArgs} args - Arguments to find a ErpProjectMember
+     * @example
+     * // Get one ErpProjectMember
+     * const erpProjectMember = await prisma.erpProjectMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ErpProjectMemberFindUniqueArgs>(args: SelectSubset<T, ErpProjectMemberFindUniqueArgs<ExtArgs>>): Prisma__ErpProjectMemberClient<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ErpProjectMember that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ErpProjectMemberFindUniqueOrThrowArgs} args - Arguments to find a ErpProjectMember
+     * @example
+     * // Get one ErpProjectMember
+     * const erpProjectMember = await prisma.erpProjectMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ErpProjectMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, ErpProjectMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ErpProjectMemberClient<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpProjectMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectMemberFindFirstArgs} args - Arguments to find a ErpProjectMember
+     * @example
+     * // Get one ErpProjectMember
+     * const erpProjectMember = await prisma.erpProjectMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ErpProjectMemberFindFirstArgs>(args?: SelectSubset<T, ErpProjectMemberFindFirstArgs<ExtArgs>>): Prisma__ErpProjectMemberClient<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpProjectMember that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectMemberFindFirstOrThrowArgs} args - Arguments to find a ErpProjectMember
+     * @example
+     * // Get one ErpProjectMember
+     * const erpProjectMember = await prisma.erpProjectMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ErpProjectMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, ErpProjectMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__ErpProjectMemberClient<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ErpProjectMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ErpProjectMembers
+     * const erpProjectMembers = await prisma.erpProjectMember.findMany()
+     * 
+     * // Get first 10 ErpProjectMembers
+     * const erpProjectMembers = await prisma.erpProjectMember.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const erpProjectMemberWithIdOnly = await prisma.erpProjectMember.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ErpProjectMemberFindManyArgs>(args?: SelectSubset<T, ErpProjectMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ErpProjectMember.
+     * @param {ErpProjectMemberCreateArgs} args - Arguments to create a ErpProjectMember.
+     * @example
+     * // Create one ErpProjectMember
+     * const ErpProjectMember = await prisma.erpProjectMember.create({
+     *   data: {
+     *     // ... data to create a ErpProjectMember
+     *   }
+     * })
+     * 
+     */
+    create<T extends ErpProjectMemberCreateArgs>(args: SelectSubset<T, ErpProjectMemberCreateArgs<ExtArgs>>): Prisma__ErpProjectMemberClient<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ErpProjectMembers.
+     * @param {ErpProjectMemberCreateManyArgs} args - Arguments to create many ErpProjectMembers.
+     * @example
+     * // Create many ErpProjectMembers
+     * const erpProjectMember = await prisma.erpProjectMember.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ErpProjectMemberCreateManyArgs>(args?: SelectSubset<T, ErpProjectMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ErpProjectMembers and returns the data saved in the database.
+     * @param {ErpProjectMemberCreateManyAndReturnArgs} args - Arguments to create many ErpProjectMembers.
+     * @example
+     * // Create many ErpProjectMembers
+     * const erpProjectMember = await prisma.erpProjectMember.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ErpProjectMembers and only return the `id`
+     * const erpProjectMemberWithIdOnly = await prisma.erpProjectMember.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ErpProjectMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, ErpProjectMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ErpProjectMember.
+     * @param {ErpProjectMemberDeleteArgs} args - Arguments to delete one ErpProjectMember.
+     * @example
+     * // Delete one ErpProjectMember
+     * const ErpProjectMember = await prisma.erpProjectMember.delete({
+     *   where: {
+     *     // ... filter to delete one ErpProjectMember
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ErpProjectMemberDeleteArgs>(args: SelectSubset<T, ErpProjectMemberDeleteArgs<ExtArgs>>): Prisma__ErpProjectMemberClient<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ErpProjectMember.
+     * @param {ErpProjectMemberUpdateArgs} args - Arguments to update one ErpProjectMember.
+     * @example
+     * // Update one ErpProjectMember
+     * const erpProjectMember = await prisma.erpProjectMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ErpProjectMemberUpdateArgs>(args: SelectSubset<T, ErpProjectMemberUpdateArgs<ExtArgs>>): Prisma__ErpProjectMemberClient<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ErpProjectMembers.
+     * @param {ErpProjectMemberDeleteManyArgs} args - Arguments to filter ErpProjectMembers to delete.
+     * @example
+     * // Delete a few ErpProjectMembers
+     * const { count } = await prisma.erpProjectMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ErpProjectMemberDeleteManyArgs>(args?: SelectSubset<T, ErpProjectMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpProjectMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ErpProjectMembers
+     * const erpProjectMember = await prisma.erpProjectMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ErpProjectMemberUpdateManyArgs>(args: SelectSubset<T, ErpProjectMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpProjectMembers and returns the data updated in the database.
+     * @param {ErpProjectMemberUpdateManyAndReturnArgs} args - Arguments to update many ErpProjectMembers.
+     * @example
+     * // Update many ErpProjectMembers
+     * const erpProjectMember = await prisma.erpProjectMember.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ErpProjectMembers and only return the `id`
+     * const erpProjectMemberWithIdOnly = await prisma.erpProjectMember.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ErpProjectMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, ErpProjectMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ErpProjectMember.
+     * @param {ErpProjectMemberUpsertArgs} args - Arguments to update or create a ErpProjectMember.
+     * @example
+     * // Update or create a ErpProjectMember
+     * const erpProjectMember = await prisma.erpProjectMember.upsert({
+     *   create: {
+     *     // ... data to create a ErpProjectMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ErpProjectMember we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ErpProjectMemberUpsertArgs>(args: SelectSubset<T, ErpProjectMemberUpsertArgs<ExtArgs>>): Prisma__ErpProjectMemberClient<$Result.GetResult<Prisma.$ErpProjectMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ErpProjectMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectMemberCountArgs} args - Arguments to filter ErpProjectMembers to count.
+     * @example
+     * // Count the number of ErpProjectMembers
+     * const count = await prisma.erpProjectMember.count({
+     *   where: {
+     *     // ... the filter for the ErpProjectMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends ErpProjectMemberCountArgs>(
+      args?: Subset<T, ErpProjectMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ErpProjectMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ErpProjectMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ErpProjectMemberAggregateArgs>(args: Subset<T, ErpProjectMemberAggregateArgs>): Prisma.PrismaPromise<GetErpProjectMemberAggregateType<T>>
+
+    /**
+     * Group by ErpProjectMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpProjectMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ErpProjectMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ErpProjectMemberGroupByArgs['orderBy'] }
+        : { orderBy?: ErpProjectMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ErpProjectMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetErpProjectMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ErpProjectMember model
+   */
+  readonly fields: ErpProjectMemberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ErpProjectMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ErpProjectMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ErpProjectMember model
+   */
+  interface ErpProjectMemberFieldRefs {
+    readonly id: FieldRef<"ErpProjectMember", 'String'>
+    readonly tenantId: FieldRef<"ErpProjectMember", 'String'>
+    readonly projectCode: FieldRef<"ErpProjectMember", 'String'>
+    readonly memberName: FieldRef<"ErpProjectMember", 'String'>
+    readonly roleFa: FieldRef<"ErpProjectMember", 'String'>
+    readonly initials: FieldRef<"ErpProjectMember", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ErpProjectMember findUnique
+   */
+  export type ErpProjectMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectMember to fetch.
+     */
+    where: ErpProjectMemberWhereUniqueInput
+  }
+
+  /**
+   * ErpProjectMember findUniqueOrThrow
+   */
+  export type ErpProjectMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectMember to fetch.
+     */
+    where: ErpProjectMemberWhereUniqueInput
+  }
+
+  /**
+   * ErpProjectMember findFirst
+   */
+  export type ErpProjectMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectMember to fetch.
+     */
+    where?: ErpProjectMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjectMembers to fetch.
+     */
+    orderBy?: ErpProjectMemberOrderByWithRelationInput | ErpProjectMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpProjectMembers.
+     */
+    cursor?: ErpProjectMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjectMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjectMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpProjectMembers.
+     */
+    distinct?: ErpProjectMemberScalarFieldEnum | ErpProjectMemberScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProjectMember findFirstOrThrow
+   */
+  export type ErpProjectMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectMember to fetch.
+     */
+    where?: ErpProjectMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjectMembers to fetch.
+     */
+    orderBy?: ErpProjectMemberOrderByWithRelationInput | ErpProjectMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpProjectMembers.
+     */
+    cursor?: ErpProjectMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjectMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjectMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpProjectMembers.
+     */
+    distinct?: ErpProjectMemberScalarFieldEnum | ErpProjectMemberScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProjectMember findMany
+   */
+  export type ErpProjectMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpProjectMembers to fetch.
+     */
+    where?: ErpProjectMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpProjectMembers to fetch.
+     */
+    orderBy?: ErpProjectMemberOrderByWithRelationInput | ErpProjectMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ErpProjectMembers.
+     */
+    cursor?: ErpProjectMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpProjectMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpProjectMembers.
+     */
+    skip?: number
+    distinct?: ErpProjectMemberScalarFieldEnum | ErpProjectMemberScalarFieldEnum[]
+  }
+
+  /**
+   * ErpProjectMember create
+   */
+  export type ErpProjectMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ErpProjectMember.
+     */
+    data: XOR<ErpProjectMemberCreateInput, ErpProjectMemberUncheckedCreateInput>
+  }
+
+  /**
+   * ErpProjectMember createMany
+   */
+  export type ErpProjectMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ErpProjectMembers.
+     */
+    data: ErpProjectMemberCreateManyInput | ErpProjectMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpProjectMember createManyAndReturn
+   */
+  export type ErpProjectMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * The data used to create many ErpProjectMembers.
+     */
+    data: ErpProjectMemberCreateManyInput | ErpProjectMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpProjectMember update
+   */
+  export type ErpProjectMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ErpProjectMember.
+     */
+    data: XOR<ErpProjectMemberUpdateInput, ErpProjectMemberUncheckedUpdateInput>
+    /**
+     * Choose, which ErpProjectMember to update.
+     */
+    where: ErpProjectMemberWhereUniqueInput
+  }
+
+  /**
+   * ErpProjectMember updateMany
+   */
+  export type ErpProjectMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ErpProjectMembers.
+     */
+    data: XOR<ErpProjectMemberUpdateManyMutationInput, ErpProjectMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpProjectMembers to update
+     */
+    where?: ErpProjectMemberWhereInput
+    /**
+     * Limit how many ErpProjectMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpProjectMember updateManyAndReturn
+   */
+  export type ErpProjectMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * The data used to update ErpProjectMembers.
+     */
+    data: XOR<ErpProjectMemberUpdateManyMutationInput, ErpProjectMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpProjectMembers to update
+     */
+    where?: ErpProjectMemberWhereInput
+    /**
+     * Limit how many ErpProjectMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpProjectMember upsert
+   */
+  export type ErpProjectMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ErpProjectMember to update in case it exists.
+     */
+    where: ErpProjectMemberWhereUniqueInput
+    /**
+     * In case the ErpProjectMember found by the `where` argument doesn't exist, create a new ErpProjectMember with this data.
+     */
+    create: XOR<ErpProjectMemberCreateInput, ErpProjectMemberUncheckedCreateInput>
+    /**
+     * In case the ErpProjectMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ErpProjectMemberUpdateInput, ErpProjectMemberUncheckedUpdateInput>
+  }
+
+  /**
+   * ErpProjectMember delete
+   */
+  export type ErpProjectMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+    /**
+     * Filter which ErpProjectMember to delete.
+     */
+    where: ErpProjectMemberWhereUniqueInput
+  }
+
+  /**
+   * ErpProjectMember deleteMany
+   */
+  export type ErpProjectMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpProjectMembers to delete
+     */
+    where?: ErpProjectMemberWhereInput
+    /**
+     * Limit how many ErpProjectMembers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpProjectMember without action
+   */
+  export type ErpProjectMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpProjectMember
+     */
+    select?: ErpProjectMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpProjectMember
+     */
+    omit?: ErpProjectMemberOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ErpMasterRecord
+   */
+
+  export type AggregateErpMasterRecord = {
+    _count: ErpMasterRecordCountAggregateOutputType | null
+    _min: ErpMasterRecordMinAggregateOutputType | null
+    _max: ErpMasterRecordMaxAggregateOutputType | null
+  }
+
+  export type ErpMasterRecordMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    kind: $Enums.ErpMasterKind | null
+    code: string | null
+    name: string | null
+    status: $Enums.ErpMasterStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ErpMasterRecordMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    kind: $Enums.ErpMasterKind | null
+    code: string | null
+    name: string | null
+    status: $Enums.ErpMasterStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ErpMasterRecordCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    kind: number
+    code: number
+    name: number
+    status: number
+    payload: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ErpMasterRecordMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    kind?: true
+    code?: true
+    name?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ErpMasterRecordMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    kind?: true
+    code?: true
+    name?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ErpMasterRecordCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    kind?: true
+    code?: true
+    name?: true
+    status?: true
+    payload?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ErpMasterRecordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpMasterRecord to aggregate.
+     */
+    where?: ErpMasterRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpMasterRecords to fetch.
+     */
+    orderBy?: ErpMasterRecordOrderByWithRelationInput | ErpMasterRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ErpMasterRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpMasterRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpMasterRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ErpMasterRecords
+    **/
+    _count?: true | ErpMasterRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ErpMasterRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ErpMasterRecordMaxAggregateInputType
+  }
+
+  export type GetErpMasterRecordAggregateType<T extends ErpMasterRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateErpMasterRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateErpMasterRecord[P]>
+      : GetScalarType<T[P], AggregateErpMasterRecord[P]>
+  }
+
+
+
+
+  export type ErpMasterRecordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ErpMasterRecordWhereInput
+    orderBy?: ErpMasterRecordOrderByWithAggregationInput | ErpMasterRecordOrderByWithAggregationInput[]
+    by: ErpMasterRecordScalarFieldEnum[] | ErpMasterRecordScalarFieldEnum
+    having?: ErpMasterRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ErpMasterRecordCountAggregateInputType | true
+    _min?: ErpMasterRecordMinAggregateInputType
+    _max?: ErpMasterRecordMaxAggregateInputType
+  }
+
+  export type ErpMasterRecordGroupByOutputType = {
+    id: string
+    tenantId: string
+    kind: $Enums.ErpMasterKind
+    code: string
+    name: string
+    status: $Enums.ErpMasterStatus
+    payload: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ErpMasterRecordCountAggregateOutputType | null
+    _min: ErpMasterRecordMinAggregateOutputType | null
+    _max: ErpMasterRecordMaxAggregateOutputType | null
+  }
+
+  type GetErpMasterRecordGroupByPayload<T extends ErpMasterRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ErpMasterRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ErpMasterRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ErpMasterRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], ErpMasterRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ErpMasterRecordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    kind?: boolean
+    code?: boolean
+    name?: boolean
+    status?: boolean
+    payload?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["erpMasterRecord"]>
+
+  export type ErpMasterRecordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    kind?: boolean
+    code?: boolean
+    name?: boolean
+    status?: boolean
+    payload?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["erpMasterRecord"]>
+
+  export type ErpMasterRecordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    kind?: boolean
+    code?: boolean
+    name?: boolean
+    status?: boolean
+    payload?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["erpMasterRecord"]>
+
+  export type ErpMasterRecordSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    kind?: boolean
+    code?: boolean
+    name?: boolean
+    status?: boolean
+    payload?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ErpMasterRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "kind" | "code" | "name" | "status" | "payload" | "createdAt" | "updatedAt", ExtArgs["result"]["erpMasterRecord"]>
+
+  export type $ErpMasterRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ErpMasterRecord"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      kind: $Enums.ErpMasterKind
+      code: string
+      name: string
+      status: $Enums.ErpMasterStatus
+      payload: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["erpMasterRecord"]>
+    composites: {}
+  }
+
+  type ErpMasterRecordGetPayload<S extends boolean | null | undefined | ErpMasterRecordDefaultArgs> = $Result.GetResult<Prisma.$ErpMasterRecordPayload, S>
+
+  type ErpMasterRecordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ErpMasterRecordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ErpMasterRecordCountAggregateInputType | true
+    }
+
+  export interface ErpMasterRecordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ErpMasterRecord'], meta: { name: 'ErpMasterRecord' } }
+    /**
+     * Find zero or one ErpMasterRecord that matches the filter.
+     * @param {ErpMasterRecordFindUniqueArgs} args - Arguments to find a ErpMasterRecord
+     * @example
+     * // Get one ErpMasterRecord
+     * const erpMasterRecord = await prisma.erpMasterRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ErpMasterRecordFindUniqueArgs>(args: SelectSubset<T, ErpMasterRecordFindUniqueArgs<ExtArgs>>): Prisma__ErpMasterRecordClient<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ErpMasterRecord that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ErpMasterRecordFindUniqueOrThrowArgs} args - Arguments to find a ErpMasterRecord
+     * @example
+     * // Get one ErpMasterRecord
+     * const erpMasterRecord = await prisma.erpMasterRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ErpMasterRecordFindUniqueOrThrowArgs>(args: SelectSubset<T, ErpMasterRecordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ErpMasterRecordClient<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpMasterRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpMasterRecordFindFirstArgs} args - Arguments to find a ErpMasterRecord
+     * @example
+     * // Get one ErpMasterRecord
+     * const erpMasterRecord = await prisma.erpMasterRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ErpMasterRecordFindFirstArgs>(args?: SelectSubset<T, ErpMasterRecordFindFirstArgs<ExtArgs>>): Prisma__ErpMasterRecordClient<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpMasterRecord that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpMasterRecordFindFirstOrThrowArgs} args - Arguments to find a ErpMasterRecord
+     * @example
+     * // Get one ErpMasterRecord
+     * const erpMasterRecord = await prisma.erpMasterRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ErpMasterRecordFindFirstOrThrowArgs>(args?: SelectSubset<T, ErpMasterRecordFindFirstOrThrowArgs<ExtArgs>>): Prisma__ErpMasterRecordClient<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ErpMasterRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpMasterRecordFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ErpMasterRecords
+     * const erpMasterRecords = await prisma.erpMasterRecord.findMany()
+     * 
+     * // Get first 10 ErpMasterRecords
+     * const erpMasterRecords = await prisma.erpMasterRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const erpMasterRecordWithIdOnly = await prisma.erpMasterRecord.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ErpMasterRecordFindManyArgs>(args?: SelectSubset<T, ErpMasterRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ErpMasterRecord.
+     * @param {ErpMasterRecordCreateArgs} args - Arguments to create a ErpMasterRecord.
+     * @example
+     * // Create one ErpMasterRecord
+     * const ErpMasterRecord = await prisma.erpMasterRecord.create({
+     *   data: {
+     *     // ... data to create a ErpMasterRecord
+     *   }
+     * })
+     * 
+     */
+    create<T extends ErpMasterRecordCreateArgs>(args: SelectSubset<T, ErpMasterRecordCreateArgs<ExtArgs>>): Prisma__ErpMasterRecordClient<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ErpMasterRecords.
+     * @param {ErpMasterRecordCreateManyArgs} args - Arguments to create many ErpMasterRecords.
+     * @example
+     * // Create many ErpMasterRecords
+     * const erpMasterRecord = await prisma.erpMasterRecord.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ErpMasterRecordCreateManyArgs>(args?: SelectSubset<T, ErpMasterRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ErpMasterRecords and returns the data saved in the database.
+     * @param {ErpMasterRecordCreateManyAndReturnArgs} args - Arguments to create many ErpMasterRecords.
+     * @example
+     * // Create many ErpMasterRecords
+     * const erpMasterRecord = await prisma.erpMasterRecord.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ErpMasterRecords and only return the `id`
+     * const erpMasterRecordWithIdOnly = await prisma.erpMasterRecord.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ErpMasterRecordCreateManyAndReturnArgs>(args?: SelectSubset<T, ErpMasterRecordCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ErpMasterRecord.
+     * @param {ErpMasterRecordDeleteArgs} args - Arguments to delete one ErpMasterRecord.
+     * @example
+     * // Delete one ErpMasterRecord
+     * const ErpMasterRecord = await prisma.erpMasterRecord.delete({
+     *   where: {
+     *     // ... filter to delete one ErpMasterRecord
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ErpMasterRecordDeleteArgs>(args: SelectSubset<T, ErpMasterRecordDeleteArgs<ExtArgs>>): Prisma__ErpMasterRecordClient<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ErpMasterRecord.
+     * @param {ErpMasterRecordUpdateArgs} args - Arguments to update one ErpMasterRecord.
+     * @example
+     * // Update one ErpMasterRecord
+     * const erpMasterRecord = await prisma.erpMasterRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ErpMasterRecordUpdateArgs>(args: SelectSubset<T, ErpMasterRecordUpdateArgs<ExtArgs>>): Prisma__ErpMasterRecordClient<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ErpMasterRecords.
+     * @param {ErpMasterRecordDeleteManyArgs} args - Arguments to filter ErpMasterRecords to delete.
+     * @example
+     * // Delete a few ErpMasterRecords
+     * const { count } = await prisma.erpMasterRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ErpMasterRecordDeleteManyArgs>(args?: SelectSubset<T, ErpMasterRecordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpMasterRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpMasterRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ErpMasterRecords
+     * const erpMasterRecord = await prisma.erpMasterRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ErpMasterRecordUpdateManyArgs>(args: SelectSubset<T, ErpMasterRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpMasterRecords and returns the data updated in the database.
+     * @param {ErpMasterRecordUpdateManyAndReturnArgs} args - Arguments to update many ErpMasterRecords.
+     * @example
+     * // Update many ErpMasterRecords
+     * const erpMasterRecord = await prisma.erpMasterRecord.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ErpMasterRecords and only return the `id`
+     * const erpMasterRecordWithIdOnly = await prisma.erpMasterRecord.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ErpMasterRecordUpdateManyAndReturnArgs>(args: SelectSubset<T, ErpMasterRecordUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ErpMasterRecord.
+     * @param {ErpMasterRecordUpsertArgs} args - Arguments to update or create a ErpMasterRecord.
+     * @example
+     * // Update or create a ErpMasterRecord
+     * const erpMasterRecord = await prisma.erpMasterRecord.upsert({
+     *   create: {
+     *     // ... data to create a ErpMasterRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ErpMasterRecord we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ErpMasterRecordUpsertArgs>(args: SelectSubset<T, ErpMasterRecordUpsertArgs<ExtArgs>>): Prisma__ErpMasterRecordClient<$Result.GetResult<Prisma.$ErpMasterRecordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ErpMasterRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpMasterRecordCountArgs} args - Arguments to filter ErpMasterRecords to count.
+     * @example
+     * // Count the number of ErpMasterRecords
+     * const count = await prisma.erpMasterRecord.count({
+     *   where: {
+     *     // ... the filter for the ErpMasterRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends ErpMasterRecordCountArgs>(
+      args?: Subset<T, ErpMasterRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ErpMasterRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ErpMasterRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpMasterRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ErpMasterRecordAggregateArgs>(args: Subset<T, ErpMasterRecordAggregateArgs>): Prisma.PrismaPromise<GetErpMasterRecordAggregateType<T>>
+
+    /**
+     * Group by ErpMasterRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpMasterRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ErpMasterRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ErpMasterRecordGroupByArgs['orderBy'] }
+        : { orderBy?: ErpMasterRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ErpMasterRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetErpMasterRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ErpMasterRecord model
+   */
+  readonly fields: ErpMasterRecordFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ErpMasterRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ErpMasterRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ErpMasterRecord model
+   */
+  interface ErpMasterRecordFieldRefs {
+    readonly id: FieldRef<"ErpMasterRecord", 'String'>
+    readonly tenantId: FieldRef<"ErpMasterRecord", 'String'>
+    readonly kind: FieldRef<"ErpMasterRecord", 'ErpMasterKind'>
+    readonly code: FieldRef<"ErpMasterRecord", 'String'>
+    readonly name: FieldRef<"ErpMasterRecord", 'String'>
+    readonly status: FieldRef<"ErpMasterRecord", 'ErpMasterStatus'>
+    readonly payload: FieldRef<"ErpMasterRecord", 'Json'>
+    readonly createdAt: FieldRef<"ErpMasterRecord", 'DateTime'>
+    readonly updatedAt: FieldRef<"ErpMasterRecord", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ErpMasterRecord findUnique
+   */
+  export type ErpMasterRecordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpMasterRecord to fetch.
+     */
+    where: ErpMasterRecordWhereUniqueInput
+  }
+
+  /**
+   * ErpMasterRecord findUniqueOrThrow
+   */
+  export type ErpMasterRecordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpMasterRecord to fetch.
+     */
+    where: ErpMasterRecordWhereUniqueInput
+  }
+
+  /**
+   * ErpMasterRecord findFirst
+   */
+  export type ErpMasterRecordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpMasterRecord to fetch.
+     */
+    where?: ErpMasterRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpMasterRecords to fetch.
+     */
+    orderBy?: ErpMasterRecordOrderByWithRelationInput | ErpMasterRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpMasterRecords.
+     */
+    cursor?: ErpMasterRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpMasterRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpMasterRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpMasterRecords.
+     */
+    distinct?: ErpMasterRecordScalarFieldEnum | ErpMasterRecordScalarFieldEnum[]
+  }
+
+  /**
+   * ErpMasterRecord findFirstOrThrow
+   */
+  export type ErpMasterRecordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpMasterRecord to fetch.
+     */
+    where?: ErpMasterRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpMasterRecords to fetch.
+     */
+    orderBy?: ErpMasterRecordOrderByWithRelationInput | ErpMasterRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpMasterRecords.
+     */
+    cursor?: ErpMasterRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpMasterRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpMasterRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpMasterRecords.
+     */
+    distinct?: ErpMasterRecordScalarFieldEnum | ErpMasterRecordScalarFieldEnum[]
+  }
+
+  /**
+   * ErpMasterRecord findMany
+   */
+  export type ErpMasterRecordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpMasterRecords to fetch.
+     */
+    where?: ErpMasterRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpMasterRecords to fetch.
+     */
+    orderBy?: ErpMasterRecordOrderByWithRelationInput | ErpMasterRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ErpMasterRecords.
+     */
+    cursor?: ErpMasterRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpMasterRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpMasterRecords.
+     */
+    skip?: number
+    distinct?: ErpMasterRecordScalarFieldEnum | ErpMasterRecordScalarFieldEnum[]
+  }
+
+  /**
+   * ErpMasterRecord create
+   */
+  export type ErpMasterRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ErpMasterRecord.
+     */
+    data: XOR<ErpMasterRecordCreateInput, ErpMasterRecordUncheckedCreateInput>
+  }
+
+  /**
+   * ErpMasterRecord createMany
+   */
+  export type ErpMasterRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ErpMasterRecords.
+     */
+    data: ErpMasterRecordCreateManyInput | ErpMasterRecordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpMasterRecord createManyAndReturn
+   */
+  export type ErpMasterRecordCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * The data used to create many ErpMasterRecords.
+     */
+    data: ErpMasterRecordCreateManyInput | ErpMasterRecordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpMasterRecord update
+   */
+  export type ErpMasterRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ErpMasterRecord.
+     */
+    data: XOR<ErpMasterRecordUpdateInput, ErpMasterRecordUncheckedUpdateInput>
+    /**
+     * Choose, which ErpMasterRecord to update.
+     */
+    where: ErpMasterRecordWhereUniqueInput
+  }
+
+  /**
+   * ErpMasterRecord updateMany
+   */
+  export type ErpMasterRecordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ErpMasterRecords.
+     */
+    data: XOR<ErpMasterRecordUpdateManyMutationInput, ErpMasterRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpMasterRecords to update
+     */
+    where?: ErpMasterRecordWhereInput
+    /**
+     * Limit how many ErpMasterRecords to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpMasterRecord updateManyAndReturn
+   */
+  export type ErpMasterRecordUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * The data used to update ErpMasterRecords.
+     */
+    data: XOR<ErpMasterRecordUpdateManyMutationInput, ErpMasterRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpMasterRecords to update
+     */
+    where?: ErpMasterRecordWhereInput
+    /**
+     * Limit how many ErpMasterRecords to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpMasterRecord upsert
+   */
+  export type ErpMasterRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ErpMasterRecord to update in case it exists.
+     */
+    where: ErpMasterRecordWhereUniqueInput
+    /**
+     * In case the ErpMasterRecord found by the `where` argument doesn't exist, create a new ErpMasterRecord with this data.
+     */
+    create: XOR<ErpMasterRecordCreateInput, ErpMasterRecordUncheckedCreateInput>
+    /**
+     * In case the ErpMasterRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ErpMasterRecordUpdateInput, ErpMasterRecordUncheckedUpdateInput>
+  }
+
+  /**
+   * ErpMasterRecord delete
+   */
+  export type ErpMasterRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+    /**
+     * Filter which ErpMasterRecord to delete.
+     */
+    where: ErpMasterRecordWhereUniqueInput
+  }
+
+  /**
+   * ErpMasterRecord deleteMany
+   */
+  export type ErpMasterRecordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpMasterRecords to delete
+     */
+    where?: ErpMasterRecordWhereInput
+    /**
+     * Limit how many ErpMasterRecords to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpMasterRecord without action
+   */
+  export type ErpMasterRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpMasterRecord
+     */
+    select?: ErpMasterRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpMasterRecord
+     */
+    omit?: ErpMasterRecordOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ErpTenantBranding
+   */
+
+  export type AggregateErpTenantBranding = {
+    _count: ErpTenantBrandingCountAggregateOutputType | null
+    _min: ErpTenantBrandingMinAggregateOutputType | null
+    _max: ErpTenantBrandingMaxAggregateOutputType | null
+  }
+
+  export type ErpTenantBrandingMinAggregateOutputType = {
+    tenantId: string | null
+    logoUrl: string | null
+    stampUrl: string | null
+    signatureUrl: string | null
+    updatedAt: Date | null
+  }
+
+  export type ErpTenantBrandingMaxAggregateOutputType = {
+    tenantId: string | null
+    logoUrl: string | null
+    stampUrl: string | null
+    signatureUrl: string | null
+    updatedAt: Date | null
+  }
+
+  export type ErpTenantBrandingCountAggregateOutputType = {
+    tenantId: number
+    logoUrl: number
+    stampUrl: number
+    signatureUrl: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ErpTenantBrandingMinAggregateInputType = {
+    tenantId?: true
+    logoUrl?: true
+    stampUrl?: true
+    signatureUrl?: true
+    updatedAt?: true
+  }
+
+  export type ErpTenantBrandingMaxAggregateInputType = {
+    tenantId?: true
+    logoUrl?: true
+    stampUrl?: true
+    signatureUrl?: true
+    updatedAt?: true
+  }
+
+  export type ErpTenantBrandingCountAggregateInputType = {
+    tenantId?: true
+    logoUrl?: true
+    stampUrl?: true
+    signatureUrl?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ErpTenantBrandingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpTenantBranding to aggregate.
+     */
+    where?: ErpTenantBrandingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpTenantBrandings to fetch.
+     */
+    orderBy?: ErpTenantBrandingOrderByWithRelationInput | ErpTenantBrandingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ErpTenantBrandingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpTenantBrandings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpTenantBrandings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ErpTenantBrandings
+    **/
+    _count?: true | ErpTenantBrandingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ErpTenantBrandingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ErpTenantBrandingMaxAggregateInputType
+  }
+
+  export type GetErpTenantBrandingAggregateType<T extends ErpTenantBrandingAggregateArgs> = {
+        [P in keyof T & keyof AggregateErpTenantBranding]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateErpTenantBranding[P]>
+      : GetScalarType<T[P], AggregateErpTenantBranding[P]>
+  }
+
+
+
+
+  export type ErpTenantBrandingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ErpTenantBrandingWhereInput
+    orderBy?: ErpTenantBrandingOrderByWithAggregationInput | ErpTenantBrandingOrderByWithAggregationInput[]
+    by: ErpTenantBrandingScalarFieldEnum[] | ErpTenantBrandingScalarFieldEnum
+    having?: ErpTenantBrandingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ErpTenantBrandingCountAggregateInputType | true
+    _min?: ErpTenantBrandingMinAggregateInputType
+    _max?: ErpTenantBrandingMaxAggregateInputType
+  }
+
+  export type ErpTenantBrandingGroupByOutputType = {
+    tenantId: string
+    logoUrl: string | null
+    stampUrl: string | null
+    signatureUrl: string | null
+    updatedAt: Date
+    _count: ErpTenantBrandingCountAggregateOutputType | null
+    _min: ErpTenantBrandingMinAggregateOutputType | null
+    _max: ErpTenantBrandingMaxAggregateOutputType | null
+  }
+
+  type GetErpTenantBrandingGroupByPayload<T extends ErpTenantBrandingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ErpTenantBrandingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ErpTenantBrandingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ErpTenantBrandingGroupByOutputType[P]>
+            : GetScalarType<T[P], ErpTenantBrandingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ErpTenantBrandingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    tenantId?: boolean
+    logoUrl?: boolean
+    stampUrl?: boolean
+    signatureUrl?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["erpTenantBranding"]>
+
+  export type ErpTenantBrandingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    tenantId?: boolean
+    logoUrl?: boolean
+    stampUrl?: boolean
+    signatureUrl?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["erpTenantBranding"]>
+
+  export type ErpTenantBrandingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    tenantId?: boolean
+    logoUrl?: boolean
+    stampUrl?: boolean
+    signatureUrl?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["erpTenantBranding"]>
+
+  export type ErpTenantBrandingSelectScalar = {
+    tenantId?: boolean
+    logoUrl?: boolean
+    stampUrl?: boolean
+    signatureUrl?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ErpTenantBrandingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"tenantId" | "logoUrl" | "stampUrl" | "signatureUrl" | "updatedAt", ExtArgs["result"]["erpTenantBranding"]>
+
+  export type $ErpTenantBrandingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ErpTenantBranding"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      tenantId: string
+      logoUrl: string | null
+      stampUrl: string | null
+      signatureUrl: string | null
+      updatedAt: Date
+    }, ExtArgs["result"]["erpTenantBranding"]>
+    composites: {}
+  }
+
+  type ErpTenantBrandingGetPayload<S extends boolean | null | undefined | ErpTenantBrandingDefaultArgs> = $Result.GetResult<Prisma.$ErpTenantBrandingPayload, S>
+
+  type ErpTenantBrandingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ErpTenantBrandingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ErpTenantBrandingCountAggregateInputType | true
+    }
+
+  export interface ErpTenantBrandingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ErpTenantBranding'], meta: { name: 'ErpTenantBranding' } }
+    /**
+     * Find zero or one ErpTenantBranding that matches the filter.
+     * @param {ErpTenantBrandingFindUniqueArgs} args - Arguments to find a ErpTenantBranding
+     * @example
+     * // Get one ErpTenantBranding
+     * const erpTenantBranding = await prisma.erpTenantBranding.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ErpTenantBrandingFindUniqueArgs>(args: SelectSubset<T, ErpTenantBrandingFindUniqueArgs<ExtArgs>>): Prisma__ErpTenantBrandingClient<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ErpTenantBranding that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ErpTenantBrandingFindUniqueOrThrowArgs} args - Arguments to find a ErpTenantBranding
+     * @example
+     * // Get one ErpTenantBranding
+     * const erpTenantBranding = await prisma.erpTenantBranding.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ErpTenantBrandingFindUniqueOrThrowArgs>(args: SelectSubset<T, ErpTenantBrandingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ErpTenantBrandingClient<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpTenantBranding that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpTenantBrandingFindFirstArgs} args - Arguments to find a ErpTenantBranding
+     * @example
+     * // Get one ErpTenantBranding
+     * const erpTenantBranding = await prisma.erpTenantBranding.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ErpTenantBrandingFindFirstArgs>(args?: SelectSubset<T, ErpTenantBrandingFindFirstArgs<ExtArgs>>): Prisma__ErpTenantBrandingClient<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ErpTenantBranding that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpTenantBrandingFindFirstOrThrowArgs} args - Arguments to find a ErpTenantBranding
+     * @example
+     * // Get one ErpTenantBranding
+     * const erpTenantBranding = await prisma.erpTenantBranding.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ErpTenantBrandingFindFirstOrThrowArgs>(args?: SelectSubset<T, ErpTenantBrandingFindFirstOrThrowArgs<ExtArgs>>): Prisma__ErpTenantBrandingClient<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ErpTenantBrandings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpTenantBrandingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ErpTenantBrandings
+     * const erpTenantBrandings = await prisma.erpTenantBranding.findMany()
+     * 
+     * // Get first 10 ErpTenantBrandings
+     * const erpTenantBrandings = await prisma.erpTenantBranding.findMany({ take: 10 })
+     * 
+     * // Only select the `tenantId`
+     * const erpTenantBrandingWithTenantIdOnly = await prisma.erpTenantBranding.findMany({ select: { tenantId: true } })
+     * 
+     */
+    findMany<T extends ErpTenantBrandingFindManyArgs>(args?: SelectSubset<T, ErpTenantBrandingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ErpTenantBranding.
+     * @param {ErpTenantBrandingCreateArgs} args - Arguments to create a ErpTenantBranding.
+     * @example
+     * // Create one ErpTenantBranding
+     * const ErpTenantBranding = await prisma.erpTenantBranding.create({
+     *   data: {
+     *     // ... data to create a ErpTenantBranding
+     *   }
+     * })
+     * 
+     */
+    create<T extends ErpTenantBrandingCreateArgs>(args: SelectSubset<T, ErpTenantBrandingCreateArgs<ExtArgs>>): Prisma__ErpTenantBrandingClient<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ErpTenantBrandings.
+     * @param {ErpTenantBrandingCreateManyArgs} args - Arguments to create many ErpTenantBrandings.
+     * @example
+     * // Create many ErpTenantBrandings
+     * const erpTenantBranding = await prisma.erpTenantBranding.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ErpTenantBrandingCreateManyArgs>(args?: SelectSubset<T, ErpTenantBrandingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ErpTenantBrandings and returns the data saved in the database.
+     * @param {ErpTenantBrandingCreateManyAndReturnArgs} args - Arguments to create many ErpTenantBrandings.
+     * @example
+     * // Create many ErpTenantBrandings
+     * const erpTenantBranding = await prisma.erpTenantBranding.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ErpTenantBrandings and only return the `tenantId`
+     * const erpTenantBrandingWithTenantIdOnly = await prisma.erpTenantBranding.createManyAndReturn({
+     *   select: { tenantId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ErpTenantBrandingCreateManyAndReturnArgs>(args?: SelectSubset<T, ErpTenantBrandingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ErpTenantBranding.
+     * @param {ErpTenantBrandingDeleteArgs} args - Arguments to delete one ErpTenantBranding.
+     * @example
+     * // Delete one ErpTenantBranding
+     * const ErpTenantBranding = await prisma.erpTenantBranding.delete({
+     *   where: {
+     *     // ... filter to delete one ErpTenantBranding
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ErpTenantBrandingDeleteArgs>(args: SelectSubset<T, ErpTenantBrandingDeleteArgs<ExtArgs>>): Prisma__ErpTenantBrandingClient<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ErpTenantBranding.
+     * @param {ErpTenantBrandingUpdateArgs} args - Arguments to update one ErpTenantBranding.
+     * @example
+     * // Update one ErpTenantBranding
+     * const erpTenantBranding = await prisma.erpTenantBranding.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ErpTenantBrandingUpdateArgs>(args: SelectSubset<T, ErpTenantBrandingUpdateArgs<ExtArgs>>): Prisma__ErpTenantBrandingClient<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ErpTenantBrandings.
+     * @param {ErpTenantBrandingDeleteManyArgs} args - Arguments to filter ErpTenantBrandings to delete.
+     * @example
+     * // Delete a few ErpTenantBrandings
+     * const { count } = await prisma.erpTenantBranding.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ErpTenantBrandingDeleteManyArgs>(args?: SelectSubset<T, ErpTenantBrandingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpTenantBrandings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpTenantBrandingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ErpTenantBrandings
+     * const erpTenantBranding = await prisma.erpTenantBranding.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ErpTenantBrandingUpdateManyArgs>(args: SelectSubset<T, ErpTenantBrandingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ErpTenantBrandings and returns the data updated in the database.
+     * @param {ErpTenantBrandingUpdateManyAndReturnArgs} args - Arguments to update many ErpTenantBrandings.
+     * @example
+     * // Update many ErpTenantBrandings
+     * const erpTenantBranding = await prisma.erpTenantBranding.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ErpTenantBrandings and only return the `tenantId`
+     * const erpTenantBrandingWithTenantIdOnly = await prisma.erpTenantBranding.updateManyAndReturn({
+     *   select: { tenantId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ErpTenantBrandingUpdateManyAndReturnArgs>(args: SelectSubset<T, ErpTenantBrandingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ErpTenantBranding.
+     * @param {ErpTenantBrandingUpsertArgs} args - Arguments to update or create a ErpTenantBranding.
+     * @example
+     * // Update or create a ErpTenantBranding
+     * const erpTenantBranding = await prisma.erpTenantBranding.upsert({
+     *   create: {
+     *     // ... data to create a ErpTenantBranding
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ErpTenantBranding we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ErpTenantBrandingUpsertArgs>(args: SelectSubset<T, ErpTenantBrandingUpsertArgs<ExtArgs>>): Prisma__ErpTenantBrandingClient<$Result.GetResult<Prisma.$ErpTenantBrandingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ErpTenantBrandings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpTenantBrandingCountArgs} args - Arguments to filter ErpTenantBrandings to count.
+     * @example
+     * // Count the number of ErpTenantBrandings
+     * const count = await prisma.erpTenantBranding.count({
+     *   where: {
+     *     // ... the filter for the ErpTenantBrandings we want to count
+     *   }
+     * })
+    **/
+    count<T extends ErpTenantBrandingCountArgs>(
+      args?: Subset<T, ErpTenantBrandingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ErpTenantBrandingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ErpTenantBranding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpTenantBrandingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ErpTenantBrandingAggregateArgs>(args: Subset<T, ErpTenantBrandingAggregateArgs>): Prisma.PrismaPromise<GetErpTenantBrandingAggregateType<T>>
+
+    /**
+     * Group by ErpTenantBranding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ErpTenantBrandingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ErpTenantBrandingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ErpTenantBrandingGroupByArgs['orderBy'] }
+        : { orderBy?: ErpTenantBrandingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ErpTenantBrandingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetErpTenantBrandingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ErpTenantBranding model
+   */
+  readonly fields: ErpTenantBrandingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ErpTenantBranding.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ErpTenantBrandingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ErpTenantBranding model
+   */
+  interface ErpTenantBrandingFieldRefs {
+    readonly tenantId: FieldRef<"ErpTenantBranding", 'String'>
+    readonly logoUrl: FieldRef<"ErpTenantBranding", 'String'>
+    readonly stampUrl: FieldRef<"ErpTenantBranding", 'String'>
+    readonly signatureUrl: FieldRef<"ErpTenantBranding", 'String'>
+    readonly updatedAt: FieldRef<"ErpTenantBranding", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ErpTenantBranding findUnique
+   */
+  export type ErpTenantBrandingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpTenantBranding to fetch.
+     */
+    where: ErpTenantBrandingWhereUniqueInput
+  }
+
+  /**
+   * ErpTenantBranding findUniqueOrThrow
+   */
+  export type ErpTenantBrandingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpTenantBranding to fetch.
+     */
+    where: ErpTenantBrandingWhereUniqueInput
+  }
+
+  /**
+   * ErpTenantBranding findFirst
+   */
+  export type ErpTenantBrandingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpTenantBranding to fetch.
+     */
+    where?: ErpTenantBrandingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpTenantBrandings to fetch.
+     */
+    orderBy?: ErpTenantBrandingOrderByWithRelationInput | ErpTenantBrandingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpTenantBrandings.
+     */
+    cursor?: ErpTenantBrandingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpTenantBrandings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpTenantBrandings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpTenantBrandings.
+     */
+    distinct?: ErpTenantBrandingScalarFieldEnum | ErpTenantBrandingScalarFieldEnum[]
+  }
+
+  /**
+   * ErpTenantBranding findFirstOrThrow
+   */
+  export type ErpTenantBrandingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpTenantBranding to fetch.
+     */
+    where?: ErpTenantBrandingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpTenantBrandings to fetch.
+     */
+    orderBy?: ErpTenantBrandingOrderByWithRelationInput | ErpTenantBrandingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ErpTenantBrandings.
+     */
+    cursor?: ErpTenantBrandingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpTenantBrandings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpTenantBrandings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ErpTenantBrandings.
+     */
+    distinct?: ErpTenantBrandingScalarFieldEnum | ErpTenantBrandingScalarFieldEnum[]
+  }
+
+  /**
+   * ErpTenantBranding findMany
+   */
+  export type ErpTenantBrandingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * Filter, which ErpTenantBrandings to fetch.
+     */
+    where?: ErpTenantBrandingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ErpTenantBrandings to fetch.
+     */
+    orderBy?: ErpTenantBrandingOrderByWithRelationInput | ErpTenantBrandingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ErpTenantBrandings.
+     */
+    cursor?: ErpTenantBrandingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ErpTenantBrandings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ErpTenantBrandings.
+     */
+    skip?: number
+    distinct?: ErpTenantBrandingScalarFieldEnum | ErpTenantBrandingScalarFieldEnum[]
+  }
+
+  /**
+   * ErpTenantBranding create
+   */
+  export type ErpTenantBrandingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ErpTenantBranding.
+     */
+    data: XOR<ErpTenantBrandingCreateInput, ErpTenantBrandingUncheckedCreateInput>
+  }
+
+  /**
+   * ErpTenantBranding createMany
+   */
+  export type ErpTenantBrandingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ErpTenantBrandings.
+     */
+    data: ErpTenantBrandingCreateManyInput | ErpTenantBrandingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpTenantBranding createManyAndReturn
+   */
+  export type ErpTenantBrandingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * The data used to create many ErpTenantBrandings.
+     */
+    data: ErpTenantBrandingCreateManyInput | ErpTenantBrandingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ErpTenantBranding update
+   */
+  export type ErpTenantBrandingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ErpTenantBranding.
+     */
+    data: XOR<ErpTenantBrandingUpdateInput, ErpTenantBrandingUncheckedUpdateInput>
+    /**
+     * Choose, which ErpTenantBranding to update.
+     */
+    where: ErpTenantBrandingWhereUniqueInput
+  }
+
+  /**
+   * ErpTenantBranding updateMany
+   */
+  export type ErpTenantBrandingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ErpTenantBrandings.
+     */
+    data: XOR<ErpTenantBrandingUpdateManyMutationInput, ErpTenantBrandingUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpTenantBrandings to update
+     */
+    where?: ErpTenantBrandingWhereInput
+    /**
+     * Limit how many ErpTenantBrandings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpTenantBranding updateManyAndReturn
+   */
+  export type ErpTenantBrandingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * The data used to update ErpTenantBrandings.
+     */
+    data: XOR<ErpTenantBrandingUpdateManyMutationInput, ErpTenantBrandingUncheckedUpdateManyInput>
+    /**
+     * Filter which ErpTenantBrandings to update
+     */
+    where?: ErpTenantBrandingWhereInput
+    /**
+     * Limit how many ErpTenantBrandings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpTenantBranding upsert
+   */
+  export type ErpTenantBrandingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ErpTenantBranding to update in case it exists.
+     */
+    where: ErpTenantBrandingWhereUniqueInput
+    /**
+     * In case the ErpTenantBranding found by the `where` argument doesn't exist, create a new ErpTenantBranding with this data.
+     */
+    create: XOR<ErpTenantBrandingCreateInput, ErpTenantBrandingUncheckedCreateInput>
+    /**
+     * In case the ErpTenantBranding was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ErpTenantBrandingUpdateInput, ErpTenantBrandingUncheckedUpdateInput>
+  }
+
+  /**
+   * ErpTenantBranding delete
+   */
+  export type ErpTenantBrandingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+    /**
+     * Filter which ErpTenantBranding to delete.
+     */
+    where: ErpTenantBrandingWhereUniqueInput
+  }
+
+  /**
+   * ErpTenantBranding deleteMany
+   */
+  export type ErpTenantBrandingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ErpTenantBrandings to delete
+     */
+    where?: ErpTenantBrandingWhereInput
+    /**
+     * Limit how many ErpTenantBrandings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ErpTenantBranding without action
+   */
+  export type ErpTenantBrandingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ErpTenantBranding
+     */
+    select?: ErpTenantBrandingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ErpTenantBranding
+     */
+    omit?: ErpTenantBrandingOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -72676,6 +82151,22 @@ export namespace Prisma {
   export type InventoryBalanceScalarFieldEnum = (typeof InventoryBalanceScalarFieldEnum)[keyof typeof InventoryBalanceScalarFieldEnum]
 
 
+  export const InventoryLotScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    productId: 'productId',
+    warehouseId: 'warehouseId',
+    lotNumber: 'lotNumber',
+    quantity: 'quantity',
+    expiryDate: 'expiryDate',
+    status: 'status',
+    receivedAt: 'receivedAt',
+    version: 'version'
+  };
+
+  export type InventoryLotScalarFieldEnum = (typeof InventoryLotScalarFieldEnum)[keyof typeof InventoryLotScalarFieldEnum]
+
+
   export const StockMovementScalarFieldEnum: {
     id: 'id',
     tenantId: 'tenantId',
@@ -72689,6 +82180,31 @@ export namespace Prisma {
   };
 
   export type StockMovementScalarFieldEnum = (typeof StockMovementScalarFieldEnum)[keyof typeof StockMovementScalarFieldEnum]
+
+
+  export const WmsStockDocumentScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    docNo: 'docNo',
+    kind: 'kind',
+    body: 'body',
+    createdAt: 'createdAt'
+  };
+
+  export type WmsStockDocumentScalarFieldEnum = (typeof WmsStockDocumentScalarFieldEnum)[keyof typeof WmsStockDocumentScalarFieldEnum]
+
+
+  export const WmsReservationRecordScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    reservationCode: 'reservationCode',
+    body: 'body',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WmsReservationRecordScalarFieldEnum = (typeof WmsReservationRecordScalarFieldEnum)[keyof typeof WmsReservationRecordScalarFieldEnum]
 
 
   export const SalesOrderScalarFieldEnum: {
@@ -73373,6 +82889,85 @@ export namespace Prisma {
   export type CallTranscriptScalarFieldEnum = (typeof CallTranscriptScalarFieldEnum)[keyof typeof CallTranscriptScalarFieldEnum]
 
 
+  export const ErpProjectScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    code: 'code',
+    name: 'name',
+    deadline: 'deadline',
+    status: 'status',
+    delayDays: 'delayDays',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ErpProjectScalarFieldEnum = (typeof ErpProjectScalarFieldEnum)[keyof typeof ErpProjectScalarFieldEnum]
+
+
+  export const ErpProjectTaskScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    number: 'number',
+    title: 'title',
+    projectCode: 'projectCode',
+    assigneeName: 'assigneeName',
+    assigneeInitials: 'assigneeInitials',
+    deadline: 'deadline',
+    status: 'status',
+    priority: 'priority',
+    overdue: 'overdue',
+    unassigned: 'unassigned',
+    checklistDone: 'checklistDone',
+    checklistTotal: 'checklistTotal',
+    loggedMinutes: 'loggedMinutes',
+    loggedHours: 'loggedHours',
+    linkType: 'linkType',
+    linkRef: 'linkRef',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ErpProjectTaskScalarFieldEnum = (typeof ErpProjectTaskScalarFieldEnum)[keyof typeof ErpProjectTaskScalarFieldEnum]
+
+
+  export const ErpProjectMemberScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    projectCode: 'projectCode',
+    memberName: 'memberName',
+    roleFa: 'roleFa',
+    initials: 'initials'
+  };
+
+  export type ErpProjectMemberScalarFieldEnum = (typeof ErpProjectMemberScalarFieldEnum)[keyof typeof ErpProjectMemberScalarFieldEnum]
+
+
+  export const ErpMasterRecordScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    kind: 'kind',
+    code: 'code',
+    name: 'name',
+    status: 'status',
+    payload: 'payload',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ErpMasterRecordScalarFieldEnum = (typeof ErpMasterRecordScalarFieldEnum)[keyof typeof ErpMasterRecordScalarFieldEnum]
+
+
+  export const ErpTenantBrandingScalarFieldEnum: {
+    tenantId: 'tenantId',
+    logoUrl: 'logoUrl',
+    stampUrl: 'stampUrl',
+    signatureUrl: 'signatureUrl',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ErpTenantBrandingScalarFieldEnum = (typeof ErpTenantBrandingScalarFieldEnum)[keyof typeof ErpTenantBrandingScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -73381,19 +82976,19 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
   export const NullableJsonNullValueInput: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-  export const JsonNullValueInput: {
-    JsonNull: typeof JsonNull
-  };
-
-  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -73518,6 +83113,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'InventoryLotStatus'
+   */
+  export type EnumInventoryLotStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InventoryLotStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'InventoryLotStatus[]'
+   */
+  export type ListEnumInventoryLotStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InventoryLotStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'MovementType'
    */
   export type EnumMovementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MovementType'>
@@ -73528,6 +83137,34 @@ export namespace Prisma {
    * Reference to a field of type 'MovementType[]'
    */
   export type ListEnumMovementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MovementType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WmsDocumentKind'
+   */
+  export type EnumWmsDocumentKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WmsDocumentKind'>
+    
+
+
+  /**
+   * Reference to a field of type 'WmsDocumentKind[]'
+   */
+  export type ListEnumWmsDocumentKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WmsDocumentKind[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -73556,20 +83193,6 @@ export namespace Prisma {
    * Reference to a field of type 'PurchaseRequestStatus[]'
    */
   export type ListEnumPurchaseRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseRequestStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -73808,6 +83431,62 @@ export namespace Prisma {
    * Reference to a field of type 'CallDirection[]'
    */
   export type ListEnumCallDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CallDirection[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpProjectStatus'
+   */
+  export type EnumErpProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpProjectStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpProjectStatus[]'
+   */
+  export type ListEnumErpProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpProjectStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpProjectTaskStatus'
+   */
+  export type EnumErpProjectTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpProjectTaskStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpProjectTaskStatus[]'
+   */
+  export type ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpProjectTaskStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpMasterKind'
+   */
+  export type EnumErpMasterKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpMasterKind'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpMasterKind[]'
+   */
+  export type ListEnumErpMasterKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpMasterKind[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpMasterStatus'
+   */
+  export type EnumErpMasterStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpMasterStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpMasterStatus[]'
+   */
+  export type ListEnumErpMasterStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpMasterStatus[]'>
     
 
 
@@ -74182,6 +83861,86 @@ export namespace Prisma {
     version?: IntWithAggregatesFilter<"InventoryBalance"> | number
   }
 
+  export type InventoryLotWhereInput = {
+    AND?: InventoryLotWhereInput | InventoryLotWhereInput[]
+    OR?: InventoryLotWhereInput[]
+    NOT?: InventoryLotWhereInput | InventoryLotWhereInput[]
+    id?: StringFilter<"InventoryLot"> | string
+    tenantId?: StringFilter<"InventoryLot"> | string
+    productId?: StringFilter<"InventoryLot"> | string
+    warehouseId?: StringFilter<"InventoryLot"> | string
+    lotNumber?: StringFilter<"InventoryLot"> | string
+    quantity?: BigIntFilter<"InventoryLot"> | bigint | number
+    expiryDate?: DateTimeNullableFilter<"InventoryLot"> | Date | string | null
+    status?: EnumInventoryLotStatusFilter<"InventoryLot"> | $Enums.InventoryLotStatus
+    receivedAt?: DateTimeFilter<"InventoryLot"> | Date | string
+    version?: IntFilter<"InventoryLot"> | number
+  }
+
+  export type InventoryLotOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    productId?: SortOrder
+    warehouseId?: SortOrder
+    lotNumber?: SortOrder
+    quantity?: SortOrder
+    expiryDate?: SortOrderInput | SortOrder
+    status?: SortOrder
+    receivedAt?: SortOrder
+    version?: SortOrder
+  }
+
+  export type InventoryLotWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_lotNumber?: InventoryLotTenantIdLotNumberCompoundUniqueInput
+    AND?: InventoryLotWhereInput | InventoryLotWhereInput[]
+    OR?: InventoryLotWhereInput[]
+    NOT?: InventoryLotWhereInput | InventoryLotWhereInput[]
+    tenantId?: StringFilter<"InventoryLot"> | string
+    productId?: StringFilter<"InventoryLot"> | string
+    warehouseId?: StringFilter<"InventoryLot"> | string
+    lotNumber?: StringFilter<"InventoryLot"> | string
+    quantity?: BigIntFilter<"InventoryLot"> | bigint | number
+    expiryDate?: DateTimeNullableFilter<"InventoryLot"> | Date | string | null
+    status?: EnumInventoryLotStatusFilter<"InventoryLot"> | $Enums.InventoryLotStatus
+    receivedAt?: DateTimeFilter<"InventoryLot"> | Date | string
+    version?: IntFilter<"InventoryLot"> | number
+  }, "id" | "tenantId_lotNumber">
+
+  export type InventoryLotOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    productId?: SortOrder
+    warehouseId?: SortOrder
+    lotNumber?: SortOrder
+    quantity?: SortOrder
+    expiryDate?: SortOrderInput | SortOrder
+    status?: SortOrder
+    receivedAt?: SortOrder
+    version?: SortOrder
+    _count?: InventoryLotCountOrderByAggregateInput
+    _avg?: InventoryLotAvgOrderByAggregateInput
+    _max?: InventoryLotMaxOrderByAggregateInput
+    _min?: InventoryLotMinOrderByAggregateInput
+    _sum?: InventoryLotSumOrderByAggregateInput
+  }
+
+  export type InventoryLotScalarWhereWithAggregatesInput = {
+    AND?: InventoryLotScalarWhereWithAggregatesInput | InventoryLotScalarWhereWithAggregatesInput[]
+    OR?: InventoryLotScalarWhereWithAggregatesInput[]
+    NOT?: InventoryLotScalarWhereWithAggregatesInput | InventoryLotScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InventoryLot"> | string
+    tenantId?: StringWithAggregatesFilter<"InventoryLot"> | string
+    productId?: StringWithAggregatesFilter<"InventoryLot"> | string
+    warehouseId?: StringWithAggregatesFilter<"InventoryLot"> | string
+    lotNumber?: StringWithAggregatesFilter<"InventoryLot"> | string
+    quantity?: BigIntWithAggregatesFilter<"InventoryLot"> | bigint | number
+    expiryDate?: DateTimeNullableWithAggregatesFilter<"InventoryLot"> | Date | string | null
+    status?: EnumInventoryLotStatusWithAggregatesFilter<"InventoryLot"> | $Enums.InventoryLotStatus
+    receivedAt?: DateTimeWithAggregatesFilter<"InventoryLot"> | Date | string
+    version?: IntWithAggregatesFilter<"InventoryLot"> | number
+  }
+
   export type StockMovementWhereInput = {
     AND?: StockMovementWhereInput | StockMovementWhereInput[]
     OR?: StockMovementWhereInput[]
@@ -74254,6 +84013,127 @@ export namespace Prisma {
     referenceType?: StringWithAggregatesFilter<"StockMovement"> | string
     referenceId?: StringWithAggregatesFilter<"StockMovement"> | string
     createdAt?: DateTimeWithAggregatesFilter<"StockMovement"> | Date | string
+  }
+
+  export type WmsStockDocumentWhereInput = {
+    AND?: WmsStockDocumentWhereInput | WmsStockDocumentWhereInput[]
+    OR?: WmsStockDocumentWhereInput[]
+    NOT?: WmsStockDocumentWhereInput | WmsStockDocumentWhereInput[]
+    id?: StringFilter<"WmsStockDocument"> | string
+    tenantId?: StringFilter<"WmsStockDocument"> | string
+    docNo?: StringFilter<"WmsStockDocument"> | string
+    kind?: EnumWmsDocumentKindFilter<"WmsStockDocument"> | $Enums.WmsDocumentKind
+    body?: JsonFilter<"WmsStockDocument">
+    createdAt?: DateTimeFilter<"WmsStockDocument"> | Date | string
+  }
+
+  export type WmsStockDocumentOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    docNo?: SortOrder
+    kind?: SortOrder
+    body?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type WmsStockDocumentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_docNo?: WmsStockDocumentTenantIdDocNoCompoundUniqueInput
+    AND?: WmsStockDocumentWhereInput | WmsStockDocumentWhereInput[]
+    OR?: WmsStockDocumentWhereInput[]
+    NOT?: WmsStockDocumentWhereInput | WmsStockDocumentWhereInput[]
+    tenantId?: StringFilter<"WmsStockDocument"> | string
+    docNo?: StringFilter<"WmsStockDocument"> | string
+    kind?: EnumWmsDocumentKindFilter<"WmsStockDocument"> | $Enums.WmsDocumentKind
+    body?: JsonFilter<"WmsStockDocument">
+    createdAt?: DateTimeFilter<"WmsStockDocument"> | Date | string
+  }, "id" | "tenantId_docNo">
+
+  export type WmsStockDocumentOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    docNo?: SortOrder
+    kind?: SortOrder
+    body?: SortOrder
+    createdAt?: SortOrder
+    _count?: WmsStockDocumentCountOrderByAggregateInput
+    _max?: WmsStockDocumentMaxOrderByAggregateInput
+    _min?: WmsStockDocumentMinOrderByAggregateInput
+  }
+
+  export type WmsStockDocumentScalarWhereWithAggregatesInput = {
+    AND?: WmsStockDocumentScalarWhereWithAggregatesInput | WmsStockDocumentScalarWhereWithAggregatesInput[]
+    OR?: WmsStockDocumentScalarWhereWithAggregatesInput[]
+    NOT?: WmsStockDocumentScalarWhereWithAggregatesInput | WmsStockDocumentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WmsStockDocument"> | string
+    tenantId?: StringWithAggregatesFilter<"WmsStockDocument"> | string
+    docNo?: StringWithAggregatesFilter<"WmsStockDocument"> | string
+    kind?: EnumWmsDocumentKindWithAggregatesFilter<"WmsStockDocument"> | $Enums.WmsDocumentKind
+    body?: JsonWithAggregatesFilter<"WmsStockDocument">
+    createdAt?: DateTimeWithAggregatesFilter<"WmsStockDocument"> | Date | string
+  }
+
+  export type WmsReservationRecordWhereInput = {
+    AND?: WmsReservationRecordWhereInput | WmsReservationRecordWhereInput[]
+    OR?: WmsReservationRecordWhereInput[]
+    NOT?: WmsReservationRecordWhereInput | WmsReservationRecordWhereInput[]
+    id?: StringFilter<"WmsReservationRecord"> | string
+    tenantId?: StringFilter<"WmsReservationRecord"> | string
+    reservationCode?: StringFilter<"WmsReservationRecord"> | string
+    body?: JsonFilter<"WmsReservationRecord">
+    status?: StringFilter<"WmsReservationRecord"> | string
+    createdAt?: DateTimeFilter<"WmsReservationRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"WmsReservationRecord"> | Date | string
+  }
+
+  export type WmsReservationRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    reservationCode?: SortOrder
+    body?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WmsReservationRecordWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_reservationCode?: WmsReservationRecordTenantIdReservationCodeCompoundUniqueInput
+    AND?: WmsReservationRecordWhereInput | WmsReservationRecordWhereInput[]
+    OR?: WmsReservationRecordWhereInput[]
+    NOT?: WmsReservationRecordWhereInput | WmsReservationRecordWhereInput[]
+    tenantId?: StringFilter<"WmsReservationRecord"> | string
+    reservationCode?: StringFilter<"WmsReservationRecord"> | string
+    body?: JsonFilter<"WmsReservationRecord">
+    status?: StringFilter<"WmsReservationRecord"> | string
+    createdAt?: DateTimeFilter<"WmsReservationRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"WmsReservationRecord"> | Date | string
+  }, "id" | "tenantId_reservationCode">
+
+  export type WmsReservationRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    reservationCode?: SortOrder
+    body?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WmsReservationRecordCountOrderByAggregateInput
+    _max?: WmsReservationRecordMaxOrderByAggregateInput
+    _min?: WmsReservationRecordMinOrderByAggregateInput
+  }
+
+  export type WmsReservationRecordScalarWhereWithAggregatesInput = {
+    AND?: WmsReservationRecordScalarWhereWithAggregatesInput | WmsReservationRecordScalarWhereWithAggregatesInput[]
+    OR?: WmsReservationRecordScalarWhereWithAggregatesInput[]
+    NOT?: WmsReservationRecordScalarWhereWithAggregatesInput | WmsReservationRecordScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WmsReservationRecord"> | string
+    tenantId?: StringWithAggregatesFilter<"WmsReservationRecord"> | string
+    reservationCode?: StringWithAggregatesFilter<"WmsReservationRecord"> | string
+    body?: JsonWithAggregatesFilter<"WmsReservationRecord">
+    status?: StringWithAggregatesFilter<"WmsReservationRecord"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"WmsReservationRecord"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WmsReservationRecord"> | Date | string
   }
 
   export type SalesOrderWhereInput = {
@@ -77809,6 +87689,400 @@ export namespace Prisma {
     confidence?: DecimalWithAggregatesFilter<"CallTranscript"> | Decimal | DecimalJsLike | number | string
   }
 
+  export type ErpProjectWhereInput = {
+    AND?: ErpProjectWhereInput | ErpProjectWhereInput[]
+    OR?: ErpProjectWhereInput[]
+    NOT?: ErpProjectWhereInput | ErpProjectWhereInput[]
+    id?: StringFilter<"ErpProject"> | string
+    tenantId?: StringFilter<"ErpProject"> | string
+    code?: StringFilter<"ErpProject"> | string
+    name?: StringFilter<"ErpProject"> | string
+    deadline?: StringNullableFilter<"ErpProject"> | string | null
+    status?: EnumErpProjectStatusFilter<"ErpProject"> | $Enums.ErpProjectStatus
+    delayDays?: IntNullableFilter<"ErpProject"> | number | null
+    createdAt?: DateTimeFilter<"ErpProject"> | Date | string
+    updatedAt?: DateTimeFilter<"ErpProject"> | Date | string
+    tasks?: ErpProjectTaskListRelationFilter
+  }
+
+  export type ErpProjectOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    deadline?: SortOrderInput | SortOrder
+    status?: SortOrder
+    delayDays?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tasks?: ErpProjectTaskOrderByRelationAggregateInput
+  }
+
+  export type ErpProjectWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_code?: ErpProjectTenantIdCodeCompoundUniqueInput
+    AND?: ErpProjectWhereInput | ErpProjectWhereInput[]
+    OR?: ErpProjectWhereInput[]
+    NOT?: ErpProjectWhereInput | ErpProjectWhereInput[]
+    tenantId?: StringFilter<"ErpProject"> | string
+    code?: StringFilter<"ErpProject"> | string
+    name?: StringFilter<"ErpProject"> | string
+    deadline?: StringNullableFilter<"ErpProject"> | string | null
+    status?: EnumErpProjectStatusFilter<"ErpProject"> | $Enums.ErpProjectStatus
+    delayDays?: IntNullableFilter<"ErpProject"> | number | null
+    createdAt?: DateTimeFilter<"ErpProject"> | Date | string
+    updatedAt?: DateTimeFilter<"ErpProject"> | Date | string
+    tasks?: ErpProjectTaskListRelationFilter
+  }, "id" | "tenantId_code">
+
+  export type ErpProjectOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    deadline?: SortOrderInput | SortOrder
+    status?: SortOrder
+    delayDays?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ErpProjectCountOrderByAggregateInput
+    _avg?: ErpProjectAvgOrderByAggregateInput
+    _max?: ErpProjectMaxOrderByAggregateInput
+    _min?: ErpProjectMinOrderByAggregateInput
+    _sum?: ErpProjectSumOrderByAggregateInput
+  }
+
+  export type ErpProjectScalarWhereWithAggregatesInput = {
+    AND?: ErpProjectScalarWhereWithAggregatesInput | ErpProjectScalarWhereWithAggregatesInput[]
+    OR?: ErpProjectScalarWhereWithAggregatesInput[]
+    NOT?: ErpProjectScalarWhereWithAggregatesInput | ErpProjectScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ErpProject"> | string
+    tenantId?: StringWithAggregatesFilter<"ErpProject"> | string
+    code?: StringWithAggregatesFilter<"ErpProject"> | string
+    name?: StringWithAggregatesFilter<"ErpProject"> | string
+    deadline?: StringNullableWithAggregatesFilter<"ErpProject"> | string | null
+    status?: EnumErpProjectStatusWithAggregatesFilter<"ErpProject"> | $Enums.ErpProjectStatus
+    delayDays?: IntNullableWithAggregatesFilter<"ErpProject"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"ErpProject"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ErpProject"> | Date | string
+  }
+
+  export type ErpProjectTaskWhereInput = {
+    AND?: ErpProjectTaskWhereInput | ErpProjectTaskWhereInput[]
+    OR?: ErpProjectTaskWhereInput[]
+    NOT?: ErpProjectTaskWhereInput | ErpProjectTaskWhereInput[]
+    id?: StringFilter<"ErpProjectTask"> | string
+    tenantId?: StringFilter<"ErpProjectTask"> | string
+    number?: StringFilter<"ErpProjectTask"> | string
+    title?: StringFilter<"ErpProjectTask"> | string
+    projectCode?: StringNullableFilter<"ErpProjectTask"> | string | null
+    assigneeName?: StringNullableFilter<"ErpProjectTask"> | string | null
+    assigneeInitials?: StringNullableFilter<"ErpProjectTask"> | string | null
+    deadline?: StringNullableFilter<"ErpProjectTask"> | string | null
+    status?: EnumErpProjectTaskStatusFilter<"ErpProjectTask"> | $Enums.ErpProjectTaskStatus
+    priority?: StringFilter<"ErpProjectTask"> | string
+    overdue?: BoolFilter<"ErpProjectTask"> | boolean
+    unassigned?: BoolFilter<"ErpProjectTask"> | boolean
+    checklistDone?: IntNullableFilter<"ErpProjectTask"> | number | null
+    checklistTotal?: IntNullableFilter<"ErpProjectTask"> | number | null
+    loggedMinutes?: IntNullableFilter<"ErpProjectTask"> | number | null
+    loggedHours?: StringNullableFilter<"ErpProjectTask"> | string | null
+    linkType?: StringNullableFilter<"ErpProjectTask"> | string | null
+    linkRef?: StringNullableFilter<"ErpProjectTask"> | string | null
+    createdAt?: DateTimeFilter<"ErpProjectTask"> | Date | string
+    updatedAt?: DateTimeFilter<"ErpProjectTask"> | Date | string
+    project?: XOR<ErpProjectNullableScalarRelationFilter, ErpProjectWhereInput> | null
+  }
+
+  export type ErpProjectTaskOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    projectCode?: SortOrderInput | SortOrder
+    assigneeName?: SortOrderInput | SortOrder
+    assigneeInitials?: SortOrderInput | SortOrder
+    deadline?: SortOrderInput | SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    overdue?: SortOrder
+    unassigned?: SortOrder
+    checklistDone?: SortOrderInput | SortOrder
+    checklistTotal?: SortOrderInput | SortOrder
+    loggedMinutes?: SortOrderInput | SortOrder
+    loggedHours?: SortOrderInput | SortOrder
+    linkType?: SortOrderInput | SortOrder
+    linkRef?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    project?: ErpProjectOrderByWithRelationInput
+  }
+
+  export type ErpProjectTaskWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_number?: ErpProjectTaskTenantIdNumberCompoundUniqueInput
+    AND?: ErpProjectTaskWhereInput | ErpProjectTaskWhereInput[]
+    OR?: ErpProjectTaskWhereInput[]
+    NOT?: ErpProjectTaskWhereInput | ErpProjectTaskWhereInput[]
+    tenantId?: StringFilter<"ErpProjectTask"> | string
+    number?: StringFilter<"ErpProjectTask"> | string
+    title?: StringFilter<"ErpProjectTask"> | string
+    projectCode?: StringNullableFilter<"ErpProjectTask"> | string | null
+    assigneeName?: StringNullableFilter<"ErpProjectTask"> | string | null
+    assigneeInitials?: StringNullableFilter<"ErpProjectTask"> | string | null
+    deadline?: StringNullableFilter<"ErpProjectTask"> | string | null
+    status?: EnumErpProjectTaskStatusFilter<"ErpProjectTask"> | $Enums.ErpProjectTaskStatus
+    priority?: StringFilter<"ErpProjectTask"> | string
+    overdue?: BoolFilter<"ErpProjectTask"> | boolean
+    unassigned?: BoolFilter<"ErpProjectTask"> | boolean
+    checklistDone?: IntNullableFilter<"ErpProjectTask"> | number | null
+    checklistTotal?: IntNullableFilter<"ErpProjectTask"> | number | null
+    loggedMinutes?: IntNullableFilter<"ErpProjectTask"> | number | null
+    loggedHours?: StringNullableFilter<"ErpProjectTask"> | string | null
+    linkType?: StringNullableFilter<"ErpProjectTask"> | string | null
+    linkRef?: StringNullableFilter<"ErpProjectTask"> | string | null
+    createdAt?: DateTimeFilter<"ErpProjectTask"> | Date | string
+    updatedAt?: DateTimeFilter<"ErpProjectTask"> | Date | string
+    project?: XOR<ErpProjectNullableScalarRelationFilter, ErpProjectWhereInput> | null
+  }, "id" | "tenantId_number">
+
+  export type ErpProjectTaskOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    projectCode?: SortOrderInput | SortOrder
+    assigneeName?: SortOrderInput | SortOrder
+    assigneeInitials?: SortOrderInput | SortOrder
+    deadline?: SortOrderInput | SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    overdue?: SortOrder
+    unassigned?: SortOrder
+    checklistDone?: SortOrderInput | SortOrder
+    checklistTotal?: SortOrderInput | SortOrder
+    loggedMinutes?: SortOrderInput | SortOrder
+    loggedHours?: SortOrderInput | SortOrder
+    linkType?: SortOrderInput | SortOrder
+    linkRef?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ErpProjectTaskCountOrderByAggregateInput
+    _avg?: ErpProjectTaskAvgOrderByAggregateInput
+    _max?: ErpProjectTaskMaxOrderByAggregateInput
+    _min?: ErpProjectTaskMinOrderByAggregateInput
+    _sum?: ErpProjectTaskSumOrderByAggregateInput
+  }
+
+  export type ErpProjectTaskScalarWhereWithAggregatesInput = {
+    AND?: ErpProjectTaskScalarWhereWithAggregatesInput | ErpProjectTaskScalarWhereWithAggregatesInput[]
+    OR?: ErpProjectTaskScalarWhereWithAggregatesInput[]
+    NOT?: ErpProjectTaskScalarWhereWithAggregatesInput | ErpProjectTaskScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ErpProjectTask"> | string
+    tenantId?: StringWithAggregatesFilter<"ErpProjectTask"> | string
+    number?: StringWithAggregatesFilter<"ErpProjectTask"> | string
+    title?: StringWithAggregatesFilter<"ErpProjectTask"> | string
+    projectCode?: StringNullableWithAggregatesFilter<"ErpProjectTask"> | string | null
+    assigneeName?: StringNullableWithAggregatesFilter<"ErpProjectTask"> | string | null
+    assigneeInitials?: StringNullableWithAggregatesFilter<"ErpProjectTask"> | string | null
+    deadline?: StringNullableWithAggregatesFilter<"ErpProjectTask"> | string | null
+    status?: EnumErpProjectTaskStatusWithAggregatesFilter<"ErpProjectTask"> | $Enums.ErpProjectTaskStatus
+    priority?: StringWithAggregatesFilter<"ErpProjectTask"> | string
+    overdue?: BoolWithAggregatesFilter<"ErpProjectTask"> | boolean
+    unassigned?: BoolWithAggregatesFilter<"ErpProjectTask"> | boolean
+    checklistDone?: IntNullableWithAggregatesFilter<"ErpProjectTask"> | number | null
+    checklistTotal?: IntNullableWithAggregatesFilter<"ErpProjectTask"> | number | null
+    loggedMinutes?: IntNullableWithAggregatesFilter<"ErpProjectTask"> | number | null
+    loggedHours?: StringNullableWithAggregatesFilter<"ErpProjectTask"> | string | null
+    linkType?: StringNullableWithAggregatesFilter<"ErpProjectTask"> | string | null
+    linkRef?: StringNullableWithAggregatesFilter<"ErpProjectTask"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ErpProjectTask"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ErpProjectTask"> | Date | string
+  }
+
+  export type ErpProjectMemberWhereInput = {
+    AND?: ErpProjectMemberWhereInput | ErpProjectMemberWhereInput[]
+    OR?: ErpProjectMemberWhereInput[]
+    NOT?: ErpProjectMemberWhereInput | ErpProjectMemberWhereInput[]
+    id?: StringFilter<"ErpProjectMember"> | string
+    tenantId?: StringFilter<"ErpProjectMember"> | string
+    projectCode?: StringFilter<"ErpProjectMember"> | string
+    memberName?: StringFilter<"ErpProjectMember"> | string
+    roleFa?: StringFilter<"ErpProjectMember"> | string
+    initials?: StringNullableFilter<"ErpProjectMember"> | string | null
+  }
+
+  export type ErpProjectMemberOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projectCode?: SortOrder
+    memberName?: SortOrder
+    roleFa?: SortOrder
+    initials?: SortOrderInput | SortOrder
+  }
+
+  export type ErpProjectMemberWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_projectCode_memberName?: ErpProjectMemberTenantIdProjectCodeMemberNameCompoundUniqueInput
+    AND?: ErpProjectMemberWhereInput | ErpProjectMemberWhereInput[]
+    OR?: ErpProjectMemberWhereInput[]
+    NOT?: ErpProjectMemberWhereInput | ErpProjectMemberWhereInput[]
+    tenantId?: StringFilter<"ErpProjectMember"> | string
+    projectCode?: StringFilter<"ErpProjectMember"> | string
+    memberName?: StringFilter<"ErpProjectMember"> | string
+    roleFa?: StringFilter<"ErpProjectMember"> | string
+    initials?: StringNullableFilter<"ErpProjectMember"> | string | null
+  }, "id" | "tenantId_projectCode_memberName">
+
+  export type ErpProjectMemberOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projectCode?: SortOrder
+    memberName?: SortOrder
+    roleFa?: SortOrder
+    initials?: SortOrderInput | SortOrder
+    _count?: ErpProjectMemberCountOrderByAggregateInput
+    _max?: ErpProjectMemberMaxOrderByAggregateInput
+    _min?: ErpProjectMemberMinOrderByAggregateInput
+  }
+
+  export type ErpProjectMemberScalarWhereWithAggregatesInput = {
+    AND?: ErpProjectMemberScalarWhereWithAggregatesInput | ErpProjectMemberScalarWhereWithAggregatesInput[]
+    OR?: ErpProjectMemberScalarWhereWithAggregatesInput[]
+    NOT?: ErpProjectMemberScalarWhereWithAggregatesInput | ErpProjectMemberScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ErpProjectMember"> | string
+    tenantId?: StringWithAggregatesFilter<"ErpProjectMember"> | string
+    projectCode?: StringWithAggregatesFilter<"ErpProjectMember"> | string
+    memberName?: StringWithAggregatesFilter<"ErpProjectMember"> | string
+    roleFa?: StringWithAggregatesFilter<"ErpProjectMember"> | string
+    initials?: StringNullableWithAggregatesFilter<"ErpProjectMember"> | string | null
+  }
+
+  export type ErpMasterRecordWhereInput = {
+    AND?: ErpMasterRecordWhereInput | ErpMasterRecordWhereInput[]
+    OR?: ErpMasterRecordWhereInput[]
+    NOT?: ErpMasterRecordWhereInput | ErpMasterRecordWhereInput[]
+    id?: StringFilter<"ErpMasterRecord"> | string
+    tenantId?: StringFilter<"ErpMasterRecord"> | string
+    kind?: EnumErpMasterKindFilter<"ErpMasterRecord"> | $Enums.ErpMasterKind
+    code?: StringFilter<"ErpMasterRecord"> | string
+    name?: StringFilter<"ErpMasterRecord"> | string
+    status?: EnumErpMasterStatusFilter<"ErpMasterRecord"> | $Enums.ErpMasterStatus
+    payload?: JsonNullableFilter<"ErpMasterRecord">
+    createdAt?: DateTimeFilter<"ErpMasterRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"ErpMasterRecord"> | Date | string
+  }
+
+  export type ErpMasterRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    kind?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    payload?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpMasterRecordWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_kind_code?: ErpMasterRecordTenantIdKindCodeCompoundUniqueInput
+    AND?: ErpMasterRecordWhereInput | ErpMasterRecordWhereInput[]
+    OR?: ErpMasterRecordWhereInput[]
+    NOT?: ErpMasterRecordWhereInput | ErpMasterRecordWhereInput[]
+    tenantId?: StringFilter<"ErpMasterRecord"> | string
+    kind?: EnumErpMasterKindFilter<"ErpMasterRecord"> | $Enums.ErpMasterKind
+    code?: StringFilter<"ErpMasterRecord"> | string
+    name?: StringFilter<"ErpMasterRecord"> | string
+    status?: EnumErpMasterStatusFilter<"ErpMasterRecord"> | $Enums.ErpMasterStatus
+    payload?: JsonNullableFilter<"ErpMasterRecord">
+    createdAt?: DateTimeFilter<"ErpMasterRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"ErpMasterRecord"> | Date | string
+  }, "id" | "tenantId_kind_code">
+
+  export type ErpMasterRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    kind?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    payload?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ErpMasterRecordCountOrderByAggregateInput
+    _max?: ErpMasterRecordMaxOrderByAggregateInput
+    _min?: ErpMasterRecordMinOrderByAggregateInput
+  }
+
+  export type ErpMasterRecordScalarWhereWithAggregatesInput = {
+    AND?: ErpMasterRecordScalarWhereWithAggregatesInput | ErpMasterRecordScalarWhereWithAggregatesInput[]
+    OR?: ErpMasterRecordScalarWhereWithAggregatesInput[]
+    NOT?: ErpMasterRecordScalarWhereWithAggregatesInput | ErpMasterRecordScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ErpMasterRecord"> | string
+    tenantId?: StringWithAggregatesFilter<"ErpMasterRecord"> | string
+    kind?: EnumErpMasterKindWithAggregatesFilter<"ErpMasterRecord"> | $Enums.ErpMasterKind
+    code?: StringWithAggregatesFilter<"ErpMasterRecord"> | string
+    name?: StringWithAggregatesFilter<"ErpMasterRecord"> | string
+    status?: EnumErpMasterStatusWithAggregatesFilter<"ErpMasterRecord"> | $Enums.ErpMasterStatus
+    payload?: JsonNullableWithAggregatesFilter<"ErpMasterRecord">
+    createdAt?: DateTimeWithAggregatesFilter<"ErpMasterRecord"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ErpMasterRecord"> | Date | string
+  }
+
+  export type ErpTenantBrandingWhereInput = {
+    AND?: ErpTenantBrandingWhereInput | ErpTenantBrandingWhereInput[]
+    OR?: ErpTenantBrandingWhereInput[]
+    NOT?: ErpTenantBrandingWhereInput | ErpTenantBrandingWhereInput[]
+    tenantId?: StringFilter<"ErpTenantBranding"> | string
+    logoUrl?: StringNullableFilter<"ErpTenantBranding"> | string | null
+    stampUrl?: StringNullableFilter<"ErpTenantBranding"> | string | null
+    signatureUrl?: StringNullableFilter<"ErpTenantBranding"> | string | null
+    updatedAt?: DateTimeFilter<"ErpTenantBranding"> | Date | string
+  }
+
+  export type ErpTenantBrandingOrderByWithRelationInput = {
+    tenantId?: SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    stampUrl?: SortOrderInput | SortOrder
+    signatureUrl?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpTenantBrandingWhereUniqueInput = Prisma.AtLeast<{
+    tenantId?: string
+    AND?: ErpTenantBrandingWhereInput | ErpTenantBrandingWhereInput[]
+    OR?: ErpTenantBrandingWhereInput[]
+    NOT?: ErpTenantBrandingWhereInput | ErpTenantBrandingWhereInput[]
+    logoUrl?: StringNullableFilter<"ErpTenantBranding"> | string | null
+    stampUrl?: StringNullableFilter<"ErpTenantBranding"> | string | null
+    signatureUrl?: StringNullableFilter<"ErpTenantBranding"> | string | null
+    updatedAt?: DateTimeFilter<"ErpTenantBranding"> | Date | string
+  }, "tenantId">
+
+  export type ErpTenantBrandingOrderByWithAggregationInput = {
+    tenantId?: SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    stampUrl?: SortOrderInput | SortOrder
+    signatureUrl?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: ErpTenantBrandingCountOrderByAggregateInput
+    _max?: ErpTenantBrandingMaxOrderByAggregateInput
+    _min?: ErpTenantBrandingMinOrderByAggregateInput
+  }
+
+  export type ErpTenantBrandingScalarWhereWithAggregatesInput = {
+    AND?: ErpTenantBrandingScalarWhereWithAggregatesInput | ErpTenantBrandingScalarWhereWithAggregatesInput[]
+    OR?: ErpTenantBrandingScalarWhereWithAggregatesInput[]
+    NOT?: ErpTenantBrandingScalarWhereWithAggregatesInput | ErpTenantBrandingScalarWhereWithAggregatesInput[]
+    tenantId?: StringWithAggregatesFilter<"ErpTenantBranding"> | string
+    logoUrl?: StringNullableWithAggregatesFilter<"ErpTenantBranding"> | string | null
+    stampUrl?: StringNullableWithAggregatesFilter<"ErpTenantBranding"> | string | null
+    signatureUrl?: StringNullableWithAggregatesFilter<"ErpTenantBranding"> | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"ErpTenantBranding"> | Date | string
+  }
+
   export type ContactCreateInput = {
     id?: string
     tenantId: string
@@ -78205,6 +88479,97 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
   }
 
+  export type InventoryLotCreateInput = {
+    id?: string
+    tenantId: string
+    productId: string
+    warehouseId: string
+    lotNumber: string
+    quantity?: bigint | number
+    expiryDate?: Date | string | null
+    status?: $Enums.InventoryLotStatus
+    receivedAt?: Date | string
+    version?: number
+  }
+
+  export type InventoryLotUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    productId: string
+    warehouseId: string
+    lotNumber: string
+    quantity?: bigint | number
+    expiryDate?: Date | string | null
+    status?: $Enums.InventoryLotStatus
+    receivedAt?: Date | string
+    version?: number
+  }
+
+  export type InventoryLotUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    warehouseId?: StringFieldUpdateOperationsInput | string
+    lotNumber?: StringFieldUpdateOperationsInput | string
+    quantity?: BigIntFieldUpdateOperationsInput | bigint | number
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumInventoryLotStatusFieldUpdateOperationsInput | $Enums.InventoryLotStatus
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    version?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InventoryLotUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    warehouseId?: StringFieldUpdateOperationsInput | string
+    lotNumber?: StringFieldUpdateOperationsInput | string
+    quantity?: BigIntFieldUpdateOperationsInput | bigint | number
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumInventoryLotStatusFieldUpdateOperationsInput | $Enums.InventoryLotStatus
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    version?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InventoryLotCreateManyInput = {
+    id?: string
+    tenantId: string
+    productId: string
+    warehouseId: string
+    lotNumber: string
+    quantity?: bigint | number
+    expiryDate?: Date | string | null
+    status?: $Enums.InventoryLotStatus
+    receivedAt?: Date | string
+    version?: number
+  }
+
+  export type InventoryLotUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    warehouseId?: StringFieldUpdateOperationsInput | string
+    lotNumber?: StringFieldUpdateOperationsInput | string
+    quantity?: BigIntFieldUpdateOperationsInput | bigint | number
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumInventoryLotStatusFieldUpdateOperationsInput | $Enums.InventoryLotStatus
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    version?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InventoryLotUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    warehouseId?: StringFieldUpdateOperationsInput | string
+    lotNumber?: StringFieldUpdateOperationsInput | string
+    quantity?: BigIntFieldUpdateOperationsInput | bigint | number
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumInventoryLotStatusFieldUpdateOperationsInput | $Enums.InventoryLotStatus
+    receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    version?: IntFieldUpdateOperationsInput | number
+  }
+
   export type StockMovementCreateInput = {
     id?: string
     tenantId: string
@@ -78287,6 +88652,139 @@ export namespace Prisma {
     referenceType?: StringFieldUpdateOperationsInput | string
     referenceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WmsStockDocumentCreateInput = {
+    id?: string
+    tenantId: string
+    docNo: string
+    kind: $Enums.WmsDocumentKind
+    body: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type WmsStockDocumentUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    docNo: string
+    kind: $Enums.WmsDocumentKind
+    body: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type WmsStockDocumentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    docNo?: StringFieldUpdateOperationsInput | string
+    kind?: EnumWmsDocumentKindFieldUpdateOperationsInput | $Enums.WmsDocumentKind
+    body?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WmsStockDocumentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    docNo?: StringFieldUpdateOperationsInput | string
+    kind?: EnumWmsDocumentKindFieldUpdateOperationsInput | $Enums.WmsDocumentKind
+    body?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WmsStockDocumentCreateManyInput = {
+    id?: string
+    tenantId: string
+    docNo: string
+    kind: $Enums.WmsDocumentKind
+    body: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type WmsStockDocumentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    docNo?: StringFieldUpdateOperationsInput | string
+    kind?: EnumWmsDocumentKindFieldUpdateOperationsInput | $Enums.WmsDocumentKind
+    body?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WmsStockDocumentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    docNo?: StringFieldUpdateOperationsInput | string
+    kind?: EnumWmsDocumentKindFieldUpdateOperationsInput | $Enums.WmsDocumentKind
+    body?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WmsReservationRecordCreateInput = {
+    id?: string
+    tenantId: string
+    reservationCode: string
+    body: JsonNullValueInput | InputJsonValue
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WmsReservationRecordUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    reservationCode: string
+    body: JsonNullValueInput | InputJsonValue
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WmsReservationRecordUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    reservationCode?: StringFieldUpdateOperationsInput | string
+    body?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WmsReservationRecordUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    reservationCode?: StringFieldUpdateOperationsInput | string
+    body?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WmsReservationRecordCreateManyInput = {
+    id?: string
+    tenantId: string
+    reservationCode: string
+    body: JsonNullValueInput | InputJsonValue
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WmsReservationRecordUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    reservationCode?: StringFieldUpdateOperationsInput | string
+    body?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WmsReservationRecordUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    reservationCode?: StringFieldUpdateOperationsInput | string
+    body?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SalesOrderCreateInput = {
@@ -82059,6 +92557,454 @@ export namespace Prisma {
     confidence?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
+  export type ErpProjectCreateInput = {
+    id?: string
+    tenantId: string
+    code: string
+    name: string
+    deadline?: string | null
+    status?: $Enums.ErpProjectStatus
+    delayDays?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: ErpProjectTaskCreateNestedManyWithoutProjectInput
+  }
+
+  export type ErpProjectUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    code: string
+    name: string
+    deadline?: string | null
+    status?: $Enums.ErpProjectStatus
+    delayDays?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: ErpProjectTaskUncheckedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ErpProjectUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectStatusFieldUpdateOperationsInput | $Enums.ErpProjectStatus
+    delayDays?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: ErpProjectTaskUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ErpProjectUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectStatusFieldUpdateOperationsInput | $Enums.ErpProjectStatus
+    delayDays?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: ErpProjectTaskUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ErpProjectCreateManyInput = {
+    id?: string
+    tenantId: string
+    code: string
+    name: string
+    deadline?: string | null
+    status?: $Enums.ErpProjectStatus
+    delayDays?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpProjectUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectStatusFieldUpdateOperationsInput | $Enums.ErpProjectStatus
+    delayDays?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpProjectUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectStatusFieldUpdateOperationsInput | $Enums.ErpProjectStatus
+    delayDays?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpProjectTaskCreateInput = {
+    id?: string
+    number: string
+    title: string
+    assigneeName?: string | null
+    assigneeInitials?: string | null
+    deadline?: string | null
+    status?: $Enums.ErpProjectTaskStatus
+    priority?: string
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: number | null
+    checklistTotal?: number | null
+    loggedMinutes?: number | null
+    loggedHours?: string | null
+    linkType?: string | null
+    linkRef?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    project?: ErpProjectCreateNestedOneWithoutTasksInput
+  }
+
+  export type ErpProjectTaskUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    number: string
+    title: string
+    projectCode?: string | null
+    assigneeName?: string | null
+    assigneeInitials?: string | null
+    deadline?: string | null
+    status?: $Enums.ErpProjectTaskStatus
+    priority?: string
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: number | null
+    checklistTotal?: number | null
+    loggedMinutes?: number | null
+    loggedHours?: string | null
+    linkType?: string | null
+    linkRef?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpProjectTaskUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    assigneeName?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeInitials?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectTaskStatusFieldUpdateOperationsInput | $Enums.ErpProjectTaskStatus
+    priority?: StringFieldUpdateOperationsInput | string
+    overdue?: BoolFieldUpdateOperationsInput | boolean
+    unassigned?: BoolFieldUpdateOperationsInput | boolean
+    checklistDone?: NullableIntFieldUpdateOperationsInput | number | null
+    checklistTotal?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedHours?: NullableStringFieldUpdateOperationsInput | string | null
+    linkType?: NullableStringFieldUpdateOperationsInput | string | null
+    linkRef?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    project?: ErpProjectUpdateOneWithoutTasksNestedInput
+  }
+
+  export type ErpProjectTaskUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    projectCode?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeName?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeInitials?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectTaskStatusFieldUpdateOperationsInput | $Enums.ErpProjectTaskStatus
+    priority?: StringFieldUpdateOperationsInput | string
+    overdue?: BoolFieldUpdateOperationsInput | boolean
+    unassigned?: BoolFieldUpdateOperationsInput | boolean
+    checklistDone?: NullableIntFieldUpdateOperationsInput | number | null
+    checklistTotal?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedHours?: NullableStringFieldUpdateOperationsInput | string | null
+    linkType?: NullableStringFieldUpdateOperationsInput | string | null
+    linkRef?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpProjectTaskCreateManyInput = {
+    id?: string
+    tenantId: string
+    number: string
+    title: string
+    projectCode?: string | null
+    assigneeName?: string | null
+    assigneeInitials?: string | null
+    deadline?: string | null
+    status?: $Enums.ErpProjectTaskStatus
+    priority?: string
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: number | null
+    checklistTotal?: number | null
+    loggedMinutes?: number | null
+    loggedHours?: string | null
+    linkType?: string | null
+    linkRef?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpProjectTaskUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    assigneeName?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeInitials?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectTaskStatusFieldUpdateOperationsInput | $Enums.ErpProjectTaskStatus
+    priority?: StringFieldUpdateOperationsInput | string
+    overdue?: BoolFieldUpdateOperationsInput | boolean
+    unassigned?: BoolFieldUpdateOperationsInput | boolean
+    checklistDone?: NullableIntFieldUpdateOperationsInput | number | null
+    checklistTotal?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedHours?: NullableStringFieldUpdateOperationsInput | string | null
+    linkType?: NullableStringFieldUpdateOperationsInput | string | null
+    linkRef?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpProjectTaskUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    projectCode?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeName?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeInitials?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectTaskStatusFieldUpdateOperationsInput | $Enums.ErpProjectTaskStatus
+    priority?: StringFieldUpdateOperationsInput | string
+    overdue?: BoolFieldUpdateOperationsInput | boolean
+    unassigned?: BoolFieldUpdateOperationsInput | boolean
+    checklistDone?: NullableIntFieldUpdateOperationsInput | number | null
+    checklistTotal?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedHours?: NullableStringFieldUpdateOperationsInput | string | null
+    linkType?: NullableStringFieldUpdateOperationsInput | string | null
+    linkRef?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpProjectMemberCreateInput = {
+    id?: string
+    tenantId: string
+    projectCode: string
+    memberName: string
+    roleFa: string
+    initials?: string | null
+  }
+
+  export type ErpProjectMemberUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    projectCode: string
+    memberName: string
+    roleFa: string
+    initials?: string | null
+  }
+
+  export type ErpProjectMemberUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    projectCode?: StringFieldUpdateOperationsInput | string
+    memberName?: StringFieldUpdateOperationsInput | string
+    roleFa?: StringFieldUpdateOperationsInput | string
+    initials?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ErpProjectMemberUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    projectCode?: StringFieldUpdateOperationsInput | string
+    memberName?: StringFieldUpdateOperationsInput | string
+    roleFa?: StringFieldUpdateOperationsInput | string
+    initials?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ErpProjectMemberCreateManyInput = {
+    id?: string
+    tenantId: string
+    projectCode: string
+    memberName: string
+    roleFa: string
+    initials?: string | null
+  }
+
+  export type ErpProjectMemberUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    projectCode?: StringFieldUpdateOperationsInput | string
+    memberName?: StringFieldUpdateOperationsInput | string
+    roleFa?: StringFieldUpdateOperationsInput | string
+    initials?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ErpProjectMemberUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    projectCode?: StringFieldUpdateOperationsInput | string
+    memberName?: StringFieldUpdateOperationsInput | string
+    roleFa?: StringFieldUpdateOperationsInput | string
+    initials?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ErpMasterRecordCreateInput = {
+    id?: string
+    tenantId: string
+    kind: $Enums.ErpMasterKind
+    code: string
+    name: string
+    status?: $Enums.ErpMasterStatus
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpMasterRecordUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    kind: $Enums.ErpMasterKind
+    code: string
+    name: string
+    status?: $Enums.ErpMasterStatus
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpMasterRecordUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    kind?: EnumErpMasterKindFieldUpdateOperationsInput | $Enums.ErpMasterKind
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumErpMasterStatusFieldUpdateOperationsInput | $Enums.ErpMasterStatus
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpMasterRecordUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    kind?: EnumErpMasterKindFieldUpdateOperationsInput | $Enums.ErpMasterKind
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumErpMasterStatusFieldUpdateOperationsInput | $Enums.ErpMasterStatus
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpMasterRecordCreateManyInput = {
+    id?: string
+    tenantId: string
+    kind: $Enums.ErpMasterKind
+    code: string
+    name: string
+    status?: $Enums.ErpMasterStatus
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpMasterRecordUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    kind?: EnumErpMasterKindFieldUpdateOperationsInput | $Enums.ErpMasterKind
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumErpMasterStatusFieldUpdateOperationsInput | $Enums.ErpMasterStatus
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpMasterRecordUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    kind?: EnumErpMasterKindFieldUpdateOperationsInput | $Enums.ErpMasterKind
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumErpMasterStatusFieldUpdateOperationsInput | $Enums.ErpMasterStatus
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpTenantBrandingCreateInput = {
+    tenantId: string
+    logoUrl?: string | null
+    stampUrl?: string | null
+    signatureUrl?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type ErpTenantBrandingUncheckedCreateInput = {
+    tenantId: string
+    logoUrl?: string | null
+    stampUrl?: string | null
+    signatureUrl?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type ErpTenantBrandingUpdateInput = {
+    tenantId?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stampUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpTenantBrandingUncheckedUpdateInput = {
+    tenantId?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stampUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpTenantBrandingCreateManyInput = {
+    tenantId: string
+    logoUrl?: string | null
+    stampUrl?: string | null
+    signatureUrl?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type ErpTenantBrandingUpdateManyMutationInput = {
+    tenantId?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stampUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpTenantBrandingUncheckedUpdateManyInput = {
+    tenantId?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stampUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    signatureUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -82527,6 +93473,77 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type EnumInventoryLotStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.InventoryLotStatus | EnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InventoryLotStatus[] | ListEnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InventoryLotStatus[] | ListEnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInventoryLotStatusFilter<$PrismaModel> | $Enums.InventoryLotStatus
+  }
+
+  export type InventoryLotTenantIdLotNumberCompoundUniqueInput = {
+    tenantId: string
+    lotNumber: string
+  }
+
+  export type InventoryLotCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    productId?: SortOrder
+    warehouseId?: SortOrder
+    lotNumber?: SortOrder
+    quantity?: SortOrder
+    expiryDate?: SortOrder
+    status?: SortOrder
+    receivedAt?: SortOrder
+    version?: SortOrder
+  }
+
+  export type InventoryLotAvgOrderByAggregateInput = {
+    quantity?: SortOrder
+    version?: SortOrder
+  }
+
+  export type InventoryLotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    productId?: SortOrder
+    warehouseId?: SortOrder
+    lotNumber?: SortOrder
+    quantity?: SortOrder
+    expiryDate?: SortOrder
+    status?: SortOrder
+    receivedAt?: SortOrder
+    version?: SortOrder
+  }
+
+  export type InventoryLotMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    productId?: SortOrder
+    warehouseId?: SortOrder
+    lotNumber?: SortOrder
+    quantity?: SortOrder
+    expiryDate?: SortOrder
+    status?: SortOrder
+    receivedAt?: SortOrder
+    version?: SortOrder
+  }
+
+  export type InventoryLotSumOrderByAggregateInput = {
+    quantity?: SortOrder
+    version?: SortOrder
+  }
+
+  export type EnumInventoryLotStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InventoryLotStatus | EnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InventoryLotStatus[] | ListEnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InventoryLotStatus[] | ListEnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInventoryLotStatusWithAggregatesFilter<$PrismaModel> | $Enums.InventoryLotStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInventoryLotStatusFilter<$PrismaModel>
+    _max?: NestedEnumInventoryLotStatusFilter<$PrismaModel>
+  }
+
   export type EnumMovementTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.MovementType | EnumMovementTypeFieldRefInput<$PrismaModel>
     in?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
@@ -82586,6 +93603,135 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMovementTypeFilter<$PrismaModel>
     _max?: NestedEnumMovementTypeFilter<$PrismaModel>
+  }
+
+  export type EnumWmsDocumentKindFilter<$PrismaModel = never> = {
+    equals?: $Enums.WmsDocumentKind | EnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    in?: $Enums.WmsDocumentKind[] | ListEnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WmsDocumentKind[] | ListEnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    not?: NestedEnumWmsDocumentKindFilter<$PrismaModel> | $Enums.WmsDocumentKind
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type WmsStockDocumentTenantIdDocNoCompoundUniqueInput = {
+    tenantId: string
+    docNo: string
+  }
+
+  export type WmsStockDocumentCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    docNo?: SortOrder
+    kind?: SortOrder
+    body?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type WmsStockDocumentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    docNo?: SortOrder
+    kind?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type WmsStockDocumentMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    docNo?: SortOrder
+    kind?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumWmsDocumentKindWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WmsDocumentKind | EnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    in?: $Enums.WmsDocumentKind[] | ListEnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WmsDocumentKind[] | ListEnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    not?: NestedEnumWmsDocumentKindWithAggregatesFilter<$PrismaModel> | $Enums.WmsDocumentKind
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWmsDocumentKindFilter<$PrismaModel>
+    _max?: NestedEnumWmsDocumentKindFilter<$PrismaModel>
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type WmsReservationRecordTenantIdReservationCodeCompoundUniqueInput = {
+    tenantId: string
+    reservationCode: string
+  }
+
+  export type WmsReservationRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    reservationCode?: SortOrder
+    body?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WmsReservationRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    reservationCode?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WmsReservationRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    reservationCode?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type EnumSalesOrderStatusFilter<$PrismaModel = never> = {
@@ -83910,29 +95056,6 @@ export namespace Prisma {
   export type WipSumOrderByAggregateInput = {
     quantity?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type EnumQcResultFilter<$PrismaModel = never> = {
     equals?: $Enums.QcResult | EnumQcResultFieldRefInput<$PrismaModel>
@@ -83964,32 +95087,6 @@ export namespace Prisma {
     productionOrderId?: SortOrder
     inspectionDate?: SortOrder
     result?: SortOrder
-  }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type EnumQcResultWithAggregatesFilter<$PrismaModel = never> = {
@@ -85357,6 +96454,348 @@ export namespace Prisma {
     confidence?: SortOrder
   }
 
+  export type EnumErpProjectStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpProjectStatus | EnumErpProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpProjectStatus[] | ListEnumErpProjectStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpProjectStatus[] | ListEnumErpProjectStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpProjectStatusFilter<$PrismaModel> | $Enums.ErpProjectStatus
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type ErpProjectTaskListRelationFilter = {
+    every?: ErpProjectTaskWhereInput
+    some?: ErpProjectTaskWhereInput
+    none?: ErpProjectTaskWhereInput
+  }
+
+  export type ErpProjectTaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ErpProjectTenantIdCodeCompoundUniqueInput = {
+    tenantId: string
+    code: string
+  }
+
+  export type ErpProjectCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    deadline?: SortOrder
+    status?: SortOrder
+    delayDays?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpProjectAvgOrderByAggregateInput = {
+    delayDays?: SortOrder
+  }
+
+  export type ErpProjectMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    deadline?: SortOrder
+    status?: SortOrder
+    delayDays?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpProjectMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    deadline?: SortOrder
+    status?: SortOrder
+    delayDays?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpProjectSumOrderByAggregateInput = {
+    delayDays?: SortOrder
+  }
+
+  export type EnumErpProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpProjectStatus | EnumErpProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpProjectStatus[] | ListEnumErpProjectStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpProjectStatus[] | ListEnumErpProjectStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.ErpProjectStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumErpProjectStatusFilter<$PrismaModel>
+    _max?: NestedEnumErpProjectStatusFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type EnumErpProjectTaskStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpProjectTaskStatus | EnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpProjectTaskStatus[] | ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpProjectTaskStatus[] | ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpProjectTaskStatusFilter<$PrismaModel> | $Enums.ErpProjectTaskStatus
+  }
+
+  export type ErpProjectNullableScalarRelationFilter = {
+    is?: ErpProjectWhereInput | null
+    isNot?: ErpProjectWhereInput | null
+  }
+
+  export type ErpProjectTaskTenantIdNumberCompoundUniqueInput = {
+    tenantId: string
+    number: string
+  }
+
+  export type ErpProjectTaskCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    projectCode?: SortOrder
+    assigneeName?: SortOrder
+    assigneeInitials?: SortOrder
+    deadline?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    overdue?: SortOrder
+    unassigned?: SortOrder
+    checklistDone?: SortOrder
+    checklistTotal?: SortOrder
+    loggedMinutes?: SortOrder
+    loggedHours?: SortOrder
+    linkType?: SortOrder
+    linkRef?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpProjectTaskAvgOrderByAggregateInput = {
+    checklistDone?: SortOrder
+    checklistTotal?: SortOrder
+    loggedMinutes?: SortOrder
+  }
+
+  export type ErpProjectTaskMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    projectCode?: SortOrder
+    assigneeName?: SortOrder
+    assigneeInitials?: SortOrder
+    deadline?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    overdue?: SortOrder
+    unassigned?: SortOrder
+    checklistDone?: SortOrder
+    checklistTotal?: SortOrder
+    loggedMinutes?: SortOrder
+    loggedHours?: SortOrder
+    linkType?: SortOrder
+    linkRef?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpProjectTaskMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    number?: SortOrder
+    title?: SortOrder
+    projectCode?: SortOrder
+    assigneeName?: SortOrder
+    assigneeInitials?: SortOrder
+    deadline?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    overdue?: SortOrder
+    unassigned?: SortOrder
+    checklistDone?: SortOrder
+    checklistTotal?: SortOrder
+    loggedMinutes?: SortOrder
+    loggedHours?: SortOrder
+    linkType?: SortOrder
+    linkRef?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpProjectTaskSumOrderByAggregateInput = {
+    checklistDone?: SortOrder
+    checklistTotal?: SortOrder
+    loggedMinutes?: SortOrder
+  }
+
+  export type EnumErpProjectTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpProjectTaskStatus | EnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpProjectTaskStatus[] | ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpProjectTaskStatus[] | ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpProjectTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.ErpProjectTaskStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumErpProjectTaskStatusFilter<$PrismaModel>
+    _max?: NestedEnumErpProjectTaskStatusFilter<$PrismaModel>
+  }
+
+  export type ErpProjectMemberTenantIdProjectCodeMemberNameCompoundUniqueInput = {
+    tenantId: string
+    projectCode: string
+    memberName: string
+  }
+
+  export type ErpProjectMemberCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projectCode?: SortOrder
+    memberName?: SortOrder
+    roleFa?: SortOrder
+    initials?: SortOrder
+  }
+
+  export type ErpProjectMemberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projectCode?: SortOrder
+    memberName?: SortOrder
+    roleFa?: SortOrder
+    initials?: SortOrder
+  }
+
+  export type ErpProjectMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projectCode?: SortOrder
+    memberName?: SortOrder
+    roleFa?: SortOrder
+    initials?: SortOrder
+  }
+
+  export type EnumErpMasterKindFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpMasterKind | EnumErpMasterKindFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpMasterKind[] | ListEnumErpMasterKindFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpMasterKind[] | ListEnumErpMasterKindFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpMasterKindFilter<$PrismaModel> | $Enums.ErpMasterKind
+  }
+
+  export type EnumErpMasterStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpMasterStatus | EnumErpMasterStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpMasterStatus[] | ListEnumErpMasterStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpMasterStatus[] | ListEnumErpMasterStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpMasterStatusFilter<$PrismaModel> | $Enums.ErpMasterStatus
+  }
+
+  export type ErpMasterRecordTenantIdKindCodeCompoundUniqueInput = {
+    tenantId: string
+    kind: $Enums.ErpMasterKind
+    code: string
+  }
+
+  export type ErpMasterRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    kind?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    payload?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpMasterRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    kind?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpMasterRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    kind?: SortOrder
+    code?: SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumErpMasterKindWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpMasterKind | EnumErpMasterKindFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpMasterKind[] | ListEnumErpMasterKindFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpMasterKind[] | ListEnumErpMasterKindFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpMasterKindWithAggregatesFilter<$PrismaModel> | $Enums.ErpMasterKind
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumErpMasterKindFilter<$PrismaModel>
+    _max?: NestedEnumErpMasterKindFilter<$PrismaModel>
+  }
+
+  export type EnumErpMasterStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpMasterStatus | EnumErpMasterStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpMasterStatus[] | ListEnumErpMasterStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpMasterStatus[] | ListEnumErpMasterStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpMasterStatusWithAggregatesFilter<$PrismaModel> | $Enums.ErpMasterStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumErpMasterStatusFilter<$PrismaModel>
+    _max?: NestedEnumErpMasterStatusFilter<$PrismaModel>
+  }
+
+  export type ErpTenantBrandingCountOrderByAggregateInput = {
+    tenantId?: SortOrder
+    logoUrl?: SortOrder
+    stampUrl?: SortOrder
+    signatureUrl?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpTenantBrandingMaxOrderByAggregateInput = {
+    tenantId?: SortOrder
+    logoUrl?: SortOrder
+    stampUrl?: SortOrder
+    signatureUrl?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ErpTenantBrandingMinOrderByAggregateInput = {
+    tenantId?: SortOrder
+    logoUrl?: SortOrder
+    stampUrl?: SortOrder
+    signatureUrl?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type LeadCreateNestedManyWithoutContactInput = {
     create?: XOR<LeadCreateWithoutContactInput, LeadUncheckedCreateWithoutContactInput> | LeadCreateWithoutContactInput[] | LeadUncheckedCreateWithoutContactInput[]
     connectOrCreate?: LeadCreateOrConnectWithoutContactInput | LeadCreateOrConnectWithoutContactInput[]
@@ -85545,8 +96984,16 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type EnumInventoryLotStatusFieldUpdateOperationsInput = {
+    set?: $Enums.InventoryLotStatus
+  }
+
   export type EnumMovementTypeFieldUpdateOperationsInput = {
     set?: $Enums.MovementType
+  }
+
+  export type EnumWmsDocumentKindFieldUpdateOperationsInput = {
+    set?: $Enums.WmsDocumentKind
   }
 
   export type SalesOrderLineCreateNestedManyWithoutSalesOrderInput = {
@@ -87735,6 +99182,88 @@ export namespace Prisma {
     update?: XOR<XOR<CallLogUpdateToOneWithWhereWithoutTranscriptsInput, CallLogUpdateWithoutTranscriptsInput>, CallLogUncheckedUpdateWithoutTranscriptsInput>
   }
 
+  export type ErpProjectTaskCreateNestedManyWithoutProjectInput = {
+    create?: XOR<ErpProjectTaskCreateWithoutProjectInput, ErpProjectTaskUncheckedCreateWithoutProjectInput> | ErpProjectTaskCreateWithoutProjectInput[] | ErpProjectTaskUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ErpProjectTaskCreateOrConnectWithoutProjectInput | ErpProjectTaskCreateOrConnectWithoutProjectInput[]
+    createMany?: ErpProjectTaskCreateManyProjectInputEnvelope
+    connect?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+  }
+
+  export type ErpProjectTaskUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<ErpProjectTaskCreateWithoutProjectInput, ErpProjectTaskUncheckedCreateWithoutProjectInput> | ErpProjectTaskCreateWithoutProjectInput[] | ErpProjectTaskUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ErpProjectTaskCreateOrConnectWithoutProjectInput | ErpProjectTaskCreateOrConnectWithoutProjectInput[]
+    createMany?: ErpProjectTaskCreateManyProjectInputEnvelope
+    connect?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+  }
+
+  export type EnumErpProjectStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ErpProjectStatus
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type ErpProjectTaskUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<ErpProjectTaskCreateWithoutProjectInput, ErpProjectTaskUncheckedCreateWithoutProjectInput> | ErpProjectTaskCreateWithoutProjectInput[] | ErpProjectTaskUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ErpProjectTaskCreateOrConnectWithoutProjectInput | ErpProjectTaskCreateOrConnectWithoutProjectInput[]
+    upsert?: ErpProjectTaskUpsertWithWhereUniqueWithoutProjectInput | ErpProjectTaskUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: ErpProjectTaskCreateManyProjectInputEnvelope
+    set?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+    disconnect?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+    delete?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+    connect?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+    update?: ErpProjectTaskUpdateWithWhereUniqueWithoutProjectInput | ErpProjectTaskUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: ErpProjectTaskUpdateManyWithWhereWithoutProjectInput | ErpProjectTaskUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: ErpProjectTaskScalarWhereInput | ErpProjectTaskScalarWhereInput[]
+  }
+
+  export type ErpProjectTaskUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<ErpProjectTaskCreateWithoutProjectInput, ErpProjectTaskUncheckedCreateWithoutProjectInput> | ErpProjectTaskCreateWithoutProjectInput[] | ErpProjectTaskUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ErpProjectTaskCreateOrConnectWithoutProjectInput | ErpProjectTaskCreateOrConnectWithoutProjectInput[]
+    upsert?: ErpProjectTaskUpsertWithWhereUniqueWithoutProjectInput | ErpProjectTaskUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: ErpProjectTaskCreateManyProjectInputEnvelope
+    set?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+    disconnect?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+    delete?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+    connect?: ErpProjectTaskWhereUniqueInput | ErpProjectTaskWhereUniqueInput[]
+    update?: ErpProjectTaskUpdateWithWhereUniqueWithoutProjectInput | ErpProjectTaskUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: ErpProjectTaskUpdateManyWithWhereWithoutProjectInput | ErpProjectTaskUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: ErpProjectTaskScalarWhereInput | ErpProjectTaskScalarWhereInput[]
+  }
+
+  export type ErpProjectCreateNestedOneWithoutTasksInput = {
+    create?: XOR<ErpProjectCreateWithoutTasksInput, ErpProjectUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: ErpProjectCreateOrConnectWithoutTasksInput
+    connect?: ErpProjectWhereUniqueInput
+  }
+
+  export type EnumErpProjectTaskStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ErpProjectTaskStatus
+  }
+
+  export type ErpProjectUpdateOneWithoutTasksNestedInput = {
+    create?: XOR<ErpProjectCreateWithoutTasksInput, ErpProjectUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: ErpProjectCreateOrConnectWithoutTasksInput
+    upsert?: ErpProjectUpsertWithoutTasksInput
+    disconnect?: ErpProjectWhereInput | boolean
+    delete?: ErpProjectWhereInput | boolean
+    connect?: ErpProjectWhereUniqueInput
+    update?: XOR<XOR<ErpProjectUpdateToOneWithWhereWithoutTasksInput, ErpProjectUpdateWithoutTasksInput>, ErpProjectUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type EnumErpMasterKindFieldUpdateOperationsInput = {
+    set?: $Enums.ErpMasterKind
+  }
+
+  export type EnumErpMasterStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ErpMasterStatus
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -87980,6 +99509,23 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type NestedEnumInventoryLotStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.InventoryLotStatus | EnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InventoryLotStatus[] | ListEnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InventoryLotStatus[] | ListEnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInventoryLotStatusFilter<$PrismaModel> | $Enums.InventoryLotStatus
+  }
+
+  export type NestedEnumInventoryLotStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InventoryLotStatus | EnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InventoryLotStatus[] | ListEnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InventoryLotStatus[] | ListEnumInventoryLotStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInventoryLotStatusWithAggregatesFilter<$PrismaModel> | $Enums.InventoryLotStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInventoryLotStatusFilter<$PrismaModel>
+    _max?: NestedEnumInventoryLotStatusFilter<$PrismaModel>
+  }
+
   export type NestedEnumMovementTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.MovementType | EnumMovementTypeFieldRefInput<$PrismaModel>
     in?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
@@ -87995,6 +99541,46 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMovementTypeFilter<$PrismaModel>
     _max?: NestedEnumMovementTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumWmsDocumentKindFilter<$PrismaModel = never> = {
+    equals?: $Enums.WmsDocumentKind | EnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    in?: $Enums.WmsDocumentKind[] | ListEnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WmsDocumentKind[] | ListEnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    not?: NestedEnumWmsDocumentKindFilter<$PrismaModel> | $Enums.WmsDocumentKind
+  }
+
+  export type NestedEnumWmsDocumentKindWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WmsDocumentKind | EnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    in?: $Enums.WmsDocumentKind[] | ListEnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WmsDocumentKind[] | ListEnumWmsDocumentKindFieldRefInput<$PrismaModel>
+    not?: NestedEnumWmsDocumentKindWithAggregatesFilter<$PrismaModel> | $Enums.WmsDocumentKind
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWmsDocumentKindFilter<$PrismaModel>
+    _max?: NestedEnumWmsDocumentKindFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedEnumSalesOrderStatusFilter<$PrismaModel = never> = {
@@ -88189,29 +99775,6 @@ export namespace Prisma {
     notIn?: $Enums.QcResult[] | ListEnumQcResultFieldRefInput<$PrismaModel>
     not?: NestedEnumQcResultFilter<$PrismaModel> | $Enums.QcResult
   }
-  export type NestedJsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type NestedEnumQcResultWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.QcResult | EnumQcResultFieldRefInput<$PrismaModel>
@@ -88391,6 +99954,101 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumCallDirectionFilter<$PrismaModel>
     _max?: NestedEnumCallDirectionFilter<$PrismaModel>
+  }
+
+  export type NestedEnumErpProjectStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpProjectStatus | EnumErpProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpProjectStatus[] | ListEnumErpProjectStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpProjectStatus[] | ListEnumErpProjectStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpProjectStatusFilter<$PrismaModel> | $Enums.ErpProjectStatus
+  }
+
+  export type NestedEnumErpProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpProjectStatus | EnumErpProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpProjectStatus[] | ListEnumErpProjectStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpProjectStatus[] | ListEnumErpProjectStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.ErpProjectStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumErpProjectStatusFilter<$PrismaModel>
+    _max?: NestedEnumErpProjectStatusFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumErpProjectTaskStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpProjectTaskStatus | EnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpProjectTaskStatus[] | ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpProjectTaskStatus[] | ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpProjectTaskStatusFilter<$PrismaModel> | $Enums.ErpProjectTaskStatus
+  }
+
+  export type NestedEnumErpProjectTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpProjectTaskStatus | EnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpProjectTaskStatus[] | ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpProjectTaskStatus[] | ListEnumErpProjectTaskStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpProjectTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.ErpProjectTaskStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumErpProjectTaskStatusFilter<$PrismaModel>
+    _max?: NestedEnumErpProjectTaskStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumErpMasterKindFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpMasterKind | EnumErpMasterKindFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpMasterKind[] | ListEnumErpMasterKindFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpMasterKind[] | ListEnumErpMasterKindFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpMasterKindFilter<$PrismaModel> | $Enums.ErpMasterKind
+  }
+
+  export type NestedEnumErpMasterStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpMasterStatus | EnumErpMasterStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpMasterStatus[] | ListEnumErpMasterStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpMasterStatus[] | ListEnumErpMasterStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpMasterStatusFilter<$PrismaModel> | $Enums.ErpMasterStatus
+  }
+
+  export type NestedEnumErpMasterKindWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpMasterKind | EnumErpMasterKindFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpMasterKind[] | ListEnumErpMasterKindFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpMasterKind[] | ListEnumErpMasterKindFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpMasterKindWithAggregatesFilter<$PrismaModel> | $Enums.ErpMasterKind
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumErpMasterKindFilter<$PrismaModel>
+    _max?: NestedEnumErpMasterKindFilter<$PrismaModel>
+  }
+
+  export type NestedEnumErpMasterStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpMasterStatus | EnumErpMasterStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ErpMasterStatus[] | ListEnumErpMasterStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ErpMasterStatus[] | ListEnumErpMasterStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumErpMasterStatusWithAggregatesFilter<$PrismaModel> | $Enums.ErpMasterStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumErpMasterStatusFilter<$PrismaModel>
+    _max?: NestedEnumErpMasterStatusFilter<$PrismaModel>
   }
 
   export type LeadCreateWithoutContactInput = {
@@ -93058,6 +104716,164 @@ export namespace Prisma {
     recordings?: CallRecordingUncheckedUpdateManyWithoutCallLogNestedInput
   }
 
+  export type ErpProjectTaskCreateWithoutProjectInput = {
+    id?: string
+    number: string
+    title: string
+    assigneeName?: string | null
+    assigneeInitials?: string | null
+    deadline?: string | null
+    status?: $Enums.ErpProjectTaskStatus
+    priority?: string
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: number | null
+    checklistTotal?: number | null
+    loggedMinutes?: number | null
+    loggedHours?: string | null
+    linkType?: string | null
+    linkRef?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpProjectTaskUncheckedCreateWithoutProjectInput = {
+    id?: string
+    number: string
+    title: string
+    assigneeName?: string | null
+    assigneeInitials?: string | null
+    deadline?: string | null
+    status?: $Enums.ErpProjectTaskStatus
+    priority?: string
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: number | null
+    checklistTotal?: number | null
+    loggedMinutes?: number | null
+    loggedHours?: string | null
+    linkType?: string | null
+    linkRef?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpProjectTaskCreateOrConnectWithoutProjectInput = {
+    where: ErpProjectTaskWhereUniqueInput
+    create: XOR<ErpProjectTaskCreateWithoutProjectInput, ErpProjectTaskUncheckedCreateWithoutProjectInput>
+  }
+
+  export type ErpProjectTaskCreateManyProjectInputEnvelope = {
+    data: ErpProjectTaskCreateManyProjectInput | ErpProjectTaskCreateManyProjectInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ErpProjectTaskUpsertWithWhereUniqueWithoutProjectInput = {
+    where: ErpProjectTaskWhereUniqueInput
+    update: XOR<ErpProjectTaskUpdateWithoutProjectInput, ErpProjectTaskUncheckedUpdateWithoutProjectInput>
+    create: XOR<ErpProjectTaskCreateWithoutProjectInput, ErpProjectTaskUncheckedCreateWithoutProjectInput>
+  }
+
+  export type ErpProjectTaskUpdateWithWhereUniqueWithoutProjectInput = {
+    where: ErpProjectTaskWhereUniqueInput
+    data: XOR<ErpProjectTaskUpdateWithoutProjectInput, ErpProjectTaskUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type ErpProjectTaskUpdateManyWithWhereWithoutProjectInput = {
+    where: ErpProjectTaskScalarWhereInput
+    data: XOR<ErpProjectTaskUpdateManyMutationInput, ErpProjectTaskUncheckedUpdateManyWithoutProjectInput>
+  }
+
+  export type ErpProjectTaskScalarWhereInput = {
+    AND?: ErpProjectTaskScalarWhereInput | ErpProjectTaskScalarWhereInput[]
+    OR?: ErpProjectTaskScalarWhereInput[]
+    NOT?: ErpProjectTaskScalarWhereInput | ErpProjectTaskScalarWhereInput[]
+    id?: StringFilter<"ErpProjectTask"> | string
+    tenantId?: StringFilter<"ErpProjectTask"> | string
+    number?: StringFilter<"ErpProjectTask"> | string
+    title?: StringFilter<"ErpProjectTask"> | string
+    projectCode?: StringNullableFilter<"ErpProjectTask"> | string | null
+    assigneeName?: StringNullableFilter<"ErpProjectTask"> | string | null
+    assigneeInitials?: StringNullableFilter<"ErpProjectTask"> | string | null
+    deadline?: StringNullableFilter<"ErpProjectTask"> | string | null
+    status?: EnumErpProjectTaskStatusFilter<"ErpProjectTask"> | $Enums.ErpProjectTaskStatus
+    priority?: StringFilter<"ErpProjectTask"> | string
+    overdue?: BoolFilter<"ErpProjectTask"> | boolean
+    unassigned?: BoolFilter<"ErpProjectTask"> | boolean
+    checklistDone?: IntNullableFilter<"ErpProjectTask"> | number | null
+    checklistTotal?: IntNullableFilter<"ErpProjectTask"> | number | null
+    loggedMinutes?: IntNullableFilter<"ErpProjectTask"> | number | null
+    loggedHours?: StringNullableFilter<"ErpProjectTask"> | string | null
+    linkType?: StringNullableFilter<"ErpProjectTask"> | string | null
+    linkRef?: StringNullableFilter<"ErpProjectTask"> | string | null
+    createdAt?: DateTimeFilter<"ErpProjectTask"> | Date | string
+    updatedAt?: DateTimeFilter<"ErpProjectTask"> | Date | string
+  }
+
+  export type ErpProjectCreateWithoutTasksInput = {
+    id?: string
+    tenantId: string
+    code: string
+    name: string
+    deadline?: string | null
+    status?: $Enums.ErpProjectStatus
+    delayDays?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpProjectUncheckedCreateWithoutTasksInput = {
+    id?: string
+    tenantId: string
+    code: string
+    name: string
+    deadline?: string | null
+    status?: $Enums.ErpProjectStatus
+    delayDays?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpProjectCreateOrConnectWithoutTasksInput = {
+    where: ErpProjectWhereUniqueInput
+    create: XOR<ErpProjectCreateWithoutTasksInput, ErpProjectUncheckedCreateWithoutTasksInput>
+  }
+
+  export type ErpProjectUpsertWithoutTasksInput = {
+    update: XOR<ErpProjectUpdateWithoutTasksInput, ErpProjectUncheckedUpdateWithoutTasksInput>
+    create: XOR<ErpProjectCreateWithoutTasksInput, ErpProjectUncheckedCreateWithoutTasksInput>
+    where?: ErpProjectWhereInput
+  }
+
+  export type ErpProjectUpdateToOneWithWhereWithoutTasksInput = {
+    where?: ErpProjectWhereInput
+    data: XOR<ErpProjectUpdateWithoutTasksInput, ErpProjectUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type ErpProjectUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectStatusFieldUpdateOperationsInput | $Enums.ErpProjectStatus
+    delayDays?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpProjectUncheckedUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectStatusFieldUpdateOperationsInput | $Enums.ErpProjectStatus
+    delayDays?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type LeadCreateManyContactInput = {
     id?: string
     tenantId: string
@@ -94538,6 +106354,90 @@ export namespace Prisma {
     transcriptText?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
     confidence?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type ErpProjectTaskCreateManyProjectInput = {
+    id?: string
+    number: string
+    title: string
+    assigneeName?: string | null
+    assigneeInitials?: string | null
+    deadline?: string | null
+    status?: $Enums.ErpProjectTaskStatus
+    priority?: string
+    overdue?: boolean
+    unassigned?: boolean
+    checklistDone?: number | null
+    checklistTotal?: number | null
+    loggedMinutes?: number | null
+    loggedHours?: string | null
+    linkType?: string | null
+    linkRef?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ErpProjectTaskUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    assigneeName?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeInitials?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectTaskStatusFieldUpdateOperationsInput | $Enums.ErpProjectTaskStatus
+    priority?: StringFieldUpdateOperationsInput | string
+    overdue?: BoolFieldUpdateOperationsInput | boolean
+    unassigned?: BoolFieldUpdateOperationsInput | boolean
+    checklistDone?: NullableIntFieldUpdateOperationsInput | number | null
+    checklistTotal?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedHours?: NullableStringFieldUpdateOperationsInput | string | null
+    linkType?: NullableStringFieldUpdateOperationsInput | string | null
+    linkRef?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpProjectTaskUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    assigneeName?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeInitials?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectTaskStatusFieldUpdateOperationsInput | $Enums.ErpProjectTaskStatus
+    priority?: StringFieldUpdateOperationsInput | string
+    overdue?: BoolFieldUpdateOperationsInput | boolean
+    unassigned?: BoolFieldUpdateOperationsInput | boolean
+    checklistDone?: NullableIntFieldUpdateOperationsInput | number | null
+    checklistTotal?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedHours?: NullableStringFieldUpdateOperationsInput | string | null
+    linkType?: NullableStringFieldUpdateOperationsInput | string | null
+    linkRef?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ErpProjectTaskUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    assigneeName?: NullableStringFieldUpdateOperationsInput | string | null
+    assigneeInitials?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumErpProjectTaskStatusFieldUpdateOperationsInput | $Enums.ErpProjectTaskStatus
+    priority?: StringFieldUpdateOperationsInput | string
+    overdue?: BoolFieldUpdateOperationsInput | boolean
+    unassigned?: BoolFieldUpdateOperationsInput | boolean
+    checklistDone?: NullableIntFieldUpdateOperationsInput | number | null
+    checklistTotal?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    loggedHours?: NullableStringFieldUpdateOperationsInput | string | null
+    linkType?: NullableStringFieldUpdateOperationsInput | string | null
+    linkRef?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

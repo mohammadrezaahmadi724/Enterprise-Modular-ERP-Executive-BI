@@ -83,19 +83,34 @@ export function AdminResourceCrud({
     setDraft({ ...row });
   };
 
+  const fieldsFromDom = (): AdminRow | null => {
+    if (!draft) return null;
+    const form = document.getElementById('admin-resource-form');
+    const typed = { ...draft };
+    if (form instanceof HTMLFormElement) {
+      const data = new FormData(form);
+      for (const f of config.fields) {
+        const v = data.get(f.key);
+        if (typeof v === 'string') typed[f.key] = f.type === 'number' ? Number(v) : v;
+      }
+    }
+    return typed;
+  };
+
   const save = () => {
-    if (!draft) return;
-    const missing = config.fields.filter((f) => f.required && !String(draft[f.key] ?? '').trim());
+    const typed = fieldsFromDom();
+    if (!typed) return;
+    const missing = config.fields.filter((f) => f.required && !String(typed[f.key] ?? '').trim());
     if (missing.length) return;
 
     void (async () => {
       try {
         setApiError(null);
         if (editingId) {
-          const { row } = await updateAdminRow(apiResource, String(editingId), draft);
+          const { row } = await updateAdminRow(apiResource, String(editingId), typed);
           setRows((prev) => prev.map((r) => (String(r.id) === editingId ? (row as AdminRow) : r)));
         } else {
-          const { row } = await createAdminRow(apiResource, draft);
+          const { row } = await createAdminRow(apiResource, typed);
           setRows((prev) => [row as AdminRow, ...prev]);
         }
         setDraft(null);
@@ -157,6 +172,7 @@ export function AdminResourceCrud({
       {draft && (
         <Card className="border-primary/30 shadow-[var(--shadow-soft)]">
           <CardContent className="space-y-4 pt-6">
+            <form id="admin-resource-form" className="space-y-4" onSubmit={(e) => { e.preventDefault(); save(); }}>
             <h3 className="font-semibold">{editingId ? 'ویرایش رکورد' : 'رکورد جدید'}</h3>
             <Box className="grid gap-3 sm:grid-cols-2">
               {config.fields.map((f) => (
@@ -164,6 +180,7 @@ export function AdminResourceCrud({
                   <span className="text-muted-foreground">{f.label}</span>
                   {f.type === 'select' ? (
                     <select
+                      name={f.key}
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
                       value={String(draft[f.key] ?? '')}
                       onChange={(e) => setDraft({ ...draft, [f.key]: e.target.value })}
@@ -182,6 +199,7 @@ export function AdminResourceCrud({
                     />
                   ) : (
                     <Input
+                      name={f.key}
                       type={f.type === 'number' ? 'number' : 'text'}
                       value={String(draft[f.key] ?? '')}
                       onChange={(e) =>
@@ -196,13 +214,14 @@ export function AdminResourceCrud({
               ))}
             </Box>
             <div className="flex gap-2">
-              <Button type="button" onClick={save}>
+              <Button type="submit">
                 ذخیره
               </Button>
               <Button type="button" variant="outline" onClick={() => setDraft(null)}>
                 انصراف
               </Button>
             </div>
+            </form>
           </CardContent>
         </Card>
       )}

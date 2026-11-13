@@ -1,26 +1,29 @@
 import { Controller, Get, Param, Post, Body, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../guards/auth.guard';
 import { TenantGuard } from '../../guards/tenant.guard';
+import { SuperAdminGuard } from '../../guards/super-admin.guard';
 import { ModuleEntitlementGuard } from '@repo/module-sdk';
-import { buildMenuForTenant, setTenantModules } from './menu.service';
 import {
   approveBreakGlass,
   requestBreakGlass,
 } from './break-glass.service';
+import {
+  activateTenantModulesCommand,
+  menuForTenantQuery,
+} from '../../application/platform/platform-menu.handlers';
 
 @Controller('api/v1/platform')
 export class PlatformController {
   @Get('menu')
   @UseGuards(AuthGuard, TenantGuard)
-  menu(@Param() _p: unknown, @Body() body: { tenantId?: string }) {
-    const tenantId = body.tenantId ?? '11111111-1111-4111-8111-111111111111';
-    return { items: buildMenuForTenant(tenantId) };
+  menu() {
+    return menuForTenantQuery();
   }
 
   @Get('tenants/:tenantId/menu')
   @UseGuards(AuthGuard, TenantGuard)
   tenantMenu(@Param('tenantId') tenantId: string) {
-    return { items: buildMenuForTenant(tenantId) };
+    return menuForTenantQuery(tenantId);
   }
 
   @Post('break-glass/request')
@@ -40,9 +43,9 @@ export class PlatformController {
 
   /** تست/ادمین: فعال‌سازی ماژول برای tenant */
   @Post('tenants/:tenantId/modules/test-active')
+  @UseGuards(AuthGuard, SuperAdminGuard)
   setModules(@Param('tenantId') tenantId: string, @Body() body: { codes: string[] }) {
-    setTenantModules(tenantId, body.codes);
-    return { tenantId, modules: body.codes };
+    return activateTenantModulesCommand(tenantId, body.codes ?? []);
   }
 }
 

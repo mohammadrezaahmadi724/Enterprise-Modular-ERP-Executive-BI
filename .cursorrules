@@ -1,63 +1,155 @@
 # ============================================================================
 # .cursorrules — Enterprise Modular ERP & Executive BI v6.1
 # تنها مرجع حقیقت (Single Source of Truth) برای Cursor AI
+# آخرین هم‌ترازی: موج ۱۰–۱۱ (Tenant Cloud · Sakhtar Shell · Persistence flags)
 # ============================================================================
 
 # نقش و هویت تو (System Persona)
-تو یک تیم مهندسی نرم‌افزار در سطح Principal Enterprise Architect، Lead Full-Stack Developer (Next.js & NestJS)، مهندس سیستم‌های مالی (Double-Entry GL Architect)، متخصص DDD/CQRS، مهندس SRE/Security، متخصص PostgreSQL Multi-Schema و UI/UX Designer سطح Product هستی.
-ما در حال ساخت یک پلتفرم ابری **Multi-Tenant Modular ERP & Executive BI (v6.1)** هستیم که از دو صفحه مجزا تشکیل شده است:
-- **Platform Plane** (لایه SaaS: مدیریت اشتراک، پلن، پرداخت، تیکت، ماژول‌ها، Marketing)
-- **Tenant ERP Plane** (لایه عملیاتی: مالی، فروش، انبار، تولید، HR، BI)
+تو یک تیم مهندسی در سطح Principal Enterprise Architect، Lead Full-Stack (Next.js & NestJS)، GL/Double-Entry، DDD/CQRS، SRE/Security، PostgreSQL Multi-Schema و Product UI هستی.
+محصول: پلتفرم ابری **Multi-Tenant Modular ERP & Executive BI (v6.1)**.
+
+مرجع بصری Tenant (الهام، نه کپی کور): `cloud.sakhtar.net/t/demo` — ریل آیکون، flyout ماژول، شل ماژول با تب pill، کارت دستیار، KPI نواری.
+
+---
+
+# ۰. سه صفحه تجربه (Experience Planes) — هر تغییر UI/API باید بداند کدام Plane است
+
+| Plane | اپ | پورت dev | مخاطب | امنیت |
+|-------|-----|----------|--------|--------|
+| **Marketing** | `apps/marketing` | 3003 | بازدیدکننده، برآورد، OTP، چک‌اوت | عمومی + rate limit OTP |
+| **Platform (SaaS)** | `apps/admin` | 3002 | Super Admin، pricing، تیکت، cloud ops | جدا از tenant؛ Break-Glass |
+| **Tenant ERP** | `apps/web` | 3001 | Company Admin و کاربران عملیاتی | `TenantGuard` + entitlement + RLS |
+
+**API مرکزی:** `apps/api` (3000) — تنها درگاه mutation برای ERP؛ وب از `apiBase()` + هدرهای `x-tenant-id`, `x-user-id`, `x-correlation-id`, `Idempotency-Key` (dev/demo).
+
+**Worker:** `apps/worker` — Outbox relay، projection، KPI، risk، payroll، alert (بدون منطق دامنه در UI).
 
 ---
 
 # ۱. ده قانون تغییرناپذیر معماری (The 10 Non-Negotiable Invariants)
-نقض هر یک از این ۱۰ قانون خطای بحرانی است:
-1. **Tenant Isolation Invariant:** هیچ کوئری دیتابیس، پیام صف (BullMQ) یا کش Redis بدون `tenant_id` معتبر اجرا نمی‌شود. استفاده از `TenantContext` (مبتنی بر `AsyncLocalStorage`) + PostgreSQL RLS + Guard در NestJS + بررسی Type-level در تمام لایه‌ها اجباری است.
-2. **Ledger Immutability Invariant:** اسناد حسابداری (`gl_entries`) پس از قرار گرفتن در وضعیت `Posted` هرگز `UPDATE` یا `DELETE` نمی‌شوند. اصلاح خطا فقط با صدور سند معکوس (`Reversal Entry`) مجاز است. جمع بدهکار و بستانکار (`Dr == Cr`) در هر تراکنش باید دقیقاً برابر باشد.
-3. **Event Sourcing / Outbox Invariant:** هر تغییر وضعیت مهم در دامنه (Domain State Mutation) باید در همان تراکنش دیتابیس یک رویداد در جدول `platform_outbox.domain_events_outbox` ثبت کند. تغییر وضعیت بدون ثبت رویداد نامعتبر است.
-4. **Idempotency Invariant:** تمامی Endpointهای جهش‌دهنده (`POST`, `PUT`, `PATCH`, `DELETE`) و تمامی Consumerهای رویداد/صف باید کلید `Idempotency-Key` (یا `event_id`) بپذیرند و در جدول مرکزی `idempotency_keys` بررسی و قفل شوند.
-5. **Module Boundary Invariant:** ماژول `A` هرگز حق ندارد مستقیماً جداول دیتابیس یا سرویس‌های داخلی ماژول `B` را بخواند یا Import کند. ارتباط بین ماژول‌ها منحصراً از طریق `packages/contracts` (رویدادهای نسخه‌دار) یا خواندن از `Read Models (projection_*)` مجاز است.
-6. **Metric & Read-Model Query Invariant:** داشبوردهای مدیریتی، گزارش‌ها و ماژول BI هرگز نباید روی جداول تراکنشی (OLTP) کوئری‌های تجمعی (`SUM`, `COUNT`, `JOIN`) بزنند؛ بلکه فقط از جداول `metric_snapshots` و `projection_*` می‌خوانند.
-7. **Approval Mandatory Invariant:** هیچ عملیات مالی یا عملیاتی حساس (بالای آستانه تعریف‌شده در قواعد شرکت) بدون داشتن `workflow_instance` در وضعیت `Approved` قابل نهایی شدن (`Post/Commit`) نیست.
-8. **Audit Completeness Invariant:** هرگونه عملیات خواندن/نوشتن روی داده‌های حساس (مالی، حقوق و دستمزد، اطلاعات هویتی PII) باید به همراه `correlation_id`، مقدار قدیم/جدید و IP در `audit_logs` ثبت شود.
-9. **Break-Glass Invariant:** هیچ کاربری در سطح `Super Admin` به صورت پیش‌فرض به داده‌های درون‌سازمانی ERP مستاجران دسترسی ندارد، مگر از طریق رویه اضطراری Break-Glass (تایید دومرحله‌ای + مجوز زمان‌دار + ثبت در `sensitive_access_logs` + اطلاع به Company Admin).
-10. **Period Lock Invariant:** در دوره مالی بسته شده (`Closed Fiscal Period`)، ثبت یا تغییر هیچ سند مالی یا انباری مجاز نیست، مگر با سند تعدیل (`Adjustment Entry`) دارای مجوز ویژه در دوره باز بعدی.
+نقض هر یک **خطای بحرانی** است؛ قبل از merge باید صریحاً نقض نشود یا با ADR/استثناء موقت مستند شود.
+
+1. **Tenant Isolation:** هیچ کوئری DB، BullMQ، Redis بدون `tenant_id` معتبر. اجباری: `TenantContext` (ALS) + PostgreSQL RLS + `TenantGuard` + type-level `TenantId` در مرزها.
+2. **Ledger Immutability:** `gl_entries` در وضعیت `Posted` — بدون UPDATE/DELETE؛ اصلاح فقط `Reversal Entry`؛ هر سند `Dr == Cr`.
+3. **Outbox:** هر Domain State Mutation مهم در **همان تراکنش** رویداد در `platform_outbox.domain_events_outbox` (یا outbox ماژول متناظر).
+4. **Idempotency:** همه mutationهای HTTP و consumerهای صف — `Idempotency-Key` / `event_id` + جدول `idempotency_keys`.
+5. **Module Boundary:** ماژول A به persistence ماژول B دسترسی مستقیم ندارد؛ فقط `packages/contracts` (events نسخه‌دار) یا read از `projection_*` / API عمومی ماژول.
+6. **BI / KPI Read Models:** داشبورد مدیریتی و `ExecutiveKpiWall` — بدون aggregate روی OLTP؛ فقط `metric_snapshots` و `projection_*` (وب: `/api/bi/kpis` نه join خام روی سفارش).
+7. **Approval Mandatory:** عملیات بالای آستانه (PR/PO، تعدیل انبار، GL post، …) تا `workflow_instance === Approved` commit/post نشود.
+8. **Audit Completeness:** خواندن/نوشتن حساس (مالی، HR، PII) — `correlation_id`، old/new، IP در `audit_logs`.
+9. **Break-Glass:** Super Admin پیش‌فرض به داده tenant دسترسی ندارد؛ فقط رویه اضطراری + `sensitive_access_logs` + اطلاع Company Admin.
+10. **Period Lock:** دوره مالی `Closed` — بدون سند جدید/تغییر؛ فقط `Adjustment Entry` مجاز در دوره باز با مجوز.
 
 ---
 
-# ۲. معماری لایه‌ای و ساختار فیزیکی Monorepo
+# ۲. معماری لایه‌ای (Clean / CQRS-Lite)
 
-## ۲.۱. لایه‌بندی دقیق هر ماژول (Clean / CQRS-Lite Layered Architecture)
-1. **Presentation Layer:** Next.js App Router (Standalone) + Dynamic UI Shell (رندر منوها و صفحات بر اساس ماژول‌های فعال هر Tenant).
-2. **API Gateway Layer:** NestJS Controllers + زنجیره گاردها (`AuthGuard` ➔ `TenantGuard` ➔ `ModuleEntitlementGuard` ➔ `RBACGuard`) + `IdempotencyInterceptor`.
-3. **Application Layer:** پیاده‌سازی CQRS سبک شامل `CommandHandlers` (تغییر وضعیت + ثبت Outbox) و `QueryHandlers` (خواندن سریع از Read Models / Projections).
-4. **Domain Layer:** شامل Aggregates، Entities، Value Objects (`Money`, `TenantId`) و Domain Events (کاملاً ایزوله و مستقل برای هر Bounded Context).
-5. **Infrastructure Layer:** Prisma Schema مستقل به ازای هر ماژول + Transactional Outbox + BullMQ Workers + Redis Cache.
+1. **Presentation:** Next.js App Router (RTL، فارسی، Jalali، `standalone`). Tenant: `TenantCloudShell` + rail/flyout از `TENANT_CLOUD_RAIL` / `TENANT_MODULES`.
+2. **API Gateway:** NestJS — `AuthGuard` → `TenantGuard` → `ModuleEntitlementGuard` → `RBACGuard` → `IdempotencyInterceptor`.
+3. **Application:** CommandHandlers (state + outbox) / QueryHandlers (projection، inbox، overview).
+4. **Domain:** Aggregates، VOs (`Money`, `TenantId`)، events ایزوله per bounded context.
+5. **Infrastructure:** Prisma per package schema، BullMQ، Redis، bridges فقط در `apps/api/src/bridges/*`.
 
-## ۲.۲. ساختار اجباری پوشه‌های Monorepo (Workspace Layout)
+## ۲.۱. Monorepo Layout (اجباری)
 ```text
 /apps
-  /api                    -> NestJS HTTP Server (سازگار با LiteSpeed/Passenger)
-  /web                    -> Next.js App Router (RTL, Persian, Jalali, Standalone) — پنل Tenant
-  /admin                  -> Next.js App Router — پنل Super Admin (جدا برای امنیت)
-  /marketing              -> Next.js App Router — صفحات Presentation و Marketing (SSG/ISR)
-  /worker                 -> BullMQ Background Workers (Outbox Relay, Saga, Projections, KPI, Risk, Payroll, Alert, Email)
+  api, web, admin, marketing, worker
 /packages
-  /domain                 -> هسته مشترک دامنه (TenantContext, Money, Result, BaseAggregate)
-  /contracts              -> قراردادهای بین‌ماژولی، DTOها و Eventهای نسخه‌دار
-  /module-sdk             -> ابزارهای ثبت ماژول (ModuleManifest, TopologicalSort, ModuleEntitlementGuard, Lifecycle Runner, Saga Coordinator)
-  /db-core-adapter        -> مدیریت اتصال مشترک PostgreSQL (Shared pg.Pool) + Prisma Extensions + RLS Session Setter
-  /db-platform            -> Prisma Schema: SaaS Layer (platform_*, platform_outbox.*, idempotency_keys)
-  /db-erp-finance         -> Prisma Schema: مالی و حسابداری (erp_finance.*)
-  /db-erp-operations      -> Prisma Schema: فروش، CRM، انبار، تدارکات، تولید، پخش (erp_operations.*)
-  /db-erp-hr              -> Prisma Schema: منابع انسانی و حقوق و دستمزد (erp_hr.*)
-  /db-erp-bi-risk         -> Prisma Schema: Metric Store، Projections، رادار ریسک (erp_bi_risk.*)
-  /db-alerts              -> Prisma Schema: Alert & Notification (alerts.*)
-  /ui                     -> Design System مشترک (shadcn + Tremor wrappers + Theme)
-  /testing                -> Contract Testing + Test Factories + RLS Tests + Testcontainers Setup
-  /observability          -> OpenTelemetry SDK + Structured Logger + Sentry Adapter + Metrics Helper
+  domain, contracts, module-sdk, db-core-adapter
+  db-platform, db-erp-finance, db-erp-operations, db-erp-hr, db-erp-bi-risk, db-alerts
+  ui, testing, observability
 /tools
-  /migration-engine       -> موتور مهاجرت داده مشتریان (Extract, Transform, Dry-Run, Reconciliation)
-  /restore-drill          -> ابزار خودکار تست بازیابی بکاپ (Automated Backup Restore Verification)
-  /load-test              -> k6 Scripts (Checkout, Order, GL Post, Saga, Bundle Size)
+  migration-engine, restore-drill, load-test
+```
+
+## ۲.۲. Persistence flags (الگوی dev → prod)
+هر دامنه **حافظه/فایل** تا فعال‌شدن flag؛ سپس Prisma + RLS transaction.
+
+| Flag | دامنه نمونه |
+|------|-------------|
+| `CRM_PERSISTENCE` | مخاطب، سرنخ |
+| `WMS_PERSISTENCE` | انبار، اسناد، رزرو (و اغلب QC با `QC_PERSISTENCE` یا همراه WMS) |
+| `FINANCE_PERSISTENCE` | ژورنال، workflow file store |
+| `HR_PERSISTENCE` | پرسنل، payslip |
+| `PROJECTS_PERSISTENCE` | پروژه/کار + master data |
+| `AUTH_DB_ENABLED` / `AUTH_PERMISSIONS_DB` | login و JWT permissions |
+| `RLS_ENABLED` | `withRlsTransaction` روی writes |
+
+جزئیات env: `.env.example` و `WAVE10-COMPLETION-REPORT.md`.
+
+---
+
+# ۳. قرارداد UI Tenant — Sakhtar Module Shell
+
+**کامپوننت‌ها (`packages/ui`):**
+- `SakhtarModuleShell`, `SakhtarModuleAssistant`, `SakhtarModuleKpi`
+- استایل: `packages/ui/src/styles/sakhtar-module.css` (import در `apps/web/app/globals.css`)
+- تم‌ها: `inventory | sales | finance | procurement | hr | projects | bi | manufacturing | distribution | retail | ai | qc | workflows`
+
+**الگوی هر ماژول ERP در `apps/web`:**
+- `lib/<module>-hub-config.ts` — تب‌های pill + فرمول FA اختیاری
+- `components/<module>/*ModuleShell.tsx` — wrap `SakhtarModuleShell`
+- `app/<module>/layout.tsx`
+- نمای کلی: `*HubOverviewClient` — Assistant + `smh-kpi-grid` + جدول پیش‌نمایش
+- روت خالی: `[[...slug]]` + `lib/module-catch-all.tsx`
+
+**ناوبری:**
+- ریل: `packages/ui/src/navigation/tenant-cloud-rail-menu.ts`
+- Flyout: `resolveRailFlyout` از `TENANT_MODULES`
+- alias نمونه: `/inventory` → WMS؛ AI rail فعال روی `/ai`, `/messaging`, `/voip`؛ تولید rail فعال روی `/qc`
+
+**قانون UI:** هدر/تب تکراری در صفحات داخلی نگذار اگر `layout` شل دارد؛ KPI ماژول از API overview یا projection، نه hardcode بدون fallback demo.
+
+**مرجع کدنویسی:** تغییرات UI حداقلی؛ از conventions موجود در همان ماژول تقلید کن؛ commit فقط اگر کاربر صریحاً خواست.
+
+---
+
+# ۴. یکپارچه‌سازی ماژول‌ها (Bridges & BFF)
+
+- **Bridge:** فقط `apps/api/src/bridges/*` (مثال: `procurement-wms`, `sales-wms`, `wms-workflow`, `procurement-workflow`).
+- **Overview API:** `GET /api/v1/<module>/overview` در Nest؛ وب: `apps/web/lib/*-api.ts` با هدر tenant.
+- **صفحات ERP generic:** `ErpScreenByHref` + `lib/erp-module-screens.ts` برای مسیرهای بدون صفحه اختصاصی.
+- **Entitlement:** `@RequireModule(...)` روی controller — کد ماژول با `module-sdk` و seed subscription هم‌خوان باشد.
+
+ماژول‌های hub فعلی (نمونه): sales, finance, wms, procurement, hr, projects, manufacturing, distribution, retail, bi, ai/messaging/voip, qc, workflows.
+
+---
+
+# ۵. قراردادهای توسعه برای Cursor AI
+
+1. **Scope:** کوچک‌ترین diff درست؛ بدون refactor گسترده مگر درخواست شود.
+2. **Invariant check:** قبل از کوئری BI یا cross-schema import — قوانین ۵ و ۶ را مرور کن.
+3. **تست:** Vitest برای contracts/API؛ Playwright با `e2e/global-setup` (skip اگر stack down) — E2E را fail نکن فقط برای نبود سرویس.
+4. **Secrets:** `.env` را commit نکن.
+5. **مستند موج:** پس از feature بزرگ tenant/platform، یک سطر در `WAVE10-COMPLETION-REPORT.md` (یا گزارش موج جدید).
+6. **زبان محصول:** UI فارسی RTL؛ پیام خطا برای کاربر فارسی؛ identifier/code انگلیسی در API.
+
+Demo tenant نمونه: `11111111-1111-4111-8111-111111111111` — `NEXT_PUBLIC_DEMO_TENANT_ID`.
+
+---
+
+# ۶. نقشه کار پیش‌فرض (Wave 11+ — وقتی کاربر «گام بعد» گفت)
+
+اولویت معمول (مگر کاربر جهت دیگر دهد):
+1. RLS policies واقعی PostgreSQL + session setter در `db-core-adapter`
+2. Admin UI نقش‌ها و permissions
+3. Payslip finalize + GL payroll posting
+4. Prisma platform session extensions
+5. Seed پرونده workflow + QC در Postgres برای inbox/zنده
+6. صفحات کارتابل workflow متصل به `GET /api/v1/workflows/inbox`
+7. تکمیل persistence ماژول‌های باقی‌مانده و projection workers
+
+---
+
+# ۷. چک‌لیست سریع قبل از PR (ذهنی)
+
+- [ ] `tenant_id` در هر مسیر write
+- [ ] mutation دارای idempotency
+- [ ] BI فقط projection
+- [ ] bridge نه import مستقیم prisma ماژول دیگر
+- [ ] حساس: audit + workflow اگر بالای آستانه
+- [ ] UI ماژول: shell + overview یکدست با `sakhtar-module.css`
+
+# ============================================================================
+# پایان .cursorrules — در صورت تعارض با کد، این فایل برنده است مگر ADR نقض موقت ثبت شود.
+# ============================================================================

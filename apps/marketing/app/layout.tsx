@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <PlausibleScript />
           <SakhtarHeader />
           <div id="main" className="flex min-h-[calc(100vh-4.25rem)] flex-col">

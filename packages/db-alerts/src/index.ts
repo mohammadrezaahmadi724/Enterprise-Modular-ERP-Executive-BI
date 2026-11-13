@@ -4,6 +4,7 @@ export * from './templates/registry';
 export * from './templates/render';
 export * from './alerts/alert.service';
 export * from './alerts/alert-evaluator';
+export * from './alerts/wms-lot-rules';
 export * from './alerts/condition-evaluator';
 export * from './notifications/orchestrator';
 export * from './notifications/notification-log.service';

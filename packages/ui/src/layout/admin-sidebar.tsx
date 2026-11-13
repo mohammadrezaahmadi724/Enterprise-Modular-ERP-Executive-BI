@@ -19,6 +19,9 @@ import { cn } from '../lib/utils';
 const ITEMS = [
   { href: '/dashboard', label: 'داشبورد', icon: LayoutDashboard },
   { href: '/tenants', label: 'Tenantها', icon: Users },
+  { href: '/users', label: 'کاربران', icon: Users },
+  { href: '/roles', label: 'نقش و مجوز', icon: Shield },
+  { href: '/permissions', label: 'کاتالوگ مجوز', icon: Shield },
   { href: '/subscriptions', label: 'اشتراک‌ها', icon: CreditCard },
   { href: '/plans', label: 'پلن و برآورد', icon: Package },
   { href: '/billing', label: 'پرداخت‌ها', icon: CreditCard },

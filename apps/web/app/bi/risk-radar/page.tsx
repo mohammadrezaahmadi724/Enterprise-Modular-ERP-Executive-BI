@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Badge, Button, PageHeader } from '@repo/ui';
+import { Badge } from '@repo/ui';
 import { RiskRadarBoard } from '../../../components/risk-radar-board';
 
 type Finding = {
@@ -25,15 +24,6 @@ export default function RiskRadarPage() {
 
   return (
     <Box className="space-y-8">
-      <PageHeader
-        title="رادار ریسک"
-        description="هشدارهای هوشمند بین‌ماژولی — نمونه مدیریتی + رویدادهای API"
-        action={
-          <Button asChild variant="outline">
-            <Link href="/bi/dashboard">بازگشت به KPI</Link>
-          </Button>
-        }
-      />
       <RiskRadarBoard />
       {findings.length > 0 && (
         <Box>

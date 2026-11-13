@@ -1,5 +1,10 @@
 import { resolveCatchAll } from '../../../lib/module-catch-all';
 
-export default function FinanceCatchAll({ params }: { params: { slug?: string[] } }) {
-  return resolveCatchAll('finance', '/finance', params.slug);
+export default async function FinanceCatchAll({
+  params,
+}: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const { slug } = await params;
+  return resolveCatchAll('finance', '/finance', slug);
 }

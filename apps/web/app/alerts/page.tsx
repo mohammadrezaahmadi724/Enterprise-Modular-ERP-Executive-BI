@@ -19,6 +19,8 @@ export default function AlertCenterPage() {
   const [severity, setSeverity] = useState('');
   const [moduleCode, setModuleCode] = useState('');
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [newTitle, setNewTitle] = useState('');
+  const [creating, setCreating] = useState(false);
 
   const load = useCallback(async () => {
     const res = await fetch('/api/alerts');
@@ -38,6 +40,23 @@ export default function AlertCenterPage() {
     });
   }, [rows, severity, moduleCode]);
 
+  async function createAlertRow() {
+    const title = newTitle.trim();
+    if (!title) return;
+    setCreating(true);
+    try {
+      await fetch('/api/alerts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ titleFa: title, severity: 'info', moduleCode: 'platform' }),
+      });
+      setNewTitle('');
+      await load();
+    } finally {
+      setCreating(false);
+    }
+  }
+
   async function bulk(action: string) {
     await fetch('/api/alerts', {
       method: 'PATCH',
@@ -51,7 +70,23 @@ export default function AlertCenterPage() {
   return (
     <main className="p-6 space-y-4" dir="rtl">
       <h1 className="text-2xl font-bold">مرکز اعلان‌ها</h1>
-      <div className="flex flex-wrap gap-2 text-sm">
+      <form
+        className="flex flex-wrap gap-2 text-sm items-center"
+        onSubmit={(e) => {
+          e.preventDefault();
+          void createAlertRow();
+        }}
+      >
+        <input
+          className="border rounded px-2 py-1 min-w-[12rem]"
+          placeholder="عنوان هشدار QA"
+          value={newTitle}
+          maxLength={120}
+          onChange={(e) => setNewTitle(e.target.value)}
+        />
+        <button type="submit" className="border rounded px-2 py-1 bg-primary text-primary-foreground" disabled={creating}>
+          ذخیره هشدار
+        </button>
         <select className="border rounded px-2" value={severity} onChange={(e) => setSeverity(e.target.value)}>
           <option value="">شدت</option>
           <option value="info">info</option>
@@ -73,7 +108,7 @@ export default function AlertCenterPage() {
         <button type="button" className="border rounded px-2" onClick={() => bulk('dismiss')}>
           Dismiss
         </button>
-      </div>
+      </form>
       <table className="w-full text-sm border" style={{ fontFamily: 'Vazirmatn, Tahoma, sans-serif' }}>
         <thead className="bg-muted">
           <tr>

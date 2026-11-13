@@ -43,6 +43,15 @@ export function seedProjection(tenantId: string, projection: string, partKey: st
   projectionStore.set(`${tenantId}:${projection}:${partKey}`, value);
 }
 
+export function getProjectionSlice(
+  tenantId: string,
+  projection: string,
+  partKey: string,
+): Record<string, number> | undefined {
+  assertAllowedSource(projection);
+  return projectionStore.get(`${tenantId}:${projection}:${partKey}`);
+}
+
 function assertAllowedSource(source: string): void {
   if (FORBIDDEN_OLTP.some((t) => source.includes(t))) {
     throw new Error(`OLTP query forbidden for dashboard: ${source}`);

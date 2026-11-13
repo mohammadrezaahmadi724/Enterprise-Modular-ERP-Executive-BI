@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import {
   Badge,
   Button,
@@ -8,7 +9,6 @@ import {
   CardContent,
   ErpDataTable,
   Input,
-  PageHeader,
 } from '@repo/ui';
 import {
   createJournalDraft,
@@ -16,8 +16,11 @@ import {
   postJournal,
   type JournalEntry,
 } from '../../../lib/finance-api';
+import { FinanceJournalMasterDetail } from '../../../components/finance/FinanceJournalMasterDetail';
 
-export default function JournalEntriesPage() {
+function JournalEntriesPageInner() {
+  const searchParams = useSearchParams();
+  const apiPanelRef = useRef<HTMLDetailsElement>(null);
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [debit, setDebit] = useState('1000000');
@@ -33,6 +36,18 @@ export default function JournalEntriesPage() {
   useEffect(() => {
     reload();
   }, []);
+
+  const openApiPanel = searchParams.get('new') === '1';
+
+  useEffect(() => {
+    if (!openApiPanel) return;
+    const el = apiPanelRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.open = true;
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }, [openApiPanel]);
 
   const createBalanced = () => {
     void createJournalDraft([
@@ -50,16 +65,18 @@ export default function JournalEntriesPage() {
   };
 
   return (
-    <div className="container max-w-5xl space-y-6 py-8">
-      <PageHeader
-        title="اسناد حسابداری"
-        description="مسیر end-to-end مالی: پیش‌نویس متوازن → workflow CFO → Post → Outbox → projection"
-        action={
-          <Button type="button" onClick={createBalanced}>
-            پیش‌نویس نمونه
-          </Button>
-        }
-      />
+    <div className="space-y-4">
+      <FinanceJournalMasterDetail />
+      <details ref={apiPanelRef} open={openApiPanel} className="rounded-lg border p-3 text-sm" id="journal-api-draft-panel">
+        <summary className="cursor-pointer font-medium">اتصال API واقعی (پیش‌نویس / Post)</summary>
+      <div className="flex flex-wrap items-center justify-between gap-2 mt-4">
+        <p className="text-sm text-muted-foreground">
+          پیش‌نویس متوازن → workflow CFO → Post → Outbox → projection
+        </p>
+        <Button type="button" onClick={createBalanced}>
+          پیش‌نویس نمونه
+        </Button>
+      </div>
       {error && <p className="text-sm text-amber-600">{error}</p>}
       <Card>
         <CardContent className="grid gap-3 pt-6 sm:grid-cols-3">
@@ -98,6 +115,15 @@ export default function JournalEntriesPage() {
           />
         </CardContent>
       </Card>
+      </details>
     </div>
+  );
+}
+
+export default function JournalEntriesPage() {
+  return (
+    <Suspense fallback={<p className="text-sm text-muted-foreground p-4">در حال بارگذاری…</p>}>
+      <JournalEntriesPageInner />
+    </Suspense>
   );
 }

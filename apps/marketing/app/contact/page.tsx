@@ -25,7 +25,7 @@ export default function ContactPage() {
           });
         }}
       >
-        <input name="name" required className="w-full border rounded px-3 py-2" placeholder="نام" />
+        <input name="name" required maxLength={80} className="w-full border rounded px-3 py-2" placeholder="نام" />
         <input name="email" type="email" required className="w-full border rounded px-3 py-2" placeholder="ایمیل" />
         <textarea name="message" className="w-full border rounded px-3 py-2" placeholder="پیام" rows={4} />
         <button type="submit" className="w-full rounded-lg border py-2">

@@ -1,5 +1,8 @@
 @import '../../../packages/ui/src/styles/marketing-tokens.css';
 @import '../../../packages/ui/src/styles/base-plain.css';
+@import '../../../packages/ui/src/styles/tenant-cloud.css';
+@import '../../../packages/ui/src/styles/sakhtar-module.css';
+@import '../../../packages/ui/src/styles/tenant-admin.css';
 
 @tailwind base;
 @tailwind components;
@@ -37,5 +40,107 @@
 
   .skip-link {
     @apply absolute -top-full right-4 z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:top-4;
+  }
+
+  .finance-aging-card {
+    background-image: linear-gradient(
+        color-mix(in oklch, hsl(var(--muted)) 25%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(90deg, color-mix(in oklch, hsl(var(--muted)) 25%, transparent) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 0;
+  }
+
+  .finance-tab.is-active {
+    box-shadow: inset 0 -2px 0 hsl(var(--primary));
+  }
+
+  .sales-tab.is-active {
+    box-shadow: inset 0 -2px 0 hsl(var(--primary));
+  }
+
+  .finance-hub-table tbody tr:hover {
+    @apply bg-muted/40;
+  }
+
+  .sk-lead-board {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(250px, 1fr);
+    gap: 12px;
+    overflow-x: auto;
+    padding: 14px 16px 18px;
+    align-items: start;
+  }
+
+  .sk-lead-col {
+    @apply bg-muted/30 border border-border rounded-lg flex flex-col min-h-[140px];
+  }
+
+  .sk-lead-col__head {
+    @apply px-3 pt-3 pb-2.5 border-b flex flex-col gap-1;
+  }
+
+  .sk-lead-col__title {
+    @apply flex items-center justify-between text-sm;
+  }
+
+  .sk-lead-col__count {
+    @apply text-xs bg-background border rounded-full px-2 text-muted-foreground;
+  }
+
+  .sk-lead-col__sum {
+    @apply text-xs text-muted-foreground;
+  }
+
+  .sk-lead-col__body {
+    @apply p-2.5 flex flex-col gap-2.5;
+  }
+
+  .sk-lead-col__more {
+    @apply text-xs text-muted-foreground text-center py-3.5 leading-relaxed;
+  }
+
+  .sk-lead-card {
+    @apply bg-card border rounded-md p-2.5 flex flex-col gap-2 cursor-grab active:cursor-grabbing;
+  }
+
+  .sk-lead-card:hover {
+    @apply border-primary/40;
+  }
+
+  .sk-crm-grid tbody tr:focus-visible {
+    @apply outline outline-2 outline-primary outline-offset-[-2px];
+  }
+
+  .sk-table-scroll {
+    scrollbar-gutter: stable;
+  }
+
+  .sk-lead-card__amount {
+    @apply text-[13px] font-semibold text-primary tabular-nums;
+  }
+
+  .sk-leads-table-wrap {
+    @apply overflow-x-auto;
+  }
+
+  @media (max-width: 899px) {
+    .sk-leads-table-wrap {
+      display: none;
+    }
+    .sk-leads-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .sk-leads-cards {
+      display: none;
+    }
   }
 }

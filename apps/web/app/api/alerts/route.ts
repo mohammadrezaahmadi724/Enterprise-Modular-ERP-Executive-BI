@@ -63,7 +63,30 @@ export async function PATCH(req: Request) {
   return Response.json({ ok: true });
 }
 
-export async function POST() {
+export async function POST(req: Request) {
+  let body: { action?: string; titleFa?: string; bodyFa?: string; severity?: string; moduleCode?: string } = {};
+  try {
+    body = (await req.json()) as typeof body;
+  } catch {
+  }
+  if (body.action === 'reset') {
+    resetAlertStore();
+    return Response.json({ ok: true });
+  }
+  if (body.titleFa?.trim()) {
+    const alert = createAlert({
+      tenantId: DEMO_TENANT,
+      moduleCode: body.moduleCode?.trim() || 'platform',
+      category: 'manual',
+      severity: (body.severity as 'info' | 'warning' | 'critical') || 'info',
+      titleFa: body.titleFa.trim(),
+      bodyFa: body.bodyFa?.trim() || body.titleFa.trim(),
+      deduplicationKey: `manual-${Date.now()}`,
+      deduplicationWindowSec: 60,
+      actionUrl: '/alerts',
+    });
+    return Response.json({ ok: true, item: alert });
+  }
   resetAlertStore();
   return Response.json({ ok: true });
 }

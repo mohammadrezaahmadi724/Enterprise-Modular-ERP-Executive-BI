@@ -23,6 +23,11 @@ export class TenantContext {
     return als.run(data, callback);
   }
 
+  /** برای میان‌افزار HTTP — کانتکست در کل زنجیرهٔ async درخواست باقی بماند */
+  static bind(data: TenantContextData): void {
+    als.enterWith(data);
+  }
+
   static get(): TenantContextData {
     const store = als.getStore();
     if (!store) {

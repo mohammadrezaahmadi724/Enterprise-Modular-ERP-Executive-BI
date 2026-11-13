@@ -1,4 +1,8 @@
 import { PrismaClient } from '@prisma/client';
+import { DEFAULT_PLAN_ROLE_TEMPLATES, PERMISSION_CATALOG, TENANT_ADMIN_PERMISSIONS } from '@repo/contracts';
+import { loadRootEnv } from '../../../tools/e2e/load-root-env';
+
+loadRootEnv();
 
 const prisma = new PrismaClient();
 
@@ -31,7 +35,19 @@ async function ensureTenantRole(
   return preferredId;
 }
 
+async function ensurePermissionCatalog() {
+  for (const entry of PERMISSION_CATALOG) {
+    await prisma.permission.upsert({
+      where: { code: entry.code },
+      update: { description: entry.labelFa },
+      create: { code: entry.code, description: entry.labelFa },
+    });
+  }
+}
+
 async function main() {
+  await ensurePermissionCatalog();
+
   const plan = await prisma.plan.upsert({
     where: { code: 'professional' },
     update: {},
@@ -53,7 +69,7 @@ async function main() {
       pricingModel: 'PerSeat',
       basePrice: 1_290_000,
       currency: 'IRT',
-      features: { modules: 'all' },
+      features: { modules: 'all', roleTemplates: DEFAULT_PLAN_ROLE_TEMPLATES },
       limits: { max_seats: 25 },
       effectiveFrom: new Date(),
     },
@@ -103,7 +119,7 @@ async function main() {
     },
   });
 
-  await prisma.subscription.upsert({
+  const subscription = await prisma.subscription.upsert({
     where: { tenantId: tenant.id },
     update: { usedSeats: 3 },
     create: {
@@ -118,9 +134,85 @@ async function main() {
     },
   });
 
+  const planSnap = { code: 'professional', nameFa: plan.nameFa, seats: 25 };
+  const fxSnap = { base: 'IRR', rate: 1, at: new Date().toISOString() };
+  const invoiceDefs = [
+    {
+      id: '00000000-0000-4000-8000-inv00001',
+      invoiceNumber: 'CLD-1403-01001',
+      issueOffsetDays: -35,
+      status: 'Paid' as const,
+      total: 18_500_000,
+    },
+    {
+      id: '00000000-0000-4000-8000-inv00002',
+      invoiceNumber: 'CLD-1403-01002',
+      issueOffsetDays: -5,
+      status: 'Issued' as const,
+      total: 19_200_000,
+    },
+  ];
+  for (const inv of invoiceDefs) {
+    const issue = new Date(Date.now() + inv.issueOffsetDays * 86400_000);
+    const due = new Date(issue.getTime() + 7 * 86400_000);
+    await prisma.invoice.upsert({
+      where: { tenantId_invoiceNumber: { tenantId, invoiceNumber: inv.invoiceNumber } },
+      update: { status: inv.status, total: inv.total },
+      create: {
+        id: inv.id,
+        tenantId,
+        subscriptionId: subscription.id,
+        invoiceNumber: inv.invoiceNumber,
+        serialPattern: 'CLD-{year}-{seq}',
+        issueDate: issue,
+        dueDate: due,
+        status: inv.status,
+        subtotal: inv.total,
+        taxAmount: 0,
+        discountAmount: 0,
+        total: inv.total,
+        currency: 'IRT',
+        exchangeRateSnapshot: fxSnap,
+        planSnapshot: planSnap,
+        correlationId: `seed-invoice-${inv.invoiceNumber}`,
+        items: {
+          create: [
+            {
+              description: 'اشتراک Sakhtar Cloud — ماهانه',
+              quantity: 1,
+              unitPrice: inv.total,
+              taxRate: 0,
+              lineTotal: inv.total,
+            },
+          ],
+        },
+      },
+    });
+  }
+
   const demoUserId = '00000000-0000-4000-8000-000000000001';
+  const demoAdminUserId = '00000000-0000-4000-8000-000000000099';
   const demoCfoRoleId = '00000000-0000-4000-8000-role00cfo';
   const demoHrRoleId = '00000000-0000-4000-8000-role00hr';
+  const demoCompanyAdminRoleId = '00000000-0000-4000-8000-role0admin';
+
+  const companyAdminRoleId = await ensureTenantRole(
+    tenantId,
+    'COMPANY_ADMIN',
+    'مدیر سازمان',
+    demoCompanyAdminRoleId,
+    [
+      ...TENANT_ADMIN_PERMISSIONS,
+      'erp.read',
+      'erp.write',
+      'finance.read',
+      'finance.write',
+      'operations.read',
+      'operations.write',
+      'crm.read',
+      'crm.write',
+    ],
+  );
 
   const cfoRoleId = await ensureTenantRole(tenantId, 'CFO', 'مدیر مالی', demoCfoRoleId, [
     'finance.read',
@@ -157,7 +249,27 @@ async function main() {
     create: { userId: demoUserId, roleId: cfoRoleId },
   });
 
-  for (const code of ['finance-base', 'crm-base', 'operations-base', 'hr-base'] as const) {
+  await prisma.user.upsert({
+    where: { email: 'admin@demo.ir' },
+    update: { tenantId, accountStatus: 'Active' },
+    create: {
+      id: demoAdminUserId,
+      tenantId,
+      email: 'admin@demo.ir',
+      passwordHash: '$2b$12$o4.2SIH3/CZnt/AgOQE9Bu0LGWWNfk4S9RwwkvEvpDm.DmSVX1Uda',
+      fullName: 'مدیر سازمان',
+      isSuperAdmin: false,
+      accountStatus: 'Active',
+    },
+  });
+
+  await prisma.userRoleAssignment.upsert({
+    where: { userId_roleId: { userId: demoAdminUserId, roleId: companyAdminRoleId } },
+    update: {},
+    create: { userId: demoAdminUserId, roleId: companyAdminRoleId },
+  });
+
+  for (const code of ['finance-base', 'crm-base', 'operations-base', 'projects-base', 'hr-base'] as const) {
     await prisma.tenantModule.upsert({
       where: { tenantId_moduleCode: { tenantId, moduleCode: code } },
       update: { status: 'Active', activatedAt: new Date() },
@@ -246,6 +358,33 @@ async function main() {
     where: { key: 'price_catalog_v1' },
     update: {},
     create: { key: 'price_catalog_v1', value: { version: 3, modules: {} } },
+  });
+
+  /** هم‌تراز با @repo/contracts — CLOUD_SUBSCRIPTION_SETTING_KEY */
+  await prisma.platformSetting.upsert({
+    where: { key: 'cloud_subscription_v1' },
+    update: {},
+    create: {
+      key: 'cloud_subscription_v1',
+      value: {
+        baseMonthlyTomans: 12_000_000,
+        includedSeats: 10,
+        extraSeatTomans: 500_000,
+        maxSeats: 30,
+        planCode: 'professional',
+        moduleMonthlyTomans: {
+          sales: 4_000_000,
+          finance: 5_000_000,
+          inventory: 4_500_000,
+          hr: 3_500_000,
+          manufacturing: 5_500_000,
+          distribution: 4_800_000,
+          retail: 4_200_000,
+          'bi-risk': 2_500_000,
+          'ai-messaging': 3_000_000,
+        },
+      },
+    },
   });
 
   console.log('Seed OK:', { tenant: tenant.slug, plan: plan.code });

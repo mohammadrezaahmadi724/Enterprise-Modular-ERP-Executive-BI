@@ -1,6 +1,6 @@
 'use client';
 
-import jalaali from 'jalaali-js';
+import * as jalaali from 'jalaali-js';
 
 const statusColor: Record<string, string> = {
   Present: 'bg-emerald-500',

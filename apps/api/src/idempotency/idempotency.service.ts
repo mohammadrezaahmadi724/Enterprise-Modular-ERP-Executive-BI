@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { IdempotencyConflictError } from '@repo/domain';
+import { platformDb } from '../prisma/platform-db';
 
 export type IdempotencyRecord = {
   tenantId: string;
@@ -14,9 +15,14 @@ export type IdempotencyRecord = {
 };
 
 const memoryStore = new Map<string, IdempotencyRecord>();
+let persistDisabled = process.env.IDEMPOTENCY_MEMORY_ONLY === 'true';
 
 function storeKey(tenantId: string, key: string, endpoint: string): string {
   return `${tenantId}:${key}:${endpoint}`;
+}
+
+function composite(tenantId: string, idempotencyKey: string, endpoint: string) {
+  return { tenantId_idempotencyKey_endpoint: { tenantId, idempotencyKey, endpoint } };
 }
 
 export function hashRequestBody(body: unknown): string {
@@ -44,6 +50,53 @@ export function resolveResponseStorage(body: unknown): {
   return { responseBody: body };
 }
 
+function decide(existing: IdempotencyRecord | undefined, requestHash: string, now: Date): 'proceed' | 'cached' | 'processing' {
+  if (!existing) return 'proceed';
+  if (existing.requestHash !== requestHash) {
+    throw new IdempotencyConflictError('Same idempotency key with different request payload');
+  }
+  if (existing.responseStatus != null) return 'cached';
+  if (existing.lockedUntil && existing.lockedUntil > now) return 'processing';
+  return 'proceed';
+}
+
+function fromDb(row: {
+  tenantId: string;
+  idempotencyKey: string;
+  endpoint: string;
+  requestHash: string;
+  responseStatus: number | null;
+  responseBody: unknown;
+  responseReferenceId: string | null;
+  lockedUntil: Date | null;
+  expiresAt: Date;
+}): IdempotencyRecord {
+  return {
+    tenantId: row.tenantId,
+    idempotencyKey: row.idempotencyKey,
+    endpoint: row.endpoint,
+    requestHash: row.requestHash,
+    responseStatus: row.responseStatus ?? undefined,
+    responseBody: row.responseBody ?? undefined,
+    responseReferenceId: row.responseReferenceId ?? undefined,
+    lockedUntil: row.lockedUntil ?? undefined,
+    expiresAt: row.expiresAt,
+  };
+}
+
+async function readDb(tenantId: string, idempotencyKey: string, endpoint: string): Promise<IdempotencyRecord | undefined> {
+  if (persistDisabled) return undefined;
+  try {
+    const row = await platformDb.idempotencyKey.findUnique({
+      where: composite(tenantId, idempotencyKey, endpoint),
+    });
+    return row ? fromDb(row) : undefined;
+  } catch {
+    persistDisabled = true;
+    return undefined;
+  }
+}
+
 export class IdempotencyService {
   async begin(
     tenantId: string,
@@ -52,29 +105,45 @@ export class IdempotencyService {
     requestHash: string,
   ): Promise<'proceed' | 'cached' | 'conflict' | 'processing'> {
     const key = storeKey(tenantId, idempotencyKey, endpoint);
-    const existing = memoryStore.get(key);
     const now = new Date();
+    const cachedMem = memoryStore.get(key);
+    const existing = cachedMem ?? (await readDb(tenantId, idempotencyKey, endpoint));
+    if (existing) memoryStore.set(key, existing);
 
-    if (existing) {
-      if (existing.requestHash !== requestHash) {
-        throw new IdempotencyConflictError('Same idempotency key with different request payload');
-      }
-      if (existing.lockedUntil && existing.lockedUntil > now) {
-        return 'processing';
-      }
-      if (existing.responseStatus != null) {
-        return 'cached';
-      }
-    }
+    const state = decide(existing, requestHash, now);
+    if (state !== 'proceed') return state;
 
-    memoryStore.set(key, {
+    const record: IdempotencyRecord = {
       tenantId,
       idempotencyKey,
       endpoint,
       requestHash,
       lockedUntil: new Date(now.getTime() + 30_000),
-      expiresAt: new Date(now.getTime() + 24 * 60 * 60 * 1000),
-    });
+      expiresAt: existing?.expiresAt ?? new Date(now.getTime() + 24 * 60 * 60 * 1000),
+    };
+    memoryStore.set(key, record);
+
+    if (!persistDisabled) {
+      try {
+        await platformDb.idempotencyKey.upsert({
+          where: composite(tenantId, idempotencyKey, endpoint),
+          create: {
+            tenantId,
+            idempotencyKey,
+            endpoint,
+            requestHash,
+            lockedUntil: record.lockedUntil,
+            expiresAt: record.expiresAt,
+          },
+          update: {
+            requestHash,
+            lockedUntil: record.lockedUntil,
+          },
+        });
+      } catch {
+        persistDisabled = true;
+      }
+    }
     return 'proceed';
   }
 
@@ -87,13 +156,28 @@ export class IdempotencyService {
   ): Promise<void> {
     const key = storeKey(tenantId, idempotencyKey, endpoint);
     const record = memoryStore.get(key);
-    if (!record) return;
     const storage = resolveResponseStorage(body);
-    record.responseStatus = status;
-    record.responseBody = storage.responseBody;
-    record.responseReferenceId = storage.responseReferenceId;
-    record.lockedUntil = undefined;
-    memoryStore.set(key, record);
+    if (record) {
+      record.responseStatus = status;
+      record.responseBody = storage.responseBody;
+      record.responseReferenceId = storage.responseReferenceId;
+      record.lockedUntil = undefined;
+      memoryStore.set(key, record);
+    }
+    if (persistDisabled) return;
+    try {
+      await platformDb.idempotencyKey.update({
+        where: composite(tenantId, idempotencyKey, endpoint),
+        data: {
+          responseStatus: status,
+          responseBody: storage.responseBody ?? undefined,
+          responseReferenceId: storage.responseReferenceId,
+          lockedUntil: null,
+        },
+      });
+    } catch {
+      persistDisabled = true;
+    }
   }
 
   getCached(tenantId: string, idempotencyKey: string, endpoint: string): IdempotencyRecord | undefined {
@@ -103,6 +187,7 @@ export class IdempotencyService {
   /** برای تست — پاک‌سازی حافظه */
   clear(): void {
     memoryStore.clear();
+    persistDisabled = process.env.IDEMPOTENCY_MEMORY_ONLY === 'true';
   }
 }
 

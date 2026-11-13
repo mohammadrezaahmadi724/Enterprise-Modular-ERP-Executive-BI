@@ -1,15 +1,24 @@
 import { Body, Controller, Get, Headers, Post, Query } from '@nestjs/common';
 import { Public } from '../../decorators/access.decorator';
 import { randomUUID } from 'node:crypto';
-import type { ErpModuleCode } from '@repo/contracts';
+import type { ErpModuleCode, WizardEstimateInput } from '@repo/contracts';
 import {
   computeModuleEstimate,
+  computeWizardEstimatePayload,
   listPlansWithModules,
   loadModuleCatalog,
 } from '../platform/pricing-catalog.service';
+import { loadCloudSubscriptionRates } from '../platform/cloud-subscription.service';
+import { loadMarketingSite } from '../platform/marketing-site.service';
+import { sendEstimateOtpCode, verifyEstimateOtpCode } from './estimate-otp.service';
 import { platformDb } from '../../prisma/platform-db';
 
-type EstimateBody = { moduleCodes: ErpModuleCode[] };
+type EstimateBody =
+  | { moduleCodes: ErpModuleCode[]; wizard?: undefined }
+  | { wizard: WizardEstimateInput; moduleCodes?: undefined };
+
+type OtpSendBody = { phone: string };
+type OtpVerifyBody = { phone: string; code: string; estimatePayload?: Record<string, unknown> };
 
 type MeetingBody = {
   hasEstimate: boolean;
@@ -33,17 +42,64 @@ export class PublicPricingController {
   async catalog() {
     const { modules, catalogVersion } = await loadModuleCatalog();
     const plans = await listPlansWithModules();
-    return { catalogVersion, modules, plans };
+    const cloudSubscription = await loadCloudSubscriptionRates();
+    return { catalogVersion, modules, plans, cloudSubscription };
+  }
+
+  @Get('cloud-subscription')
+  async cloudSubscription() {
+    return loadCloudSubscriptionRates();
+  }
+
+  @Get('site')
+  site() {
+    return loadMarketingSite();
   }
 
   @Post('estimate')
-  estimate(@Body() body: EstimateBody, @Headers('idempotency-key') idempotencyKey?: string) {
-    const codes = Array.isArray(body.moduleCodes) ? body.moduleCodes : [];
+  async estimate(@Body() body: EstimateBody, @Headers('idempotency-key') idempotencyKey?: string) {
     const correlationId = idempotencyKey ?? randomUUID();
+    if (body.wizard) {
+      const result = await computeWizardEstimatePayload(body.wizard);
+      return { ...result, estimateId: correlationId, kind: 'wizard' as const };
+    }
+    const codes = Array.isArray(body.moduleCodes) ? body.moduleCodes : [];
     return computeModuleEstimate(codes).then((result) => ({
       ...result,
       estimateId: correlationId,
+      kind: 'legacy' as const,
     }));
+  }
+
+  @Post('estimate/otp/send')
+  async otpSend(@Body() body: OtpSendBody) {
+    return sendEstimateOtpCode(body.phone ?? '');
+  }
+
+  @Post('estimate/otp/verify')
+  async otpVerify(@Body() body: OtpVerifyBody, @Headers('idempotency-key') idempotencyKey?: string) {
+    const correlationId = idempotencyKey ?? randomUUID();
+    const phone = (body.phone ?? '').trim();
+    const check = await verifyEstimateOtpCode(phone, body.code ?? '');
+    if (!check.verified) {
+      return { verified: false, message: check.message };
+    }
+    await platformDb.supportTicket.create({
+      data: {
+        tenantId: null,
+        subject: `برآوردگر پروژه — تأیید موبایل ${phone}`,
+        priority: 'high',
+        status: 'open',
+        category: 'estimate_lead',
+        metadata: {
+          type: 'erp_estimate_verified',
+          correlationId,
+          phone,
+          estimate: body.estimatePayload ?? null,
+        },
+      },
+    });
+    return { verified: true, correlationId };
   }
 
   @Get('estimate/preview')

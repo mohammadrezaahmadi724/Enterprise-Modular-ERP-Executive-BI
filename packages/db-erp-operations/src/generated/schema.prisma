@@ -122,6 +122,33 @@ model InventoryBalance {
   @@schema("erp_operations")
 }
 
+enum InventoryLotStatus {
+  Active
+  Expired
+  Quarantine
+  Blocked
+
+  @@schema("erp_operations")
+}
+
+model InventoryLot {
+  id          String             @id @default(uuid())
+  tenantId    String             @map("tenant_id")
+  productId   String             @map("product_id")
+  warehouseId String             @map("warehouse_id")
+  lotNumber   String             @map("lot_number")
+  quantity    BigInt             @default(0)
+  expiryDate  DateTime?          @map("expiry_date") @db.Date
+  status      InventoryLotStatus @default(Active)
+  receivedAt  DateTime           @default(now()) @map("received_at")
+  version     Int                @default(0)
+
+  @@unique([tenantId, lotNumber])
+  @@index([tenantId, productId, warehouseId, status])
+  @@map("inventory_lots")
+  @@schema("erp_operations")
+}
+
 model StockMovement {
   id            String       @id @default(uuid())
   tenantId      String       @map("tenant_id")
@@ -135,6 +162,43 @@ model StockMovement {
 
   @@index([tenantId, referenceId])
   @@map("stock_movements")
+  @@schema("erp_operations")
+}
+
+enum WmsDocumentKind {
+  Receipt
+  Issue
+  Transfer
+
+  @@schema("erp_operations")
+}
+
+model WmsStockDocument {
+  id        String          @id @default(uuid())
+  tenantId  String          @map("tenant_id")
+  docNo     String          @map("doc_no")
+  kind      WmsDocumentKind
+  body      Json
+  createdAt DateTime        @default(now()) @map("created_at")
+
+  @@unique([tenantId, docNo])
+  @@index([tenantId, kind])
+  @@map("wms_stock_documents")
+  @@schema("erp_operations")
+}
+
+model WmsReservationRecord {
+  id              String   @id @default(uuid())
+  tenantId        String   @map("tenant_id")
+  reservationCode String   @map("reservation_code")
+  body            Json
+  status          String
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@unique([tenantId, reservationCode])
+  @@index([tenantId, status])
+  @@map("wms_reservations")
   @@schema("erp_operations")
 }
 
@@ -1115,5 +1179,84 @@ model CallTranscript {
   callLog CallLog @relation(fields: [callLogId], references: [id])
 
   @@map("call_transcripts")
+  @@schema("erp_operations")
+}
+
+enum ErpProjectStatus {
+  active
+  on_hold
+  completed
+  canceled
+
+  @@schema("erp_operations")
+}
+
+enum ErpProjectTaskStatus {
+  not_started
+  in_progress
+  done
+
+  @@schema("erp_operations")
+}
+
+model ErpProject {
+  id        String           @id @default(uuid())
+  tenantId  String           @map("tenant_id")
+  code      String
+  name      String
+  deadline  String?
+  status    ErpProjectStatus @default(active)
+  delayDays Int?             @map("delay_days")
+  createdAt DateTime         @default(now()) @map("created_at")
+  updatedAt DateTime         @updatedAt @map("updated_at")
+
+  tasks ErpProjectTask[]
+
+  @@unique([tenantId, code])
+  @@index([tenantId, status])
+  @@map("erp_projects")
+  @@schema("erp_operations")
+}
+
+model ErpProjectTask {
+  id               String               @id @default(uuid())
+  tenantId         String               @map("tenant_id")
+  number           String
+  title            String
+  projectCode      String?              @map("project_code")
+  assigneeName     String?              @map("assignee_name")
+  assigneeInitials String?              @map("assignee_initials")
+  deadline         String?
+  status           ErpProjectTaskStatus @default(not_started)
+  priority         String               @default("medium")
+  overdue          Boolean              @default(false)
+  unassigned       Boolean              @default(false)
+  checklistDone    Int?                 @map("checklist_done")
+  checklistTotal   Int?                 @map("checklist_total")
+  loggedMinutes    Int?                 @map("logged_minutes")
+  loggedHours      String?              @map("logged_hours")
+  linkType         String?              @map("link_type")
+  linkRef          String?              @map("link_ref")
+  createdAt        DateTime             @default(now()) @map("created_at")
+  updatedAt        DateTime             @updatedAt @map("updated_at")
+
+  project ErpProject? @relation(fields: [tenantId, projectCode], references: [tenantId, code])
+
+  @@unique([tenantId, number])
+  @@index([tenantId, projectCode])
+  @@map("erp_project_tasks")
+  @@schema("erp_operations")
+}
+
+model ErpProjectMember {
+  id          String  @id @default(uuid())
+  tenantId    String  @map("tenant_id")
+  projectCode String  @map("project_code")
+  memberName  String  @map("member_name")
+  roleFa      String  @map("role_fa")
+  initials    String?
+
+  @@unique([tenantId, projectCode, memberName])
+  @@map("erp_project_members")
   @@schema("erp_operations")
 }

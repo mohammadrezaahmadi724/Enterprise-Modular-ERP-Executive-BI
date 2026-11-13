@@ -4,6 +4,11 @@
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./templates/keys": "./src/templates/template-keys.ts",
+    "./templates/render": "./src/templates/render.ts"
+  },
   "scripts": {
     "db:generate": "prisma generate",
     "typecheck": "tsc -p tsconfig.json --noEmit",

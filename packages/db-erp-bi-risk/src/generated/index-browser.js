@@ -197,6 +197,38 @@ exports.Prisma.TenantKpiConfigScalarFieldEnum = {
   isVisible: 'isVisible'
 };
 
+exports.Prisma.ProjectionWmsSliceScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  projection: 'projection',
+  partKey: 'partKey',
+  payload: 'payload',
+  lastProcessedEventId: 'lastProcessedEventId',
+  lastProcessedVersion: 'lastProcessedVersion',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectionWmsTrackingContractScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  sku: 'sku',
+  payload: 'payload',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectionWmsKardexLineScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  eventId: 'eventId',
+  sku: 'sku',
+  warehouse: 'warehouse',
+  movement: 'movement',
+  qtyIn: 'qtyIn',
+  qtyOut: 'qtyOut',
+  reference: 'reference',
+  recordedAt: 'recordedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -252,7 +284,10 @@ exports.Prisma.ModelName = {
   RiskRule: 'RiskRule',
   TenantRiskRule: 'TenantRiskRule',
   RiskFinding: 'RiskFinding',
-  TenantKpiConfig: 'TenantKpiConfig'
+  TenantKpiConfig: 'TenantKpiConfig',
+  ProjectionWmsSlice: 'ProjectionWmsSlice',
+  ProjectionWmsTrackingContract: 'ProjectionWmsTrackingContract',
+  ProjectionWmsKardexLine: 'ProjectionWmsKardexLine'
 };
 
 /**

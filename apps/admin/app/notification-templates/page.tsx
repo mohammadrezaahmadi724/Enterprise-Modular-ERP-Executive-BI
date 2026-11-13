@@ -1,6 +1,7 @@
 'use client';
 
-import { TEMPLATE_KEYS, renderEmailTemplate } from '@repo/db-alerts';
+import { TEMPLATE_KEYS } from '@repo/db-alerts/templates/keys';
+import { renderEmailTemplate } from '@repo/db-alerts/templates/render';
 import { useMemo, useState } from 'react';
 
 export default function NotificationTemplatesPage() {

@@ -2,6 +2,13 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
+type ProdRuntime = {
+  persistence: { finance: boolean; crm: boolean; wms: boolean };
+  smtp: { configured: boolean; mode: string };
+  kms: { configured: boolean; keyVersion: string };
+  backup: { policy: string; lastRun?: string };
+};
+
 type OpsSnapshot = {
   database: {
     connected: boolean;
@@ -28,6 +35,7 @@ const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://127.0.0.1:3000';
 
 export default function HealthPage() {
   const [data, setData] = useState<OpsSnapshot | null>(null);
+  const [runtime, setRuntime] = useState<ProdRuntime | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,11 +43,15 @@ export default function HealthPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API}/api/v1/platform/ops/monitor`, {
-        headers: { 'x-super-admin': 'true' },
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setData((await res.json()) as OpsSnapshot);
+      const [monitorRes, runtimeRes] = await Promise.all([
+        fetch(`${API}/api/v1/platform/ops/monitor`, { headers: { 'x-super-admin': 'true' } }),
+        fetch(`${API}/api/v1/platform/ops/runtime`, { headers: { 'x-super-admin': 'true' } }),
+      ]);
+      if (!monitorRes.ok) throw new Error(`monitor HTTP ${monitorRes.status}`);
+      setData((await monitorRes.json()) as OpsSnapshot);
+      if (runtimeRes.ok) {
+        setRuntime((await runtimeRes.json()) as ProdRuntime);
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'خطا');
     } finally {
@@ -63,6 +75,20 @@ export default function HealthPage() {
       </div>
 
       {error && <p className="text-sm text-red-600">API: {error} — مطمئن شوید `pnpm --filter @repo/api dev` روی پورت ۳۰۰۰ است.</p>}
+
+      {runtime ? (
+        <section className="border rounded-lg p-4">
+          <h2 className="font-semibold mb-2">Persistence ERP (runtime)</h2>
+          <ul className="text-sm flex flex-wrap gap-3">
+            <PersistBadge label="Finance" on={runtime.persistence.finance} />
+            <PersistBadge label="CRM" on={runtime.persistence.crm} />
+            <PersistBadge label="WMS" on={runtime.persistence.wms} />
+          </ul>
+          <p className="text-xs text-muted-foreground mt-2">
+            WMS: <code>WMS_PERSISTENCE</code> + جداول <code>wms_stock_documents</code> / <code>wms_reservations</code>
+          </p>
+        </section>
+      ) : null}
 
       {data && (
         <>
@@ -118,7 +144,13 @@ export default function HealthPage() {
           <section>
             <h2 className="font-semibold mb-2">فشار اشتراک و صندلی</h2>
             <p className="text-sm text-muted-foreground mb-2">
-              مستأجران: {new Intl.NumberFormat('fa-IR').format(data.tenancy.tenants)} — اگر صفر است: <code className="text-xs">pnpm db:push && pnpm db:seed</code>
+              مستأجران: {new Intl.NumberFormat('fa-IR').format(data.tenancy.tenants)}
+              {data.tenancy.tenants === 0 ? (
+                <>
+                  {' '}
+                  — اگر صفر است: <code className="text-xs">pnpm db:push && pnpm db:seed</code>
+                </>
+              ) : null}
             </p>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border">
@@ -150,7 +182,7 @@ export default function HealthPage() {
                         </td>
                         <td className="p-2">
                           <div className="h-2 bg-muted rounded overflow-hidden">
-                            <motion
+                            <div
                               title={`${s.seatPressurePercent}%`}
                               className={`h-full ${s.seatPressurePercent >= 80 ? 'bg-amber-500' : 'bg-primary'}`}
                               style={{ width: `${s.seatPressurePercent}%` }}
@@ -170,6 +202,14 @@ export default function HealthPage() {
   );
 }
 
+function PersistBadge({ label, on }: { label: string; on: boolean }) {
+  return (
+    <li className={`rounded px-2 py-1 text-xs border ${on ? 'bg-emerald-50 border-emerald-200' : 'bg-muted'}`}>
+      {label}: <strong>{on ? 'PostgreSQL' : 'memory'}</strong>
+    </li>
+  );
+}
+
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <Legacy className="border rounded-lg p-4">
@@ -180,9 +220,9 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 }
 
 function Legacy(props: React.HTMLAttributes<HTMLDivElement>) {
-  return <motion {...props} />;
+  return <HealthBox {...props} />;
 }
 
-function motion(props: React.HTMLAttributes<HTMLDivElement>) {
+function HealthBox(props: React.HTMLAttributes<HTMLDivElement>) {
   return <div {...props} />;
 }

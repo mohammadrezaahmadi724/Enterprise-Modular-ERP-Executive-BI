@@ -13,14 +13,24 @@ import {
 import { TENANT_HOME, TENANT_MODULES, TENANT_SETTINGS } from '../navigation/tenant-menu';
 import { cn } from '../lib/utils';
 
-export function TenantSidebar({ activeModules = [] }: { activeModules?: string[] }) {
+export function TenantSidebar({
+  activeModules = [],
+  hideMenuHrefs = [],
+}: {
+  activeModules?: string[];
+  hideMenuHrefs?: string[];
+}) {
   const pathname = usePathname();
+  const hidden = useMemo(() => new Set(hideMenuHrefs), [hideMenuHrefs]);
   const modules = useMemo(
     () =>
       TENANT_MODULES.filter(
         (m) => activeModules.length === 0 || !m.moduleCode || activeModules.includes(m.moduleCode),
-      ),
-    [activeModules],
+      ).map((mod) => ({
+        ...mod,
+        items: mod.items.filter((item) => !hidden.has(item.href)),
+      })),
+    [activeModules, hidden],
   );
 
   const [openIds, setOpenIds] = useState<Record<string, boolean>>({});

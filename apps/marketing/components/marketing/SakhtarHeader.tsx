@@ -152,6 +152,12 @@ export function SakhtarHeader() {
             <Link href="/pricing" className="sakhtar-header-nav-link">
               برآورد هزینه
             </Link>
+            <Link href="/about" className="sakhtar-header-nav-link">
+              درباره رشد
+            </Link>
+            <Link href="/faq" className="sakhtar-header-nav-link">
+              پرسش‌های متداول
+            </Link>
             <Link href="/contact" className="sakhtar-header-nav-link">
               تماس
             </Link>
@@ -159,7 +165,7 @@ export function SakhtarHeader() {
 
           <div className="sakhtar-header-actions flex items-center gap-2">
             <Link href={`${WEB_URL}/login`} className="sakhtar-header-login hidden text-sm sm:inline">
-              ورود ERP ابری
+              ورود و ثبت‌نام
             </Link>
             <button
               type="button"
@@ -233,6 +239,12 @@ export function SakhtarHeader() {
             <hr className="my-3" />
             <Link href="/pricing" className="rounded-lg px-3 py-2 text-sm" onClick={() => setMobileOpen(false)}>
               برآورد هزینه
+            </Link>
+            <Link href="/about" className="rounded-lg px-3 py-2 text-sm" onClick={() => setMobileOpen(false)}>
+              درباره رشد
+            </Link>
+            <Link href="/faq" className="rounded-lg px-3 py-2 text-sm" onClick={() => setMobileOpen(false)}>
+              پرسش‌های متداول
             </Link>
             <Link href={`${WEB_URL}/login`} className="rounded-lg px-3 py-2 text-sm" onClick={() => setMobileOpen(false)}>
               ورود

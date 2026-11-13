@@ -1,4 +1,8 @@
+import { TENANT_ADMIN_PERMISSIONS } from '@repo/contracts';
 import { platformDb } from '../../prisma/platform-db';
+
+/** همان کاربری که پنل مستأجر در حالت دمو با هدر x-user-id می‌فرستد. */
+const DEMO_COMPANY_ADMIN_USER_ID = '00000000-0000-4000-8000-000000000099';
 
 function permissionsDbEnabled(): boolean {
   return process.env.AUTH_PERMISSIONS_DB === '1' || process.env.AUTH_PERMISSIONS_DB === 'true';
@@ -44,10 +48,29 @@ export async function resolveDevUserFromHeaders(input: {
   }
   const permissions = await resolvePermissionsForUser(input.userId);
   if (permissions.length) {
+    if (input.userId === DEMO_COMPANY_ADMIN_USER_ID && !permissions.includes('operations.write')) {
+      return { permissions: [...permissions, 'operations.write'], isSuperAdmin: false };
+    }
     return { permissions, isSuperAdmin: false };
   }
   if (input.superAdminHeader) {
     return { permissions: ['*'], isSuperAdmin: true };
+  }
+  if (input.userId === DEMO_COMPANY_ADMIN_USER_ID) {
+    return {
+      permissions: [
+        ...TENANT_ADMIN_PERMISSIONS,
+        'erp.read',
+        'erp.write',
+        'finance.read',
+        'finance.write',
+        'operations.read',
+        'operations.write',
+        'crm.read',
+        'crm.write',
+      ],
+      isSuperAdmin: false,
+    };
   }
   return { permissions: ['erp.read', 'erp.write'], isSuperAdmin: false };
 }

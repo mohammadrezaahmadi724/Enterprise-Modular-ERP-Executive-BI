@@ -128,6 +128,23 @@ const MODULE_PROFILE: Record<
       { key: 'status', label: 'وضعیت' },
     ],
   },
+  qc: {
+    statusKey: 'status',
+    fields: [
+      { key: 'code', label: 'کد بازرسی', required: true },
+      { key: 'workOrder', label: 'سفارش کار', required: true },
+      { key: 'product', label: 'محصول' },
+      { key: 'result', label: 'نتیجه', type: 'select', options: ['قبول', 'نگه‌داری', 'رد'] },
+      { key: 'status', label: 'وضعیت', type: 'select', options: ['باز', 'بسته', 'در جریان'] },
+    ],
+    columns: [
+      { key: 'code', label: 'کد' },
+      { key: 'workOrder', label: 'سفارش کار' },
+      { key: 'product', label: 'محصول' },
+      { key: 'result', label: 'نتیجه' },
+      { key: 'status', label: 'وضعیت' },
+    ],
+  },
   retail: {
     statusKey: 'status',
     fields: [
@@ -210,6 +227,14 @@ function buildRows(href: string, title: string, profile: (typeof MODULE_PROFILE)
       return { ...base, item: `قلم ${i + 1}`, qty: 120 + i * 15, warehouse: 'انبار مرکزی' };
     }
     if (module.id === 'manufacturing') {
+      if (href.startsWith('/qc')) {
+        return {
+          ...base,
+          workOrder: `WO-1404-021${i}`,
+          product: `محصول ${i + 1}`,
+          result: i === 1 ? 'نگه‌داری' : 'قبول',
+        };
+      }
       return { ...base, product: `محصول ${i + 1}`, qty: 50 + i * 10, workCenter: 'خط A' };
     }
     if (module.id === 'distribution') {
@@ -230,7 +255,8 @@ export function getModuleScreen(href: string): ErpScreen {
   const module = found?.module ?? { id: 'finance', label: 'عملیاتی' } as TenantMenuModule;
   const title = found?.item.label ?? 'بخش عملیاتی';
   const description = found?.item.subtitle ?? module.label;
-  const profile = MODULE_PROFILE[module.id] ?? MODULE_PROFILE.finance;
+  const profile =
+    href.startsWith('/qc') ? MODULE_PROFILE.qc : (MODULE_PROFILE[module.id] ?? MODULE_PROFILE.finance);
 
   const rows = buildRows(href, title, profile, module as TenantMenuModule);
 
@@ -245,7 +271,7 @@ export function getModuleScreen(href: string): ErpScreen {
     rows,
     kpis: [
       { label: 'رکورد باز', value: String(rows.filter((r) => r.status !== 'بسته').length) },
-      { label: 'ماه جاری', value: '۱۴۰۴/۰۸' },
+      { label: 'ماه جاری', value: '۱۴۰۵/۰۸' },
       { label: 'ماژول', value: module.label },
     ],
   };

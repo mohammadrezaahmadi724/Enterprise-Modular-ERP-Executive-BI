@@ -48,6 +48,21 @@ export type RiskFinding = $Result.DefaultSelection<Prisma.$RiskFindingPayload>
  * 
  */
 export type TenantKpiConfig = $Result.DefaultSelection<Prisma.$TenantKpiConfigPayload>
+/**
+ * Model ProjectionWmsSlice
+ * 
+ */
+export type ProjectionWmsSlice = $Result.DefaultSelection<Prisma.$ProjectionWmsSlicePayload>
+/**
+ * Model ProjectionWmsTrackingContract
+ * 
+ */
+export type ProjectionWmsTrackingContract = $Result.DefaultSelection<Prisma.$ProjectionWmsTrackingContractPayload>
+/**
+ * Model ProjectionWmsKardexLine
+ * 
+ */
+export type ProjectionWmsKardexLine = $Result.DefaultSelection<Prisma.$ProjectionWmsKardexLinePayload>
 
 /**
  * Enums
@@ -281,6 +296,36 @@ export class PrismaClient<
     * ```
     */
   get tenantKpiConfig(): Prisma.TenantKpiConfigDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectionWmsSlice`: Exposes CRUD operations for the **ProjectionWmsSlice** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectionWmsSlices
+    * const projectionWmsSlices = await prisma.projectionWmsSlice.findMany()
+    * ```
+    */
+  get projectionWmsSlice(): Prisma.ProjectionWmsSliceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectionWmsTrackingContract`: Exposes CRUD operations for the **ProjectionWmsTrackingContract** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectionWmsTrackingContracts
+    * const projectionWmsTrackingContracts = await prisma.projectionWmsTrackingContract.findMany()
+    * ```
+    */
+  get projectionWmsTrackingContract(): Prisma.ProjectionWmsTrackingContractDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectionWmsKardexLine`: Exposes CRUD operations for the **ProjectionWmsKardexLine** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectionWmsKardexLines
+    * const projectionWmsKardexLines = await prisma.projectionWmsKardexLine.findMany()
+    * ```
+    */
+  get projectionWmsKardexLine(): Prisma.ProjectionWmsKardexLineDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -728,7 +773,10 @@ export namespace Prisma {
     RiskRule: 'RiskRule',
     TenantRiskRule: 'TenantRiskRule',
     RiskFinding: 'RiskFinding',
-    TenantKpiConfig: 'TenantKpiConfig'
+    TenantKpiConfig: 'TenantKpiConfig',
+    ProjectionWmsSlice: 'ProjectionWmsSlice',
+    ProjectionWmsTrackingContract: 'ProjectionWmsTrackingContract',
+    ProjectionWmsKardexLine: 'ProjectionWmsKardexLine'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -747,7 +795,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "projectionFinancialSummary" | "projectionSalesSummary" | "metricSnapshot" | "riskRule" | "tenantRiskRule" | "riskFinding" | "tenantKpiConfig"
+      modelProps: "projectionFinancialSummary" | "projectionSalesSummary" | "metricSnapshot" | "riskRule" | "tenantRiskRule" | "riskFinding" | "tenantKpiConfig" | "projectionWmsSlice" | "projectionWmsTrackingContract" | "projectionWmsKardexLine"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1269,6 +1317,228 @@ export namespace Prisma {
           }
         }
       }
+      ProjectionWmsSlice: {
+        payload: Prisma.$ProjectionWmsSlicePayload<ExtArgs>
+        fields: Prisma.ProjectionWmsSliceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectionWmsSliceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectionWmsSliceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectionWmsSliceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectionWmsSliceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>
+          }
+          findMany: {
+            args: Prisma.ProjectionWmsSliceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>[]
+          }
+          create: {
+            args: Prisma.ProjectionWmsSliceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>
+          }
+          createMany: {
+            args: Prisma.ProjectionWmsSliceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProjectionWmsSliceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>[]
+          }
+          delete: {
+            args: Prisma.ProjectionWmsSliceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>
+          }
+          update: {
+            args: Prisma.ProjectionWmsSliceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectionWmsSliceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectionWmsSliceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProjectionWmsSliceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>[]
+          }
+          upsert: {
+            args: Prisma.ProjectionWmsSliceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsSlicePayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectionWmsSliceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectionWmsSlice>
+          }
+          groupBy: {
+            args: Prisma.ProjectionWmsSliceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectionWmsSliceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectionWmsSliceCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectionWmsSliceCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProjectionWmsTrackingContract: {
+        payload: Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>
+        fields: Prisma.ProjectionWmsTrackingContractFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectionWmsTrackingContractFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectionWmsTrackingContractFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectionWmsTrackingContractFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectionWmsTrackingContractFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>
+          }
+          findMany: {
+            args: Prisma.ProjectionWmsTrackingContractFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>[]
+          }
+          create: {
+            args: Prisma.ProjectionWmsTrackingContractCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>
+          }
+          createMany: {
+            args: Prisma.ProjectionWmsTrackingContractCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProjectionWmsTrackingContractCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>[]
+          }
+          delete: {
+            args: Prisma.ProjectionWmsTrackingContractDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>
+          }
+          update: {
+            args: Prisma.ProjectionWmsTrackingContractUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectionWmsTrackingContractDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectionWmsTrackingContractUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProjectionWmsTrackingContractUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProjectionWmsTrackingContractUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsTrackingContractPayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectionWmsTrackingContractAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectionWmsTrackingContract>
+          }
+          groupBy: {
+            args: Prisma.ProjectionWmsTrackingContractGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectionWmsTrackingContractGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectionWmsTrackingContractCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectionWmsTrackingContractCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProjectionWmsKardexLine: {
+        payload: Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>
+        fields: Prisma.ProjectionWmsKardexLineFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectionWmsKardexLineFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectionWmsKardexLineFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectionWmsKardexLineFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectionWmsKardexLineFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>
+          }
+          findMany: {
+            args: Prisma.ProjectionWmsKardexLineFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>[]
+          }
+          create: {
+            args: Prisma.ProjectionWmsKardexLineCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>
+          }
+          createMany: {
+            args: Prisma.ProjectionWmsKardexLineCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProjectionWmsKardexLineCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>[]
+          }
+          delete: {
+            args: Prisma.ProjectionWmsKardexLineDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>
+          }
+          update: {
+            args: Prisma.ProjectionWmsKardexLineUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectionWmsKardexLineDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectionWmsKardexLineUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProjectionWmsKardexLineUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>[]
+          }
+          upsert: {
+            args: Prisma.ProjectionWmsKardexLineUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectionWmsKardexLinePayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectionWmsKardexLineAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectionWmsKardexLine>
+          }
+          groupBy: {
+            args: Prisma.ProjectionWmsKardexLineGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectionWmsKardexLineGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectionWmsKardexLineCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectionWmsKardexLineCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1372,6 +1642,9 @@ export namespace Prisma {
     tenantRiskRule?: TenantRiskRuleOmit
     riskFinding?: RiskFindingOmit
     tenantKpiConfig?: TenantKpiConfigOmit
+    projectionWmsSlice?: ProjectionWmsSliceOmit
+    projectionWmsTrackingContract?: ProjectionWmsTrackingContractOmit
+    projectionWmsKardexLine?: ProjectionWmsKardexLineOmit
   }
 
   /* Types for Logging */
@@ -9086,6 +9359,3159 @@ export namespace Prisma {
 
 
   /**
+   * Model ProjectionWmsSlice
+   */
+
+  export type AggregateProjectionWmsSlice = {
+    _count: ProjectionWmsSliceCountAggregateOutputType | null
+    _avg: ProjectionWmsSliceAvgAggregateOutputType | null
+    _sum: ProjectionWmsSliceSumAggregateOutputType | null
+    _min: ProjectionWmsSliceMinAggregateOutputType | null
+    _max: ProjectionWmsSliceMaxAggregateOutputType | null
+  }
+
+  export type ProjectionWmsSliceAvgAggregateOutputType = {
+    lastProcessedVersion: number | null
+  }
+
+  export type ProjectionWmsSliceSumAggregateOutputType = {
+    lastProcessedVersion: number | null
+  }
+
+  export type ProjectionWmsSliceMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    projection: string | null
+    partKey: string | null
+    lastProcessedEventId: string | null
+    lastProcessedVersion: number | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectionWmsSliceMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    projection: string | null
+    partKey: string | null
+    lastProcessedEventId: string | null
+    lastProcessedVersion: number | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectionWmsSliceCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    projection: number
+    partKey: number
+    payload: number
+    lastProcessedEventId: number
+    lastProcessedVersion: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProjectionWmsSliceAvgAggregateInputType = {
+    lastProcessedVersion?: true
+  }
+
+  export type ProjectionWmsSliceSumAggregateInputType = {
+    lastProcessedVersion?: true
+  }
+
+  export type ProjectionWmsSliceMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    projection?: true
+    partKey?: true
+    lastProcessedEventId?: true
+    lastProcessedVersion?: true
+    updatedAt?: true
+  }
+
+  export type ProjectionWmsSliceMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    projection?: true
+    partKey?: true
+    lastProcessedEventId?: true
+    lastProcessedVersion?: true
+    updatedAt?: true
+  }
+
+  export type ProjectionWmsSliceCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    projection?: true
+    partKey?: true
+    payload?: true
+    lastProcessedEventId?: true
+    lastProcessedVersion?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProjectionWmsSliceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectionWmsSlice to aggregate.
+     */
+    where?: ProjectionWmsSliceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsSlices to fetch.
+     */
+    orderBy?: ProjectionWmsSliceOrderByWithRelationInput | ProjectionWmsSliceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectionWmsSliceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsSlices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsSlices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectionWmsSlices
+    **/
+    _count?: true | ProjectionWmsSliceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProjectionWmsSliceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProjectionWmsSliceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectionWmsSliceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectionWmsSliceMaxAggregateInputType
+  }
+
+  export type GetProjectionWmsSliceAggregateType<T extends ProjectionWmsSliceAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectionWmsSlice]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectionWmsSlice[P]>
+      : GetScalarType<T[P], AggregateProjectionWmsSlice[P]>
+  }
+
+
+
+
+  export type ProjectionWmsSliceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectionWmsSliceWhereInput
+    orderBy?: ProjectionWmsSliceOrderByWithAggregationInput | ProjectionWmsSliceOrderByWithAggregationInput[]
+    by: ProjectionWmsSliceScalarFieldEnum[] | ProjectionWmsSliceScalarFieldEnum
+    having?: ProjectionWmsSliceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectionWmsSliceCountAggregateInputType | true
+    _avg?: ProjectionWmsSliceAvgAggregateInputType
+    _sum?: ProjectionWmsSliceSumAggregateInputType
+    _min?: ProjectionWmsSliceMinAggregateInputType
+    _max?: ProjectionWmsSliceMaxAggregateInputType
+  }
+
+  export type ProjectionWmsSliceGroupByOutputType = {
+    id: string
+    tenantId: string
+    projection: string
+    partKey: string
+    payload: JsonValue
+    lastProcessedEventId: string
+    lastProcessedVersion: number
+    updatedAt: Date
+    _count: ProjectionWmsSliceCountAggregateOutputType | null
+    _avg: ProjectionWmsSliceAvgAggregateOutputType | null
+    _sum: ProjectionWmsSliceSumAggregateOutputType | null
+    _min: ProjectionWmsSliceMinAggregateOutputType | null
+    _max: ProjectionWmsSliceMaxAggregateOutputType | null
+  }
+
+  type GetProjectionWmsSliceGroupByPayload<T extends ProjectionWmsSliceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectionWmsSliceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectionWmsSliceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectionWmsSliceGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectionWmsSliceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectionWmsSliceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    projection?: boolean
+    partKey?: boolean
+    payload?: boolean
+    lastProcessedEventId?: boolean
+    lastProcessedVersion?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsSlice"]>
+
+  export type ProjectionWmsSliceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    projection?: boolean
+    partKey?: boolean
+    payload?: boolean
+    lastProcessedEventId?: boolean
+    lastProcessedVersion?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsSlice"]>
+
+  export type ProjectionWmsSliceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    projection?: boolean
+    partKey?: boolean
+    payload?: boolean
+    lastProcessedEventId?: boolean
+    lastProcessedVersion?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsSlice"]>
+
+  export type ProjectionWmsSliceSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    projection?: boolean
+    partKey?: boolean
+    payload?: boolean
+    lastProcessedEventId?: boolean
+    lastProcessedVersion?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProjectionWmsSliceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "projection" | "partKey" | "payload" | "lastProcessedEventId" | "lastProcessedVersion" | "updatedAt", ExtArgs["result"]["projectionWmsSlice"]>
+
+  export type $ProjectionWmsSlicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectionWmsSlice"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      projection: string
+      partKey: string
+      payload: Prisma.JsonValue
+      lastProcessedEventId: string
+      lastProcessedVersion: number
+      updatedAt: Date
+    }, ExtArgs["result"]["projectionWmsSlice"]>
+    composites: {}
+  }
+
+  type ProjectionWmsSliceGetPayload<S extends boolean | null | undefined | ProjectionWmsSliceDefaultArgs> = $Result.GetResult<Prisma.$ProjectionWmsSlicePayload, S>
+
+  type ProjectionWmsSliceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectionWmsSliceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectionWmsSliceCountAggregateInputType | true
+    }
+
+  export interface ProjectionWmsSliceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectionWmsSlice'], meta: { name: 'ProjectionWmsSlice' } }
+    /**
+     * Find zero or one ProjectionWmsSlice that matches the filter.
+     * @param {ProjectionWmsSliceFindUniqueArgs} args - Arguments to find a ProjectionWmsSlice
+     * @example
+     * // Get one ProjectionWmsSlice
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectionWmsSliceFindUniqueArgs>(args: SelectSubset<T, ProjectionWmsSliceFindUniqueArgs<ExtArgs>>): Prisma__ProjectionWmsSliceClient<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectionWmsSlice that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectionWmsSliceFindUniqueOrThrowArgs} args - Arguments to find a ProjectionWmsSlice
+     * @example
+     * // Get one ProjectionWmsSlice
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectionWmsSliceFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectionWmsSliceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectionWmsSliceClient<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectionWmsSlice that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsSliceFindFirstArgs} args - Arguments to find a ProjectionWmsSlice
+     * @example
+     * // Get one ProjectionWmsSlice
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectionWmsSliceFindFirstArgs>(args?: SelectSubset<T, ProjectionWmsSliceFindFirstArgs<ExtArgs>>): Prisma__ProjectionWmsSliceClient<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectionWmsSlice that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsSliceFindFirstOrThrowArgs} args - Arguments to find a ProjectionWmsSlice
+     * @example
+     * // Get one ProjectionWmsSlice
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectionWmsSliceFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectionWmsSliceFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectionWmsSliceClient<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectionWmsSlices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsSliceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectionWmsSlices
+     * const projectionWmsSlices = await prisma.projectionWmsSlice.findMany()
+     * 
+     * // Get first 10 ProjectionWmsSlices
+     * const projectionWmsSlices = await prisma.projectionWmsSlice.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectionWmsSliceWithIdOnly = await prisma.projectionWmsSlice.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectionWmsSliceFindManyArgs>(args?: SelectSubset<T, ProjectionWmsSliceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectionWmsSlice.
+     * @param {ProjectionWmsSliceCreateArgs} args - Arguments to create a ProjectionWmsSlice.
+     * @example
+     * // Create one ProjectionWmsSlice
+     * const ProjectionWmsSlice = await prisma.projectionWmsSlice.create({
+     *   data: {
+     *     // ... data to create a ProjectionWmsSlice
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectionWmsSliceCreateArgs>(args: SelectSubset<T, ProjectionWmsSliceCreateArgs<ExtArgs>>): Prisma__ProjectionWmsSliceClient<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectionWmsSlices.
+     * @param {ProjectionWmsSliceCreateManyArgs} args - Arguments to create many ProjectionWmsSlices.
+     * @example
+     * // Create many ProjectionWmsSlices
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectionWmsSliceCreateManyArgs>(args?: SelectSubset<T, ProjectionWmsSliceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProjectionWmsSlices and returns the data saved in the database.
+     * @param {ProjectionWmsSliceCreateManyAndReturnArgs} args - Arguments to create many ProjectionWmsSlices.
+     * @example
+     * // Create many ProjectionWmsSlices
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProjectionWmsSlices and only return the `id`
+     * const projectionWmsSliceWithIdOnly = await prisma.projectionWmsSlice.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProjectionWmsSliceCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectionWmsSliceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProjectionWmsSlice.
+     * @param {ProjectionWmsSliceDeleteArgs} args - Arguments to delete one ProjectionWmsSlice.
+     * @example
+     * // Delete one ProjectionWmsSlice
+     * const ProjectionWmsSlice = await prisma.projectionWmsSlice.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectionWmsSlice
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectionWmsSliceDeleteArgs>(args: SelectSubset<T, ProjectionWmsSliceDeleteArgs<ExtArgs>>): Prisma__ProjectionWmsSliceClient<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectionWmsSlice.
+     * @param {ProjectionWmsSliceUpdateArgs} args - Arguments to update one ProjectionWmsSlice.
+     * @example
+     * // Update one ProjectionWmsSlice
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectionWmsSliceUpdateArgs>(args: SelectSubset<T, ProjectionWmsSliceUpdateArgs<ExtArgs>>): Prisma__ProjectionWmsSliceClient<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectionWmsSlices.
+     * @param {ProjectionWmsSliceDeleteManyArgs} args - Arguments to filter ProjectionWmsSlices to delete.
+     * @example
+     * // Delete a few ProjectionWmsSlices
+     * const { count } = await prisma.projectionWmsSlice.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectionWmsSliceDeleteManyArgs>(args?: SelectSubset<T, ProjectionWmsSliceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectionWmsSlices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsSliceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectionWmsSlices
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectionWmsSliceUpdateManyArgs>(args: SelectSubset<T, ProjectionWmsSliceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectionWmsSlices and returns the data updated in the database.
+     * @param {ProjectionWmsSliceUpdateManyAndReturnArgs} args - Arguments to update many ProjectionWmsSlices.
+     * @example
+     * // Update many ProjectionWmsSlices
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProjectionWmsSlices and only return the `id`
+     * const projectionWmsSliceWithIdOnly = await prisma.projectionWmsSlice.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProjectionWmsSliceUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectionWmsSliceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProjectionWmsSlice.
+     * @param {ProjectionWmsSliceUpsertArgs} args - Arguments to update or create a ProjectionWmsSlice.
+     * @example
+     * // Update or create a ProjectionWmsSlice
+     * const projectionWmsSlice = await prisma.projectionWmsSlice.upsert({
+     *   create: {
+     *     // ... data to create a ProjectionWmsSlice
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectionWmsSlice we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectionWmsSliceUpsertArgs>(args: SelectSubset<T, ProjectionWmsSliceUpsertArgs<ExtArgs>>): Prisma__ProjectionWmsSliceClient<$Result.GetResult<Prisma.$ProjectionWmsSlicePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectionWmsSlices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsSliceCountArgs} args - Arguments to filter ProjectionWmsSlices to count.
+     * @example
+     * // Count the number of ProjectionWmsSlices
+     * const count = await prisma.projectionWmsSlice.count({
+     *   where: {
+     *     // ... the filter for the ProjectionWmsSlices we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectionWmsSliceCountArgs>(
+      args?: Subset<T, ProjectionWmsSliceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectionWmsSliceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectionWmsSlice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsSliceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectionWmsSliceAggregateArgs>(args: Subset<T, ProjectionWmsSliceAggregateArgs>): Prisma.PrismaPromise<GetProjectionWmsSliceAggregateType<T>>
+
+    /**
+     * Group by ProjectionWmsSlice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsSliceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectionWmsSliceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectionWmsSliceGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectionWmsSliceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectionWmsSliceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectionWmsSliceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectionWmsSlice model
+   */
+  readonly fields: ProjectionWmsSliceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectionWmsSlice.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectionWmsSliceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectionWmsSlice model
+   */
+  interface ProjectionWmsSliceFieldRefs {
+    readonly id: FieldRef<"ProjectionWmsSlice", 'String'>
+    readonly tenantId: FieldRef<"ProjectionWmsSlice", 'String'>
+    readonly projection: FieldRef<"ProjectionWmsSlice", 'String'>
+    readonly partKey: FieldRef<"ProjectionWmsSlice", 'String'>
+    readonly payload: FieldRef<"ProjectionWmsSlice", 'Json'>
+    readonly lastProcessedEventId: FieldRef<"ProjectionWmsSlice", 'String'>
+    readonly lastProcessedVersion: FieldRef<"ProjectionWmsSlice", 'Int'>
+    readonly updatedAt: FieldRef<"ProjectionWmsSlice", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectionWmsSlice findUnique
+   */
+  export type ProjectionWmsSliceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsSlice to fetch.
+     */
+    where: ProjectionWmsSliceWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsSlice findUniqueOrThrow
+   */
+  export type ProjectionWmsSliceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsSlice to fetch.
+     */
+    where: ProjectionWmsSliceWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsSlice findFirst
+   */
+  export type ProjectionWmsSliceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsSlice to fetch.
+     */
+    where?: ProjectionWmsSliceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsSlices to fetch.
+     */
+    orderBy?: ProjectionWmsSliceOrderByWithRelationInput | ProjectionWmsSliceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectionWmsSlices.
+     */
+    cursor?: ProjectionWmsSliceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsSlices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsSlices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectionWmsSlices.
+     */
+    distinct?: ProjectionWmsSliceScalarFieldEnum | ProjectionWmsSliceScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsSlice findFirstOrThrow
+   */
+  export type ProjectionWmsSliceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsSlice to fetch.
+     */
+    where?: ProjectionWmsSliceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsSlices to fetch.
+     */
+    orderBy?: ProjectionWmsSliceOrderByWithRelationInput | ProjectionWmsSliceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectionWmsSlices.
+     */
+    cursor?: ProjectionWmsSliceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsSlices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsSlices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectionWmsSlices.
+     */
+    distinct?: ProjectionWmsSliceScalarFieldEnum | ProjectionWmsSliceScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsSlice findMany
+   */
+  export type ProjectionWmsSliceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsSlices to fetch.
+     */
+    where?: ProjectionWmsSliceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsSlices to fetch.
+     */
+    orderBy?: ProjectionWmsSliceOrderByWithRelationInput | ProjectionWmsSliceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectionWmsSlices.
+     */
+    cursor?: ProjectionWmsSliceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsSlices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsSlices.
+     */
+    skip?: number
+    distinct?: ProjectionWmsSliceScalarFieldEnum | ProjectionWmsSliceScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsSlice create
+   */
+  export type ProjectionWmsSliceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectionWmsSlice.
+     */
+    data: XOR<ProjectionWmsSliceCreateInput, ProjectionWmsSliceUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectionWmsSlice createMany
+   */
+  export type ProjectionWmsSliceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectionWmsSlices.
+     */
+    data: ProjectionWmsSliceCreateManyInput | ProjectionWmsSliceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectionWmsSlice createManyAndReturn
+   */
+  export type ProjectionWmsSliceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProjectionWmsSlices.
+     */
+    data: ProjectionWmsSliceCreateManyInput | ProjectionWmsSliceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectionWmsSlice update
+   */
+  export type ProjectionWmsSliceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectionWmsSlice.
+     */
+    data: XOR<ProjectionWmsSliceUpdateInput, ProjectionWmsSliceUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectionWmsSlice to update.
+     */
+    where: ProjectionWmsSliceWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsSlice updateMany
+   */
+  export type ProjectionWmsSliceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectionWmsSlices.
+     */
+    data: XOR<ProjectionWmsSliceUpdateManyMutationInput, ProjectionWmsSliceUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectionWmsSlices to update
+     */
+    where?: ProjectionWmsSliceWhereInput
+    /**
+     * Limit how many ProjectionWmsSlices to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsSlice updateManyAndReturn
+   */
+  export type ProjectionWmsSliceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * The data used to update ProjectionWmsSlices.
+     */
+    data: XOR<ProjectionWmsSliceUpdateManyMutationInput, ProjectionWmsSliceUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectionWmsSlices to update
+     */
+    where?: ProjectionWmsSliceWhereInput
+    /**
+     * Limit how many ProjectionWmsSlices to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsSlice upsert
+   */
+  export type ProjectionWmsSliceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectionWmsSlice to update in case it exists.
+     */
+    where: ProjectionWmsSliceWhereUniqueInput
+    /**
+     * In case the ProjectionWmsSlice found by the `where` argument doesn't exist, create a new ProjectionWmsSlice with this data.
+     */
+    create: XOR<ProjectionWmsSliceCreateInput, ProjectionWmsSliceUncheckedCreateInput>
+    /**
+     * In case the ProjectionWmsSlice was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectionWmsSliceUpdateInput, ProjectionWmsSliceUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectionWmsSlice delete
+   */
+  export type ProjectionWmsSliceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+    /**
+     * Filter which ProjectionWmsSlice to delete.
+     */
+    where: ProjectionWmsSliceWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsSlice deleteMany
+   */
+  export type ProjectionWmsSliceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectionWmsSlices to delete
+     */
+    where?: ProjectionWmsSliceWhereInput
+    /**
+     * Limit how many ProjectionWmsSlices to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsSlice without action
+   */
+  export type ProjectionWmsSliceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsSlice
+     */
+    select?: ProjectionWmsSliceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsSlice
+     */
+    omit?: ProjectionWmsSliceOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProjectionWmsTrackingContract
+   */
+
+  export type AggregateProjectionWmsTrackingContract = {
+    _count: ProjectionWmsTrackingContractCountAggregateOutputType | null
+    _min: ProjectionWmsTrackingContractMinAggregateOutputType | null
+    _max: ProjectionWmsTrackingContractMaxAggregateOutputType | null
+  }
+
+  export type ProjectionWmsTrackingContractMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    sku: string | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectionWmsTrackingContractMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    sku: string | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectionWmsTrackingContractCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    sku: number
+    payload: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProjectionWmsTrackingContractMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    sku?: true
+    updatedAt?: true
+  }
+
+  export type ProjectionWmsTrackingContractMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    sku?: true
+    updatedAt?: true
+  }
+
+  export type ProjectionWmsTrackingContractCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    sku?: true
+    payload?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProjectionWmsTrackingContractAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectionWmsTrackingContract to aggregate.
+     */
+    where?: ProjectionWmsTrackingContractWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsTrackingContracts to fetch.
+     */
+    orderBy?: ProjectionWmsTrackingContractOrderByWithRelationInput | ProjectionWmsTrackingContractOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectionWmsTrackingContractWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsTrackingContracts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsTrackingContracts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectionWmsTrackingContracts
+    **/
+    _count?: true | ProjectionWmsTrackingContractCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectionWmsTrackingContractMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectionWmsTrackingContractMaxAggregateInputType
+  }
+
+  export type GetProjectionWmsTrackingContractAggregateType<T extends ProjectionWmsTrackingContractAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectionWmsTrackingContract]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectionWmsTrackingContract[P]>
+      : GetScalarType<T[P], AggregateProjectionWmsTrackingContract[P]>
+  }
+
+
+
+
+  export type ProjectionWmsTrackingContractGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectionWmsTrackingContractWhereInput
+    orderBy?: ProjectionWmsTrackingContractOrderByWithAggregationInput | ProjectionWmsTrackingContractOrderByWithAggregationInput[]
+    by: ProjectionWmsTrackingContractScalarFieldEnum[] | ProjectionWmsTrackingContractScalarFieldEnum
+    having?: ProjectionWmsTrackingContractScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectionWmsTrackingContractCountAggregateInputType | true
+    _min?: ProjectionWmsTrackingContractMinAggregateInputType
+    _max?: ProjectionWmsTrackingContractMaxAggregateInputType
+  }
+
+  export type ProjectionWmsTrackingContractGroupByOutputType = {
+    id: string
+    tenantId: string
+    sku: string
+    payload: JsonValue
+    updatedAt: Date
+    _count: ProjectionWmsTrackingContractCountAggregateOutputType | null
+    _min: ProjectionWmsTrackingContractMinAggregateOutputType | null
+    _max: ProjectionWmsTrackingContractMaxAggregateOutputType | null
+  }
+
+  type GetProjectionWmsTrackingContractGroupByPayload<T extends ProjectionWmsTrackingContractGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectionWmsTrackingContractGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectionWmsTrackingContractGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectionWmsTrackingContractGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectionWmsTrackingContractGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectionWmsTrackingContractSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    sku?: boolean
+    payload?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsTrackingContract"]>
+
+  export type ProjectionWmsTrackingContractSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    sku?: boolean
+    payload?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsTrackingContract"]>
+
+  export type ProjectionWmsTrackingContractSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    sku?: boolean
+    payload?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsTrackingContract"]>
+
+  export type ProjectionWmsTrackingContractSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    sku?: boolean
+    payload?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProjectionWmsTrackingContractOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "sku" | "payload" | "updatedAt", ExtArgs["result"]["projectionWmsTrackingContract"]>
+
+  export type $ProjectionWmsTrackingContractPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectionWmsTrackingContract"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      sku: string
+      payload: Prisma.JsonValue
+      updatedAt: Date
+    }, ExtArgs["result"]["projectionWmsTrackingContract"]>
+    composites: {}
+  }
+
+  type ProjectionWmsTrackingContractGetPayload<S extends boolean | null | undefined | ProjectionWmsTrackingContractDefaultArgs> = $Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload, S>
+
+  type ProjectionWmsTrackingContractCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectionWmsTrackingContractFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectionWmsTrackingContractCountAggregateInputType | true
+    }
+
+  export interface ProjectionWmsTrackingContractDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectionWmsTrackingContract'], meta: { name: 'ProjectionWmsTrackingContract' } }
+    /**
+     * Find zero or one ProjectionWmsTrackingContract that matches the filter.
+     * @param {ProjectionWmsTrackingContractFindUniqueArgs} args - Arguments to find a ProjectionWmsTrackingContract
+     * @example
+     * // Get one ProjectionWmsTrackingContract
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectionWmsTrackingContractFindUniqueArgs>(args: SelectSubset<T, ProjectionWmsTrackingContractFindUniqueArgs<ExtArgs>>): Prisma__ProjectionWmsTrackingContractClient<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectionWmsTrackingContract that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectionWmsTrackingContractFindUniqueOrThrowArgs} args - Arguments to find a ProjectionWmsTrackingContract
+     * @example
+     * // Get one ProjectionWmsTrackingContract
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectionWmsTrackingContractFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectionWmsTrackingContractFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectionWmsTrackingContractClient<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectionWmsTrackingContract that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsTrackingContractFindFirstArgs} args - Arguments to find a ProjectionWmsTrackingContract
+     * @example
+     * // Get one ProjectionWmsTrackingContract
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectionWmsTrackingContractFindFirstArgs>(args?: SelectSubset<T, ProjectionWmsTrackingContractFindFirstArgs<ExtArgs>>): Prisma__ProjectionWmsTrackingContractClient<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectionWmsTrackingContract that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsTrackingContractFindFirstOrThrowArgs} args - Arguments to find a ProjectionWmsTrackingContract
+     * @example
+     * // Get one ProjectionWmsTrackingContract
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectionWmsTrackingContractFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectionWmsTrackingContractFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectionWmsTrackingContractClient<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectionWmsTrackingContracts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsTrackingContractFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectionWmsTrackingContracts
+     * const projectionWmsTrackingContracts = await prisma.projectionWmsTrackingContract.findMany()
+     * 
+     * // Get first 10 ProjectionWmsTrackingContracts
+     * const projectionWmsTrackingContracts = await prisma.projectionWmsTrackingContract.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectionWmsTrackingContractWithIdOnly = await prisma.projectionWmsTrackingContract.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectionWmsTrackingContractFindManyArgs>(args?: SelectSubset<T, ProjectionWmsTrackingContractFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectionWmsTrackingContract.
+     * @param {ProjectionWmsTrackingContractCreateArgs} args - Arguments to create a ProjectionWmsTrackingContract.
+     * @example
+     * // Create one ProjectionWmsTrackingContract
+     * const ProjectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.create({
+     *   data: {
+     *     // ... data to create a ProjectionWmsTrackingContract
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectionWmsTrackingContractCreateArgs>(args: SelectSubset<T, ProjectionWmsTrackingContractCreateArgs<ExtArgs>>): Prisma__ProjectionWmsTrackingContractClient<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectionWmsTrackingContracts.
+     * @param {ProjectionWmsTrackingContractCreateManyArgs} args - Arguments to create many ProjectionWmsTrackingContracts.
+     * @example
+     * // Create many ProjectionWmsTrackingContracts
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectionWmsTrackingContractCreateManyArgs>(args?: SelectSubset<T, ProjectionWmsTrackingContractCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProjectionWmsTrackingContracts and returns the data saved in the database.
+     * @param {ProjectionWmsTrackingContractCreateManyAndReturnArgs} args - Arguments to create many ProjectionWmsTrackingContracts.
+     * @example
+     * // Create many ProjectionWmsTrackingContracts
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProjectionWmsTrackingContracts and only return the `id`
+     * const projectionWmsTrackingContractWithIdOnly = await prisma.projectionWmsTrackingContract.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProjectionWmsTrackingContractCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectionWmsTrackingContractCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProjectionWmsTrackingContract.
+     * @param {ProjectionWmsTrackingContractDeleteArgs} args - Arguments to delete one ProjectionWmsTrackingContract.
+     * @example
+     * // Delete one ProjectionWmsTrackingContract
+     * const ProjectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectionWmsTrackingContract
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectionWmsTrackingContractDeleteArgs>(args: SelectSubset<T, ProjectionWmsTrackingContractDeleteArgs<ExtArgs>>): Prisma__ProjectionWmsTrackingContractClient<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectionWmsTrackingContract.
+     * @param {ProjectionWmsTrackingContractUpdateArgs} args - Arguments to update one ProjectionWmsTrackingContract.
+     * @example
+     * // Update one ProjectionWmsTrackingContract
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectionWmsTrackingContractUpdateArgs>(args: SelectSubset<T, ProjectionWmsTrackingContractUpdateArgs<ExtArgs>>): Prisma__ProjectionWmsTrackingContractClient<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectionWmsTrackingContracts.
+     * @param {ProjectionWmsTrackingContractDeleteManyArgs} args - Arguments to filter ProjectionWmsTrackingContracts to delete.
+     * @example
+     * // Delete a few ProjectionWmsTrackingContracts
+     * const { count } = await prisma.projectionWmsTrackingContract.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectionWmsTrackingContractDeleteManyArgs>(args?: SelectSubset<T, ProjectionWmsTrackingContractDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectionWmsTrackingContracts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsTrackingContractUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectionWmsTrackingContracts
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectionWmsTrackingContractUpdateManyArgs>(args: SelectSubset<T, ProjectionWmsTrackingContractUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectionWmsTrackingContracts and returns the data updated in the database.
+     * @param {ProjectionWmsTrackingContractUpdateManyAndReturnArgs} args - Arguments to update many ProjectionWmsTrackingContracts.
+     * @example
+     * // Update many ProjectionWmsTrackingContracts
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProjectionWmsTrackingContracts and only return the `id`
+     * const projectionWmsTrackingContractWithIdOnly = await prisma.projectionWmsTrackingContract.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProjectionWmsTrackingContractUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectionWmsTrackingContractUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProjectionWmsTrackingContract.
+     * @param {ProjectionWmsTrackingContractUpsertArgs} args - Arguments to update or create a ProjectionWmsTrackingContract.
+     * @example
+     * // Update or create a ProjectionWmsTrackingContract
+     * const projectionWmsTrackingContract = await prisma.projectionWmsTrackingContract.upsert({
+     *   create: {
+     *     // ... data to create a ProjectionWmsTrackingContract
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectionWmsTrackingContract we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectionWmsTrackingContractUpsertArgs>(args: SelectSubset<T, ProjectionWmsTrackingContractUpsertArgs<ExtArgs>>): Prisma__ProjectionWmsTrackingContractClient<$Result.GetResult<Prisma.$ProjectionWmsTrackingContractPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectionWmsTrackingContracts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsTrackingContractCountArgs} args - Arguments to filter ProjectionWmsTrackingContracts to count.
+     * @example
+     * // Count the number of ProjectionWmsTrackingContracts
+     * const count = await prisma.projectionWmsTrackingContract.count({
+     *   where: {
+     *     // ... the filter for the ProjectionWmsTrackingContracts we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectionWmsTrackingContractCountArgs>(
+      args?: Subset<T, ProjectionWmsTrackingContractCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectionWmsTrackingContractCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectionWmsTrackingContract.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsTrackingContractAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectionWmsTrackingContractAggregateArgs>(args: Subset<T, ProjectionWmsTrackingContractAggregateArgs>): Prisma.PrismaPromise<GetProjectionWmsTrackingContractAggregateType<T>>
+
+    /**
+     * Group by ProjectionWmsTrackingContract.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsTrackingContractGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectionWmsTrackingContractGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectionWmsTrackingContractGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectionWmsTrackingContractGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectionWmsTrackingContractGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectionWmsTrackingContractGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectionWmsTrackingContract model
+   */
+  readonly fields: ProjectionWmsTrackingContractFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectionWmsTrackingContract.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectionWmsTrackingContractClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectionWmsTrackingContract model
+   */
+  interface ProjectionWmsTrackingContractFieldRefs {
+    readonly id: FieldRef<"ProjectionWmsTrackingContract", 'String'>
+    readonly tenantId: FieldRef<"ProjectionWmsTrackingContract", 'String'>
+    readonly sku: FieldRef<"ProjectionWmsTrackingContract", 'String'>
+    readonly payload: FieldRef<"ProjectionWmsTrackingContract", 'Json'>
+    readonly updatedAt: FieldRef<"ProjectionWmsTrackingContract", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectionWmsTrackingContract findUnique
+   */
+  export type ProjectionWmsTrackingContractFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsTrackingContract to fetch.
+     */
+    where: ProjectionWmsTrackingContractWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsTrackingContract findUniqueOrThrow
+   */
+  export type ProjectionWmsTrackingContractFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsTrackingContract to fetch.
+     */
+    where: ProjectionWmsTrackingContractWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsTrackingContract findFirst
+   */
+  export type ProjectionWmsTrackingContractFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsTrackingContract to fetch.
+     */
+    where?: ProjectionWmsTrackingContractWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsTrackingContracts to fetch.
+     */
+    orderBy?: ProjectionWmsTrackingContractOrderByWithRelationInput | ProjectionWmsTrackingContractOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectionWmsTrackingContracts.
+     */
+    cursor?: ProjectionWmsTrackingContractWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsTrackingContracts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsTrackingContracts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectionWmsTrackingContracts.
+     */
+    distinct?: ProjectionWmsTrackingContractScalarFieldEnum | ProjectionWmsTrackingContractScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsTrackingContract findFirstOrThrow
+   */
+  export type ProjectionWmsTrackingContractFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsTrackingContract to fetch.
+     */
+    where?: ProjectionWmsTrackingContractWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsTrackingContracts to fetch.
+     */
+    orderBy?: ProjectionWmsTrackingContractOrderByWithRelationInput | ProjectionWmsTrackingContractOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectionWmsTrackingContracts.
+     */
+    cursor?: ProjectionWmsTrackingContractWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsTrackingContracts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsTrackingContracts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectionWmsTrackingContracts.
+     */
+    distinct?: ProjectionWmsTrackingContractScalarFieldEnum | ProjectionWmsTrackingContractScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsTrackingContract findMany
+   */
+  export type ProjectionWmsTrackingContractFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsTrackingContracts to fetch.
+     */
+    where?: ProjectionWmsTrackingContractWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsTrackingContracts to fetch.
+     */
+    orderBy?: ProjectionWmsTrackingContractOrderByWithRelationInput | ProjectionWmsTrackingContractOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectionWmsTrackingContracts.
+     */
+    cursor?: ProjectionWmsTrackingContractWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsTrackingContracts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsTrackingContracts.
+     */
+    skip?: number
+    distinct?: ProjectionWmsTrackingContractScalarFieldEnum | ProjectionWmsTrackingContractScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsTrackingContract create
+   */
+  export type ProjectionWmsTrackingContractCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectionWmsTrackingContract.
+     */
+    data: XOR<ProjectionWmsTrackingContractCreateInput, ProjectionWmsTrackingContractUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectionWmsTrackingContract createMany
+   */
+  export type ProjectionWmsTrackingContractCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectionWmsTrackingContracts.
+     */
+    data: ProjectionWmsTrackingContractCreateManyInput | ProjectionWmsTrackingContractCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectionWmsTrackingContract createManyAndReturn
+   */
+  export type ProjectionWmsTrackingContractCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProjectionWmsTrackingContracts.
+     */
+    data: ProjectionWmsTrackingContractCreateManyInput | ProjectionWmsTrackingContractCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectionWmsTrackingContract update
+   */
+  export type ProjectionWmsTrackingContractUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectionWmsTrackingContract.
+     */
+    data: XOR<ProjectionWmsTrackingContractUpdateInput, ProjectionWmsTrackingContractUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectionWmsTrackingContract to update.
+     */
+    where: ProjectionWmsTrackingContractWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsTrackingContract updateMany
+   */
+  export type ProjectionWmsTrackingContractUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectionWmsTrackingContracts.
+     */
+    data: XOR<ProjectionWmsTrackingContractUpdateManyMutationInput, ProjectionWmsTrackingContractUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectionWmsTrackingContracts to update
+     */
+    where?: ProjectionWmsTrackingContractWhereInput
+    /**
+     * Limit how many ProjectionWmsTrackingContracts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsTrackingContract updateManyAndReturn
+   */
+  export type ProjectionWmsTrackingContractUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * The data used to update ProjectionWmsTrackingContracts.
+     */
+    data: XOR<ProjectionWmsTrackingContractUpdateManyMutationInput, ProjectionWmsTrackingContractUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectionWmsTrackingContracts to update
+     */
+    where?: ProjectionWmsTrackingContractWhereInput
+    /**
+     * Limit how many ProjectionWmsTrackingContracts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsTrackingContract upsert
+   */
+  export type ProjectionWmsTrackingContractUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectionWmsTrackingContract to update in case it exists.
+     */
+    where: ProjectionWmsTrackingContractWhereUniqueInput
+    /**
+     * In case the ProjectionWmsTrackingContract found by the `where` argument doesn't exist, create a new ProjectionWmsTrackingContract with this data.
+     */
+    create: XOR<ProjectionWmsTrackingContractCreateInput, ProjectionWmsTrackingContractUncheckedCreateInput>
+    /**
+     * In case the ProjectionWmsTrackingContract was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectionWmsTrackingContractUpdateInput, ProjectionWmsTrackingContractUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectionWmsTrackingContract delete
+   */
+  export type ProjectionWmsTrackingContractDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+    /**
+     * Filter which ProjectionWmsTrackingContract to delete.
+     */
+    where: ProjectionWmsTrackingContractWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsTrackingContract deleteMany
+   */
+  export type ProjectionWmsTrackingContractDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectionWmsTrackingContracts to delete
+     */
+    where?: ProjectionWmsTrackingContractWhereInput
+    /**
+     * Limit how many ProjectionWmsTrackingContracts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsTrackingContract without action
+   */
+  export type ProjectionWmsTrackingContractDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsTrackingContract
+     */
+    select?: ProjectionWmsTrackingContractSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsTrackingContract
+     */
+    omit?: ProjectionWmsTrackingContractOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProjectionWmsKardexLine
+   */
+
+  export type AggregateProjectionWmsKardexLine = {
+    _count: ProjectionWmsKardexLineCountAggregateOutputType | null
+    _avg: ProjectionWmsKardexLineAvgAggregateOutputType | null
+    _sum: ProjectionWmsKardexLineSumAggregateOutputType | null
+    _min: ProjectionWmsKardexLineMinAggregateOutputType | null
+    _max: ProjectionWmsKardexLineMaxAggregateOutputType | null
+  }
+
+  export type ProjectionWmsKardexLineAvgAggregateOutputType = {
+    qtyIn: number | null
+    qtyOut: number | null
+  }
+
+  export type ProjectionWmsKardexLineSumAggregateOutputType = {
+    qtyIn: number | null
+    qtyOut: number | null
+  }
+
+  export type ProjectionWmsKardexLineMinAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    eventId: string | null
+    sku: string | null
+    warehouse: string | null
+    movement: string | null
+    qtyIn: number | null
+    qtyOut: number | null
+    reference: string | null
+    recordedAt: Date | null
+  }
+
+  export type ProjectionWmsKardexLineMaxAggregateOutputType = {
+    id: string | null
+    tenantId: string | null
+    eventId: string | null
+    sku: string | null
+    warehouse: string | null
+    movement: string | null
+    qtyIn: number | null
+    qtyOut: number | null
+    reference: string | null
+    recordedAt: Date | null
+  }
+
+  export type ProjectionWmsKardexLineCountAggregateOutputType = {
+    id: number
+    tenantId: number
+    eventId: number
+    sku: number
+    warehouse: number
+    movement: number
+    qtyIn: number
+    qtyOut: number
+    reference: number
+    recordedAt: number
+    _all: number
+  }
+
+
+  export type ProjectionWmsKardexLineAvgAggregateInputType = {
+    qtyIn?: true
+    qtyOut?: true
+  }
+
+  export type ProjectionWmsKardexLineSumAggregateInputType = {
+    qtyIn?: true
+    qtyOut?: true
+  }
+
+  export type ProjectionWmsKardexLineMinAggregateInputType = {
+    id?: true
+    tenantId?: true
+    eventId?: true
+    sku?: true
+    warehouse?: true
+    movement?: true
+    qtyIn?: true
+    qtyOut?: true
+    reference?: true
+    recordedAt?: true
+  }
+
+  export type ProjectionWmsKardexLineMaxAggregateInputType = {
+    id?: true
+    tenantId?: true
+    eventId?: true
+    sku?: true
+    warehouse?: true
+    movement?: true
+    qtyIn?: true
+    qtyOut?: true
+    reference?: true
+    recordedAt?: true
+  }
+
+  export type ProjectionWmsKardexLineCountAggregateInputType = {
+    id?: true
+    tenantId?: true
+    eventId?: true
+    sku?: true
+    warehouse?: true
+    movement?: true
+    qtyIn?: true
+    qtyOut?: true
+    reference?: true
+    recordedAt?: true
+    _all?: true
+  }
+
+  export type ProjectionWmsKardexLineAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectionWmsKardexLine to aggregate.
+     */
+    where?: ProjectionWmsKardexLineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsKardexLines to fetch.
+     */
+    orderBy?: ProjectionWmsKardexLineOrderByWithRelationInput | ProjectionWmsKardexLineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectionWmsKardexLineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsKardexLines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsKardexLines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectionWmsKardexLines
+    **/
+    _count?: true | ProjectionWmsKardexLineCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProjectionWmsKardexLineAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProjectionWmsKardexLineSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectionWmsKardexLineMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectionWmsKardexLineMaxAggregateInputType
+  }
+
+  export type GetProjectionWmsKardexLineAggregateType<T extends ProjectionWmsKardexLineAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectionWmsKardexLine]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectionWmsKardexLine[P]>
+      : GetScalarType<T[P], AggregateProjectionWmsKardexLine[P]>
+  }
+
+
+
+
+  export type ProjectionWmsKardexLineGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectionWmsKardexLineWhereInput
+    orderBy?: ProjectionWmsKardexLineOrderByWithAggregationInput | ProjectionWmsKardexLineOrderByWithAggregationInput[]
+    by: ProjectionWmsKardexLineScalarFieldEnum[] | ProjectionWmsKardexLineScalarFieldEnum
+    having?: ProjectionWmsKardexLineScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectionWmsKardexLineCountAggregateInputType | true
+    _avg?: ProjectionWmsKardexLineAvgAggregateInputType
+    _sum?: ProjectionWmsKardexLineSumAggregateInputType
+    _min?: ProjectionWmsKardexLineMinAggregateInputType
+    _max?: ProjectionWmsKardexLineMaxAggregateInputType
+  }
+
+  export type ProjectionWmsKardexLineGroupByOutputType = {
+    id: string
+    tenantId: string
+    eventId: string
+    sku: string
+    warehouse: string
+    movement: string
+    qtyIn: number
+    qtyOut: number
+    reference: string
+    recordedAt: Date
+    _count: ProjectionWmsKardexLineCountAggregateOutputType | null
+    _avg: ProjectionWmsKardexLineAvgAggregateOutputType | null
+    _sum: ProjectionWmsKardexLineSumAggregateOutputType | null
+    _min: ProjectionWmsKardexLineMinAggregateOutputType | null
+    _max: ProjectionWmsKardexLineMaxAggregateOutputType | null
+  }
+
+  type GetProjectionWmsKardexLineGroupByPayload<T extends ProjectionWmsKardexLineGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectionWmsKardexLineGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectionWmsKardexLineGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectionWmsKardexLineGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectionWmsKardexLineGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectionWmsKardexLineSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    eventId?: boolean
+    sku?: boolean
+    warehouse?: boolean
+    movement?: boolean
+    qtyIn?: boolean
+    qtyOut?: boolean
+    reference?: boolean
+    recordedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsKardexLine"]>
+
+  export type ProjectionWmsKardexLineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    eventId?: boolean
+    sku?: boolean
+    warehouse?: boolean
+    movement?: boolean
+    qtyIn?: boolean
+    qtyOut?: boolean
+    reference?: boolean
+    recordedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsKardexLine"]>
+
+  export type ProjectionWmsKardexLineSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tenantId?: boolean
+    eventId?: boolean
+    sku?: boolean
+    warehouse?: boolean
+    movement?: boolean
+    qtyIn?: boolean
+    qtyOut?: boolean
+    reference?: boolean
+    recordedAt?: boolean
+  }, ExtArgs["result"]["projectionWmsKardexLine"]>
+
+  export type ProjectionWmsKardexLineSelectScalar = {
+    id?: boolean
+    tenantId?: boolean
+    eventId?: boolean
+    sku?: boolean
+    warehouse?: boolean
+    movement?: boolean
+    qtyIn?: boolean
+    qtyOut?: boolean
+    reference?: boolean
+    recordedAt?: boolean
+  }
+
+  export type ProjectionWmsKardexLineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "eventId" | "sku" | "warehouse" | "movement" | "qtyIn" | "qtyOut" | "reference" | "recordedAt", ExtArgs["result"]["projectionWmsKardexLine"]>
+
+  export type $ProjectionWmsKardexLinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectionWmsKardexLine"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tenantId: string
+      eventId: string
+      sku: string
+      warehouse: string
+      movement: string
+      qtyIn: number
+      qtyOut: number
+      reference: string
+      recordedAt: Date
+    }, ExtArgs["result"]["projectionWmsKardexLine"]>
+    composites: {}
+  }
+
+  type ProjectionWmsKardexLineGetPayload<S extends boolean | null | undefined | ProjectionWmsKardexLineDefaultArgs> = $Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload, S>
+
+  type ProjectionWmsKardexLineCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectionWmsKardexLineFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectionWmsKardexLineCountAggregateInputType | true
+    }
+
+  export interface ProjectionWmsKardexLineDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectionWmsKardexLine'], meta: { name: 'ProjectionWmsKardexLine' } }
+    /**
+     * Find zero or one ProjectionWmsKardexLine that matches the filter.
+     * @param {ProjectionWmsKardexLineFindUniqueArgs} args - Arguments to find a ProjectionWmsKardexLine
+     * @example
+     * // Get one ProjectionWmsKardexLine
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectionWmsKardexLineFindUniqueArgs>(args: SelectSubset<T, ProjectionWmsKardexLineFindUniqueArgs<ExtArgs>>): Prisma__ProjectionWmsKardexLineClient<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectionWmsKardexLine that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectionWmsKardexLineFindUniqueOrThrowArgs} args - Arguments to find a ProjectionWmsKardexLine
+     * @example
+     * // Get one ProjectionWmsKardexLine
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectionWmsKardexLineFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectionWmsKardexLineFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectionWmsKardexLineClient<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectionWmsKardexLine that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsKardexLineFindFirstArgs} args - Arguments to find a ProjectionWmsKardexLine
+     * @example
+     * // Get one ProjectionWmsKardexLine
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectionWmsKardexLineFindFirstArgs>(args?: SelectSubset<T, ProjectionWmsKardexLineFindFirstArgs<ExtArgs>>): Prisma__ProjectionWmsKardexLineClient<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectionWmsKardexLine that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsKardexLineFindFirstOrThrowArgs} args - Arguments to find a ProjectionWmsKardexLine
+     * @example
+     * // Get one ProjectionWmsKardexLine
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectionWmsKardexLineFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectionWmsKardexLineFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectionWmsKardexLineClient<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectionWmsKardexLines that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsKardexLineFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectionWmsKardexLines
+     * const projectionWmsKardexLines = await prisma.projectionWmsKardexLine.findMany()
+     * 
+     * // Get first 10 ProjectionWmsKardexLines
+     * const projectionWmsKardexLines = await prisma.projectionWmsKardexLine.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectionWmsKardexLineWithIdOnly = await prisma.projectionWmsKardexLine.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectionWmsKardexLineFindManyArgs>(args?: SelectSubset<T, ProjectionWmsKardexLineFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectionWmsKardexLine.
+     * @param {ProjectionWmsKardexLineCreateArgs} args - Arguments to create a ProjectionWmsKardexLine.
+     * @example
+     * // Create one ProjectionWmsKardexLine
+     * const ProjectionWmsKardexLine = await prisma.projectionWmsKardexLine.create({
+     *   data: {
+     *     // ... data to create a ProjectionWmsKardexLine
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectionWmsKardexLineCreateArgs>(args: SelectSubset<T, ProjectionWmsKardexLineCreateArgs<ExtArgs>>): Prisma__ProjectionWmsKardexLineClient<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectionWmsKardexLines.
+     * @param {ProjectionWmsKardexLineCreateManyArgs} args - Arguments to create many ProjectionWmsKardexLines.
+     * @example
+     * // Create many ProjectionWmsKardexLines
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectionWmsKardexLineCreateManyArgs>(args?: SelectSubset<T, ProjectionWmsKardexLineCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProjectionWmsKardexLines and returns the data saved in the database.
+     * @param {ProjectionWmsKardexLineCreateManyAndReturnArgs} args - Arguments to create many ProjectionWmsKardexLines.
+     * @example
+     * // Create many ProjectionWmsKardexLines
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProjectionWmsKardexLines and only return the `id`
+     * const projectionWmsKardexLineWithIdOnly = await prisma.projectionWmsKardexLine.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProjectionWmsKardexLineCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectionWmsKardexLineCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProjectionWmsKardexLine.
+     * @param {ProjectionWmsKardexLineDeleteArgs} args - Arguments to delete one ProjectionWmsKardexLine.
+     * @example
+     * // Delete one ProjectionWmsKardexLine
+     * const ProjectionWmsKardexLine = await prisma.projectionWmsKardexLine.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectionWmsKardexLine
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectionWmsKardexLineDeleteArgs>(args: SelectSubset<T, ProjectionWmsKardexLineDeleteArgs<ExtArgs>>): Prisma__ProjectionWmsKardexLineClient<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectionWmsKardexLine.
+     * @param {ProjectionWmsKardexLineUpdateArgs} args - Arguments to update one ProjectionWmsKardexLine.
+     * @example
+     * // Update one ProjectionWmsKardexLine
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectionWmsKardexLineUpdateArgs>(args: SelectSubset<T, ProjectionWmsKardexLineUpdateArgs<ExtArgs>>): Prisma__ProjectionWmsKardexLineClient<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectionWmsKardexLines.
+     * @param {ProjectionWmsKardexLineDeleteManyArgs} args - Arguments to filter ProjectionWmsKardexLines to delete.
+     * @example
+     * // Delete a few ProjectionWmsKardexLines
+     * const { count } = await prisma.projectionWmsKardexLine.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectionWmsKardexLineDeleteManyArgs>(args?: SelectSubset<T, ProjectionWmsKardexLineDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectionWmsKardexLines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsKardexLineUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectionWmsKardexLines
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectionWmsKardexLineUpdateManyArgs>(args: SelectSubset<T, ProjectionWmsKardexLineUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectionWmsKardexLines and returns the data updated in the database.
+     * @param {ProjectionWmsKardexLineUpdateManyAndReturnArgs} args - Arguments to update many ProjectionWmsKardexLines.
+     * @example
+     * // Update many ProjectionWmsKardexLines
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProjectionWmsKardexLines and only return the `id`
+     * const projectionWmsKardexLineWithIdOnly = await prisma.projectionWmsKardexLine.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProjectionWmsKardexLineUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectionWmsKardexLineUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProjectionWmsKardexLine.
+     * @param {ProjectionWmsKardexLineUpsertArgs} args - Arguments to update or create a ProjectionWmsKardexLine.
+     * @example
+     * // Update or create a ProjectionWmsKardexLine
+     * const projectionWmsKardexLine = await prisma.projectionWmsKardexLine.upsert({
+     *   create: {
+     *     // ... data to create a ProjectionWmsKardexLine
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectionWmsKardexLine we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectionWmsKardexLineUpsertArgs>(args: SelectSubset<T, ProjectionWmsKardexLineUpsertArgs<ExtArgs>>): Prisma__ProjectionWmsKardexLineClient<$Result.GetResult<Prisma.$ProjectionWmsKardexLinePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectionWmsKardexLines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsKardexLineCountArgs} args - Arguments to filter ProjectionWmsKardexLines to count.
+     * @example
+     * // Count the number of ProjectionWmsKardexLines
+     * const count = await prisma.projectionWmsKardexLine.count({
+     *   where: {
+     *     // ... the filter for the ProjectionWmsKardexLines we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectionWmsKardexLineCountArgs>(
+      args?: Subset<T, ProjectionWmsKardexLineCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectionWmsKardexLineCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectionWmsKardexLine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsKardexLineAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectionWmsKardexLineAggregateArgs>(args: Subset<T, ProjectionWmsKardexLineAggregateArgs>): Prisma.PrismaPromise<GetProjectionWmsKardexLineAggregateType<T>>
+
+    /**
+     * Group by ProjectionWmsKardexLine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectionWmsKardexLineGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectionWmsKardexLineGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectionWmsKardexLineGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectionWmsKardexLineGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectionWmsKardexLineGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectionWmsKardexLineGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectionWmsKardexLine model
+   */
+  readonly fields: ProjectionWmsKardexLineFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectionWmsKardexLine.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectionWmsKardexLineClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectionWmsKardexLine model
+   */
+  interface ProjectionWmsKardexLineFieldRefs {
+    readonly id: FieldRef<"ProjectionWmsKardexLine", 'String'>
+    readonly tenantId: FieldRef<"ProjectionWmsKardexLine", 'String'>
+    readonly eventId: FieldRef<"ProjectionWmsKardexLine", 'String'>
+    readonly sku: FieldRef<"ProjectionWmsKardexLine", 'String'>
+    readonly warehouse: FieldRef<"ProjectionWmsKardexLine", 'String'>
+    readonly movement: FieldRef<"ProjectionWmsKardexLine", 'String'>
+    readonly qtyIn: FieldRef<"ProjectionWmsKardexLine", 'Int'>
+    readonly qtyOut: FieldRef<"ProjectionWmsKardexLine", 'Int'>
+    readonly reference: FieldRef<"ProjectionWmsKardexLine", 'String'>
+    readonly recordedAt: FieldRef<"ProjectionWmsKardexLine", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectionWmsKardexLine findUnique
+   */
+  export type ProjectionWmsKardexLineFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsKardexLine to fetch.
+     */
+    where: ProjectionWmsKardexLineWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsKardexLine findUniqueOrThrow
+   */
+  export type ProjectionWmsKardexLineFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsKardexLine to fetch.
+     */
+    where: ProjectionWmsKardexLineWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsKardexLine findFirst
+   */
+  export type ProjectionWmsKardexLineFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsKardexLine to fetch.
+     */
+    where?: ProjectionWmsKardexLineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsKardexLines to fetch.
+     */
+    orderBy?: ProjectionWmsKardexLineOrderByWithRelationInput | ProjectionWmsKardexLineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectionWmsKardexLines.
+     */
+    cursor?: ProjectionWmsKardexLineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsKardexLines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsKardexLines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectionWmsKardexLines.
+     */
+    distinct?: ProjectionWmsKardexLineScalarFieldEnum | ProjectionWmsKardexLineScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsKardexLine findFirstOrThrow
+   */
+  export type ProjectionWmsKardexLineFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsKardexLine to fetch.
+     */
+    where?: ProjectionWmsKardexLineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsKardexLines to fetch.
+     */
+    orderBy?: ProjectionWmsKardexLineOrderByWithRelationInput | ProjectionWmsKardexLineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectionWmsKardexLines.
+     */
+    cursor?: ProjectionWmsKardexLineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsKardexLines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsKardexLines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectionWmsKardexLines.
+     */
+    distinct?: ProjectionWmsKardexLineScalarFieldEnum | ProjectionWmsKardexLineScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsKardexLine findMany
+   */
+  export type ProjectionWmsKardexLineFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * Filter, which ProjectionWmsKardexLines to fetch.
+     */
+    where?: ProjectionWmsKardexLineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectionWmsKardexLines to fetch.
+     */
+    orderBy?: ProjectionWmsKardexLineOrderByWithRelationInput | ProjectionWmsKardexLineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectionWmsKardexLines.
+     */
+    cursor?: ProjectionWmsKardexLineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectionWmsKardexLines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectionWmsKardexLines.
+     */
+    skip?: number
+    distinct?: ProjectionWmsKardexLineScalarFieldEnum | ProjectionWmsKardexLineScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectionWmsKardexLine create
+   */
+  export type ProjectionWmsKardexLineCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectionWmsKardexLine.
+     */
+    data: XOR<ProjectionWmsKardexLineCreateInput, ProjectionWmsKardexLineUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectionWmsKardexLine createMany
+   */
+  export type ProjectionWmsKardexLineCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectionWmsKardexLines.
+     */
+    data: ProjectionWmsKardexLineCreateManyInput | ProjectionWmsKardexLineCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectionWmsKardexLine createManyAndReturn
+   */
+  export type ProjectionWmsKardexLineCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProjectionWmsKardexLines.
+     */
+    data: ProjectionWmsKardexLineCreateManyInput | ProjectionWmsKardexLineCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectionWmsKardexLine update
+   */
+  export type ProjectionWmsKardexLineUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectionWmsKardexLine.
+     */
+    data: XOR<ProjectionWmsKardexLineUpdateInput, ProjectionWmsKardexLineUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectionWmsKardexLine to update.
+     */
+    where: ProjectionWmsKardexLineWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsKardexLine updateMany
+   */
+  export type ProjectionWmsKardexLineUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectionWmsKardexLines.
+     */
+    data: XOR<ProjectionWmsKardexLineUpdateManyMutationInput, ProjectionWmsKardexLineUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectionWmsKardexLines to update
+     */
+    where?: ProjectionWmsKardexLineWhereInput
+    /**
+     * Limit how many ProjectionWmsKardexLines to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsKardexLine updateManyAndReturn
+   */
+  export type ProjectionWmsKardexLineUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * The data used to update ProjectionWmsKardexLines.
+     */
+    data: XOR<ProjectionWmsKardexLineUpdateManyMutationInput, ProjectionWmsKardexLineUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectionWmsKardexLines to update
+     */
+    where?: ProjectionWmsKardexLineWhereInput
+    /**
+     * Limit how many ProjectionWmsKardexLines to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsKardexLine upsert
+   */
+  export type ProjectionWmsKardexLineUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectionWmsKardexLine to update in case it exists.
+     */
+    where: ProjectionWmsKardexLineWhereUniqueInput
+    /**
+     * In case the ProjectionWmsKardexLine found by the `where` argument doesn't exist, create a new ProjectionWmsKardexLine with this data.
+     */
+    create: XOR<ProjectionWmsKardexLineCreateInput, ProjectionWmsKardexLineUncheckedCreateInput>
+    /**
+     * In case the ProjectionWmsKardexLine was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectionWmsKardexLineUpdateInput, ProjectionWmsKardexLineUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectionWmsKardexLine delete
+   */
+  export type ProjectionWmsKardexLineDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+    /**
+     * Filter which ProjectionWmsKardexLine to delete.
+     */
+    where: ProjectionWmsKardexLineWhereUniqueInput
+  }
+
+  /**
+   * ProjectionWmsKardexLine deleteMany
+   */
+  export type ProjectionWmsKardexLineDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectionWmsKardexLines to delete
+     */
+    where?: ProjectionWmsKardexLineWhereInput
+    /**
+     * Limit how many ProjectionWmsKardexLines to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectionWmsKardexLine without action
+   */
+  export type ProjectionWmsKardexLineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectionWmsKardexLine
+     */
+    select?: ProjectionWmsKardexLineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectionWmsKardexLine
+     */
+    omit?: ProjectionWmsKardexLineOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9194,6 +12620,47 @@ export namespace Prisma {
   };
 
   export type TenantKpiConfigScalarFieldEnum = (typeof TenantKpiConfigScalarFieldEnum)[keyof typeof TenantKpiConfigScalarFieldEnum]
+
+
+  export const ProjectionWmsSliceScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    projection: 'projection',
+    partKey: 'partKey',
+    payload: 'payload',
+    lastProcessedEventId: 'lastProcessedEventId',
+    lastProcessedVersion: 'lastProcessedVersion',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProjectionWmsSliceScalarFieldEnum = (typeof ProjectionWmsSliceScalarFieldEnum)[keyof typeof ProjectionWmsSliceScalarFieldEnum]
+
+
+  export const ProjectionWmsTrackingContractScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    sku: 'sku',
+    payload: 'payload',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProjectionWmsTrackingContractScalarFieldEnum = (typeof ProjectionWmsTrackingContractScalarFieldEnum)[keyof typeof ProjectionWmsTrackingContractScalarFieldEnum]
+
+
+  export const ProjectionWmsKardexLineScalarFieldEnum: {
+    id: 'id',
+    tenantId: 'tenantId',
+    eventId: 'eventId',
+    sku: 'sku',
+    warehouse: 'warehouse',
+    movement: 'movement',
+    qtyIn: 'qtyIn',
+    qtyOut: 'qtyOut',
+    reference: 'reference',
+    recordedAt: 'recordedAt'
+  };
+
+  export type ProjectionWmsKardexLineScalarFieldEnum = (typeof ProjectionWmsKardexLineScalarFieldEnum)[keyof typeof ProjectionWmsKardexLineScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -9889,6 +13356,209 @@ export namespace Prisma {
     isVisible?: BoolWithAggregatesFilter<"TenantKpiConfig"> | boolean
   }
 
+  export type ProjectionWmsSliceWhereInput = {
+    AND?: ProjectionWmsSliceWhereInput | ProjectionWmsSliceWhereInput[]
+    OR?: ProjectionWmsSliceWhereInput[]
+    NOT?: ProjectionWmsSliceWhereInput | ProjectionWmsSliceWhereInput[]
+    id?: StringFilter<"ProjectionWmsSlice"> | string
+    tenantId?: StringFilter<"ProjectionWmsSlice"> | string
+    projection?: StringFilter<"ProjectionWmsSlice"> | string
+    partKey?: StringFilter<"ProjectionWmsSlice"> | string
+    payload?: JsonFilter<"ProjectionWmsSlice">
+    lastProcessedEventId?: StringFilter<"ProjectionWmsSlice"> | string
+    lastProcessedVersion?: IntFilter<"ProjectionWmsSlice"> | number
+    updatedAt?: DateTimeFilter<"ProjectionWmsSlice"> | Date | string
+  }
+
+  export type ProjectionWmsSliceOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projection?: SortOrder
+    partKey?: SortOrder
+    payload?: SortOrder
+    lastProcessedEventId?: SortOrder
+    lastProcessedVersion?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectionWmsSliceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_projection_partKey?: ProjectionWmsSliceTenantIdProjectionPartKeyCompoundUniqueInput
+    AND?: ProjectionWmsSliceWhereInput | ProjectionWmsSliceWhereInput[]
+    OR?: ProjectionWmsSliceWhereInput[]
+    NOT?: ProjectionWmsSliceWhereInput | ProjectionWmsSliceWhereInput[]
+    tenantId?: StringFilter<"ProjectionWmsSlice"> | string
+    projection?: StringFilter<"ProjectionWmsSlice"> | string
+    partKey?: StringFilter<"ProjectionWmsSlice"> | string
+    payload?: JsonFilter<"ProjectionWmsSlice">
+    lastProcessedEventId?: StringFilter<"ProjectionWmsSlice"> | string
+    lastProcessedVersion?: IntFilter<"ProjectionWmsSlice"> | number
+    updatedAt?: DateTimeFilter<"ProjectionWmsSlice"> | Date | string
+  }, "id" | "tenantId_projection_partKey">
+
+  export type ProjectionWmsSliceOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projection?: SortOrder
+    partKey?: SortOrder
+    payload?: SortOrder
+    lastProcessedEventId?: SortOrder
+    lastProcessedVersion?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProjectionWmsSliceCountOrderByAggregateInput
+    _avg?: ProjectionWmsSliceAvgOrderByAggregateInput
+    _max?: ProjectionWmsSliceMaxOrderByAggregateInput
+    _min?: ProjectionWmsSliceMinOrderByAggregateInput
+    _sum?: ProjectionWmsSliceSumOrderByAggregateInput
+  }
+
+  export type ProjectionWmsSliceScalarWhereWithAggregatesInput = {
+    AND?: ProjectionWmsSliceScalarWhereWithAggregatesInput | ProjectionWmsSliceScalarWhereWithAggregatesInput[]
+    OR?: ProjectionWmsSliceScalarWhereWithAggregatesInput[]
+    NOT?: ProjectionWmsSliceScalarWhereWithAggregatesInput | ProjectionWmsSliceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectionWmsSlice"> | string
+    tenantId?: StringWithAggregatesFilter<"ProjectionWmsSlice"> | string
+    projection?: StringWithAggregatesFilter<"ProjectionWmsSlice"> | string
+    partKey?: StringWithAggregatesFilter<"ProjectionWmsSlice"> | string
+    payload?: JsonWithAggregatesFilter<"ProjectionWmsSlice">
+    lastProcessedEventId?: StringWithAggregatesFilter<"ProjectionWmsSlice"> | string
+    lastProcessedVersion?: IntWithAggregatesFilter<"ProjectionWmsSlice"> | number
+    updatedAt?: DateTimeWithAggregatesFilter<"ProjectionWmsSlice"> | Date | string
+  }
+
+  export type ProjectionWmsTrackingContractWhereInput = {
+    AND?: ProjectionWmsTrackingContractWhereInput | ProjectionWmsTrackingContractWhereInput[]
+    OR?: ProjectionWmsTrackingContractWhereInput[]
+    NOT?: ProjectionWmsTrackingContractWhereInput | ProjectionWmsTrackingContractWhereInput[]
+    id?: StringFilter<"ProjectionWmsTrackingContract"> | string
+    tenantId?: StringFilter<"ProjectionWmsTrackingContract"> | string
+    sku?: StringFilter<"ProjectionWmsTrackingContract"> | string
+    payload?: JsonFilter<"ProjectionWmsTrackingContract">
+    updatedAt?: DateTimeFilter<"ProjectionWmsTrackingContract"> | Date | string
+  }
+
+  export type ProjectionWmsTrackingContractOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    sku?: SortOrder
+    payload?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectionWmsTrackingContractWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_sku?: ProjectionWmsTrackingContractTenantIdSkuCompoundUniqueInput
+    AND?: ProjectionWmsTrackingContractWhereInput | ProjectionWmsTrackingContractWhereInput[]
+    OR?: ProjectionWmsTrackingContractWhereInput[]
+    NOT?: ProjectionWmsTrackingContractWhereInput | ProjectionWmsTrackingContractWhereInput[]
+    tenantId?: StringFilter<"ProjectionWmsTrackingContract"> | string
+    sku?: StringFilter<"ProjectionWmsTrackingContract"> | string
+    payload?: JsonFilter<"ProjectionWmsTrackingContract">
+    updatedAt?: DateTimeFilter<"ProjectionWmsTrackingContract"> | Date | string
+  }, "id" | "tenantId_sku">
+
+  export type ProjectionWmsTrackingContractOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    sku?: SortOrder
+    payload?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProjectionWmsTrackingContractCountOrderByAggregateInput
+    _max?: ProjectionWmsTrackingContractMaxOrderByAggregateInput
+    _min?: ProjectionWmsTrackingContractMinOrderByAggregateInput
+  }
+
+  export type ProjectionWmsTrackingContractScalarWhereWithAggregatesInput = {
+    AND?: ProjectionWmsTrackingContractScalarWhereWithAggregatesInput | ProjectionWmsTrackingContractScalarWhereWithAggregatesInput[]
+    OR?: ProjectionWmsTrackingContractScalarWhereWithAggregatesInput[]
+    NOT?: ProjectionWmsTrackingContractScalarWhereWithAggregatesInput | ProjectionWmsTrackingContractScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectionWmsTrackingContract"> | string
+    tenantId?: StringWithAggregatesFilter<"ProjectionWmsTrackingContract"> | string
+    sku?: StringWithAggregatesFilter<"ProjectionWmsTrackingContract"> | string
+    payload?: JsonWithAggregatesFilter<"ProjectionWmsTrackingContract">
+    updatedAt?: DateTimeWithAggregatesFilter<"ProjectionWmsTrackingContract"> | Date | string
+  }
+
+  export type ProjectionWmsKardexLineWhereInput = {
+    AND?: ProjectionWmsKardexLineWhereInput | ProjectionWmsKardexLineWhereInput[]
+    OR?: ProjectionWmsKardexLineWhereInput[]
+    NOT?: ProjectionWmsKardexLineWhereInput | ProjectionWmsKardexLineWhereInput[]
+    id?: StringFilter<"ProjectionWmsKardexLine"> | string
+    tenantId?: StringFilter<"ProjectionWmsKardexLine"> | string
+    eventId?: StringFilter<"ProjectionWmsKardexLine"> | string
+    sku?: StringFilter<"ProjectionWmsKardexLine"> | string
+    warehouse?: StringFilter<"ProjectionWmsKardexLine"> | string
+    movement?: StringFilter<"ProjectionWmsKardexLine"> | string
+    qtyIn?: IntFilter<"ProjectionWmsKardexLine"> | number
+    qtyOut?: IntFilter<"ProjectionWmsKardexLine"> | number
+    reference?: StringFilter<"ProjectionWmsKardexLine"> | string
+    recordedAt?: DateTimeFilter<"ProjectionWmsKardexLine"> | Date | string
+  }
+
+  export type ProjectionWmsKardexLineOrderByWithRelationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    eventId?: SortOrder
+    sku?: SortOrder
+    warehouse?: SortOrder
+    movement?: SortOrder
+    qtyIn?: SortOrder
+    qtyOut?: SortOrder
+    reference?: SortOrder
+    recordedAt?: SortOrder
+  }
+
+  export type ProjectionWmsKardexLineWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tenantId_eventId?: ProjectionWmsKardexLineTenantIdEventIdCompoundUniqueInput
+    AND?: ProjectionWmsKardexLineWhereInput | ProjectionWmsKardexLineWhereInput[]
+    OR?: ProjectionWmsKardexLineWhereInput[]
+    NOT?: ProjectionWmsKardexLineWhereInput | ProjectionWmsKardexLineWhereInput[]
+    tenantId?: StringFilter<"ProjectionWmsKardexLine"> | string
+    eventId?: StringFilter<"ProjectionWmsKardexLine"> | string
+    sku?: StringFilter<"ProjectionWmsKardexLine"> | string
+    warehouse?: StringFilter<"ProjectionWmsKardexLine"> | string
+    movement?: StringFilter<"ProjectionWmsKardexLine"> | string
+    qtyIn?: IntFilter<"ProjectionWmsKardexLine"> | number
+    qtyOut?: IntFilter<"ProjectionWmsKardexLine"> | number
+    reference?: StringFilter<"ProjectionWmsKardexLine"> | string
+    recordedAt?: DateTimeFilter<"ProjectionWmsKardexLine"> | Date | string
+  }, "id" | "tenantId_eventId">
+
+  export type ProjectionWmsKardexLineOrderByWithAggregationInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    eventId?: SortOrder
+    sku?: SortOrder
+    warehouse?: SortOrder
+    movement?: SortOrder
+    qtyIn?: SortOrder
+    qtyOut?: SortOrder
+    reference?: SortOrder
+    recordedAt?: SortOrder
+    _count?: ProjectionWmsKardexLineCountOrderByAggregateInput
+    _avg?: ProjectionWmsKardexLineAvgOrderByAggregateInput
+    _max?: ProjectionWmsKardexLineMaxOrderByAggregateInput
+    _min?: ProjectionWmsKardexLineMinOrderByAggregateInput
+    _sum?: ProjectionWmsKardexLineSumOrderByAggregateInput
+  }
+
+  export type ProjectionWmsKardexLineScalarWhereWithAggregatesInput = {
+    AND?: ProjectionWmsKardexLineScalarWhereWithAggregatesInput | ProjectionWmsKardexLineScalarWhereWithAggregatesInput[]
+    OR?: ProjectionWmsKardexLineScalarWhereWithAggregatesInput[]
+    NOT?: ProjectionWmsKardexLineScalarWhereWithAggregatesInput | ProjectionWmsKardexLineScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectionWmsKardexLine"> | string
+    tenantId?: StringWithAggregatesFilter<"ProjectionWmsKardexLine"> | string
+    eventId?: StringWithAggregatesFilter<"ProjectionWmsKardexLine"> | string
+    sku?: StringWithAggregatesFilter<"ProjectionWmsKardexLine"> | string
+    warehouse?: StringWithAggregatesFilter<"ProjectionWmsKardexLine"> | string
+    movement?: StringWithAggregatesFilter<"ProjectionWmsKardexLine"> | string
+    qtyIn?: IntWithAggregatesFilter<"ProjectionWmsKardexLine"> | number
+    qtyOut?: IntWithAggregatesFilter<"ProjectionWmsKardexLine"> | number
+    reference?: StringWithAggregatesFilter<"ProjectionWmsKardexLine"> | string
+    recordedAt?: DateTimeWithAggregatesFilter<"ProjectionWmsKardexLine"> | Date | string
+  }
+
   export type ProjectionFinancialSummaryCreateInput = {
     id?: string
     tenantId: string
@@ -10425,6 +14095,230 @@ export namespace Prisma {
     position?: JsonNullValueInput | InputJsonValue
     size?: JsonNullValueInput | InputJsonValue
     isVisible?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ProjectionWmsSliceCreateInput = {
+    id?: string
+    tenantId: string
+    projection: string
+    partKey: string
+    payload: JsonNullValueInput | InputJsonValue
+    lastProcessedEventId: string
+    lastProcessedVersion: number
+    updatedAt?: Date | string
+  }
+
+  export type ProjectionWmsSliceUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    projection: string
+    partKey: string
+    payload: JsonNullValueInput | InputJsonValue
+    lastProcessedEventId: string
+    lastProcessedVersion: number
+    updatedAt?: Date | string
+  }
+
+  export type ProjectionWmsSliceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    projection?: StringFieldUpdateOperationsInput | string
+    partKey?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    lastProcessedEventId?: StringFieldUpdateOperationsInput | string
+    lastProcessedVersion?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsSliceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    projection?: StringFieldUpdateOperationsInput | string
+    partKey?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    lastProcessedEventId?: StringFieldUpdateOperationsInput | string
+    lastProcessedVersion?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsSliceCreateManyInput = {
+    id?: string
+    tenantId: string
+    projection: string
+    partKey: string
+    payload: JsonNullValueInput | InputJsonValue
+    lastProcessedEventId: string
+    lastProcessedVersion: number
+    updatedAt?: Date | string
+  }
+
+  export type ProjectionWmsSliceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    projection?: StringFieldUpdateOperationsInput | string
+    partKey?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    lastProcessedEventId?: StringFieldUpdateOperationsInput | string
+    lastProcessedVersion?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsSliceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    projection?: StringFieldUpdateOperationsInput | string
+    partKey?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    lastProcessedEventId?: StringFieldUpdateOperationsInput | string
+    lastProcessedVersion?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsTrackingContractCreateInput = {
+    id?: string
+    tenantId: string
+    sku: string
+    payload: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type ProjectionWmsTrackingContractUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    sku: string
+    payload: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type ProjectionWmsTrackingContractUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsTrackingContractUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsTrackingContractCreateManyInput = {
+    id?: string
+    tenantId: string
+    sku: string
+    payload: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type ProjectionWmsTrackingContractUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsTrackingContractUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsKardexLineCreateInput = {
+    id?: string
+    tenantId: string
+    eventId: string
+    sku: string
+    warehouse: string
+    movement: string
+    qtyIn?: number
+    qtyOut?: number
+    reference: string
+    recordedAt?: Date | string
+  }
+
+  export type ProjectionWmsKardexLineUncheckedCreateInput = {
+    id?: string
+    tenantId: string
+    eventId: string
+    sku: string
+    warehouse: string
+    movement: string
+    qtyIn?: number
+    qtyOut?: number
+    reference: string
+    recordedAt?: Date | string
+  }
+
+  export type ProjectionWmsKardexLineUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    warehouse?: StringFieldUpdateOperationsInput | string
+    movement?: StringFieldUpdateOperationsInput | string
+    qtyIn?: IntFieldUpdateOperationsInput | number
+    qtyOut?: IntFieldUpdateOperationsInput | number
+    reference?: StringFieldUpdateOperationsInput | string
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsKardexLineUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    warehouse?: StringFieldUpdateOperationsInput | string
+    movement?: StringFieldUpdateOperationsInput | string
+    qtyIn?: IntFieldUpdateOperationsInput | number
+    qtyOut?: IntFieldUpdateOperationsInput | number
+    reference?: StringFieldUpdateOperationsInput | string
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsKardexLineCreateManyInput = {
+    id?: string
+    tenantId: string
+    eventId: string
+    sku: string
+    warehouse: string
+    movement: string
+    qtyIn?: number
+    qtyOut?: number
+    reference: string
+    recordedAt?: Date | string
+  }
+
+  export type ProjectionWmsKardexLineUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    warehouse?: StringFieldUpdateOperationsInput | string
+    movement?: StringFieldUpdateOperationsInput | string
+    qtyIn?: IntFieldUpdateOperationsInput | number
+    qtyOut?: IntFieldUpdateOperationsInput | number
+    reference?: StringFieldUpdateOperationsInput | string
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectionWmsKardexLineUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tenantId?: StringFieldUpdateOperationsInput | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    warehouse?: StringFieldUpdateOperationsInput | string
+    movement?: StringFieldUpdateOperationsInput | string
+    qtyIn?: IntFieldUpdateOperationsInput | number
+    qtyOut?: IntFieldUpdateOperationsInput | number
+    reference?: StringFieldUpdateOperationsInput | string
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -11077,6 +14971,132 @@ export namespace Prisma {
     tenantId?: SortOrder
     kpiCode?: SortOrder
     isVisible?: SortOrder
+  }
+
+  export type ProjectionWmsSliceTenantIdProjectionPartKeyCompoundUniqueInput = {
+    tenantId: string
+    projection: string
+    partKey: string
+  }
+
+  export type ProjectionWmsSliceCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projection?: SortOrder
+    partKey?: SortOrder
+    payload?: SortOrder
+    lastProcessedEventId?: SortOrder
+    lastProcessedVersion?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectionWmsSliceAvgOrderByAggregateInput = {
+    lastProcessedVersion?: SortOrder
+  }
+
+  export type ProjectionWmsSliceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projection?: SortOrder
+    partKey?: SortOrder
+    lastProcessedEventId?: SortOrder
+    lastProcessedVersion?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectionWmsSliceMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    projection?: SortOrder
+    partKey?: SortOrder
+    lastProcessedEventId?: SortOrder
+    lastProcessedVersion?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectionWmsSliceSumOrderByAggregateInput = {
+    lastProcessedVersion?: SortOrder
+  }
+
+  export type ProjectionWmsTrackingContractTenantIdSkuCompoundUniqueInput = {
+    tenantId: string
+    sku: string
+  }
+
+  export type ProjectionWmsTrackingContractCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    sku?: SortOrder
+    payload?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectionWmsTrackingContractMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    sku?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectionWmsTrackingContractMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    sku?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectionWmsKardexLineTenantIdEventIdCompoundUniqueInput = {
+    tenantId: string
+    eventId: string
+  }
+
+  export type ProjectionWmsKardexLineCountOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    eventId?: SortOrder
+    sku?: SortOrder
+    warehouse?: SortOrder
+    movement?: SortOrder
+    qtyIn?: SortOrder
+    qtyOut?: SortOrder
+    reference?: SortOrder
+    recordedAt?: SortOrder
+  }
+
+  export type ProjectionWmsKardexLineAvgOrderByAggregateInput = {
+    qtyIn?: SortOrder
+    qtyOut?: SortOrder
+  }
+
+  export type ProjectionWmsKardexLineMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    eventId?: SortOrder
+    sku?: SortOrder
+    warehouse?: SortOrder
+    movement?: SortOrder
+    qtyIn?: SortOrder
+    qtyOut?: SortOrder
+    reference?: SortOrder
+    recordedAt?: SortOrder
+  }
+
+  export type ProjectionWmsKardexLineMinOrderByAggregateInput = {
+    id?: SortOrder
+    tenantId?: SortOrder
+    eventId?: SortOrder
+    sku?: SortOrder
+    warehouse?: SortOrder
+    movement?: SortOrder
+    qtyIn?: SortOrder
+    qtyOut?: SortOrder
+    reference?: SortOrder
+    recordedAt?: SortOrder
+  }
+
+  export type ProjectionWmsKardexLineSumOrderByAggregateInput = {
+    qtyIn?: SortOrder
+    qtyOut?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {

@@ -1,5 +1,10 @@
 import { resolveCatchAll } from '../../../lib/module-catch-all';
 
-export default function SalesCatchAll({ params }: { params: { slug?: string[] } }) {
-  return resolveCatchAll('sales', '/sales', params.slug);
+export default async function SalesCatchAll({
+  params,
+}: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const { slug } = await params;
+  return resolveCatchAll('sales', '/sales', slug);
 }

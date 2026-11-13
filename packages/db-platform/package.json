@@ -14,7 +14,8 @@
     "test": "vitest run --dir test"
   },
   "dependencies": {
-    "@prisma/client": "^6.1.0"
+    "@prisma/client": "^6.1.0",
+    "@repo/contracts": "workspace:*"
   },
   "devDependencies": {
     "prisma": "^6.1.0",

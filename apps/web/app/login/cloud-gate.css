@@ -1,0 +1,168 @@
+.cloud-gate {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgb(90 120 220 / 0.35), transparent 55%),
+    #16306f;
+  color: white;
+  padding: 1.25rem 1.25rem 3rem;
+}
+
+.cloud-gate-bar {
+  max-width: 68rem;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cloud-gate-brand {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.cloud-gate-back {
+  border-radius: 999px;
+  background: white;
+  color: #16306f;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.cloud-gate-copy {
+  max-width: 68rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cloud-gate-copy h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 800;
+}
+
+.cloud-gate-copy > p {
+  margin-top: 0.6rem;
+  opacity: 0.85;
+}
+
+.cloud-gate-grid {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 800px) {
+  .cloud-gate-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cloud-card {
+  background: white;
+  color: #172033;
+  border-radius: 1.4rem;
+  padding: 1.25rem 1.25rem 1.4rem;
+  text-align: right;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.18);
+}
+
+.cloud-kicker {
+  display: inline-flex;
+  border-radius: 999px;
+  background: #eef3ff;
+  color: #3156c4;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+}
+
+.cloud-mock {
+  margin: 1rem 0;
+  height: 7.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #edf1f8, #f8fafc 40%, #1e3a8a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.cloud-mock span {
+  width: 4.2rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  background: white;
+}
+
+.cloud-mock-live span {
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.cloud-card h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.cloud-card p {
+  margin: 0.45rem 0 1rem;
+  color: #526075;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.cloud-cta {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-radius: 0.85rem;
+  padding: 0.8rem 1rem;
+  font-weight: 800;
+  color: white;
+}
+
+.cloud-cta-blue {
+  background: #2f62f0;
+}
+
+.cloud-cta-navy {
+  background: #16306f;
+}
+
+.cloud-form {
+  max-width: 28rem;
+  margin: 4rem auto;
+  background: white;
+  color: #172033;
+  border-radius: 1.4rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cloud-form h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.cloud-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.cloud-form input {
+  border: 1px solid #e4e7f0;
+  border-radius: 0.7rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.cloud-form-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #526075;
+}

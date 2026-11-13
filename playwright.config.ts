@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
+  globalSetup: require.resolve('./e2e/global-setup.ts'),
   testDir: 'e2e',
   timeout: 60_000,
   snapshotPathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}{ext}',

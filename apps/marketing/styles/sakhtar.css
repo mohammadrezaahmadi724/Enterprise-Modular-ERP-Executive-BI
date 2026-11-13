@@ -370,3 +370,138 @@ body {
 .home-page {
   overflow-x: hidden;
 }
+
+html:not(.dark) body {
+  background:
+    radial-gradient(ellipse 80% 40% at 80% 0%, hsl(221 83% 53% / 0.08), transparent 55%),
+    #eef1f8;
+}
+
+html:not(.dark) .sakhtar-header {
+  border: 0;
+  background: transparent;
+  padding: 0.85rem 1rem 0;
+}
+
+html:not(.dark) .sakhtar-header-inner {
+  min-height: 3.4rem;
+  border: 1px solid #e7e9f2;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgb(23 32 71 / 0.06);
+  padding-inline: 0.9rem;
+}
+
+.sk-display {
+  font-size: clamp(1.85rem, 3.4vw, 3.15rem);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.03em;
+}
+
+.sk-lead {
+  max-width: 40rem;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.98rem;
+  line-height: 1.9;
+}
+
+.sk-badge {
+  border-radius: 999px;
+  background: hsl(221 83% 53% / 0.1);
+  color: hsl(221 70% 42%);
+  padding: 0.35rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.sk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.9rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.sk-btn-primary {
+  background: hsl(226 72% 52%);
+  color: white;
+  box-shadow: 0 10px 24px hsl(226 72% 52% / 0.28);
+}
+
+.sk-btn-ghost {
+  background: #fff;
+  border: 1px solid #e4e7f0;
+  color: inherit;
+}
+
+.sk-chip {
+  border-radius: 999px;
+  border: 1px solid #e4e7f0;
+  background: #fff;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+.sk-page {
+  position: relative;
+}
+
+.sk-panel {
+  border-radius: 1.75rem;
+  border: 1px solid #e6e9f2;
+  background:
+    linear-gradient(180deg, hsl(221 100% 97%), #fff 42%);
+  box-shadow: 0 18px 50px rgb(23 32 71 / 0.06);
+}
+
+.sk-phone {
+  position: fixed;
+  z-index: 30;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  background: #1f9d55;
+  color: white;
+  padding: 0.7rem 1rem;
+  font-size: 0.85rem;
+  box-shadow: 0 12px 28px rgb(31 157 85 / 0.35);
+}
+
+.sk-faq {
+  border-radius: 1rem;
+  border: 1px solid #e6e9f2;
+  background: #fff;
+}
+
+.sk-faq-q {
+  width: 100%;
+  text-align: right;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+  background: transparent;
+}
+
+.sk-faq-a {
+  padding: 0 1rem 1rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.8;
+  font-size: 0.92rem;
+}
+
+.dark .sk-btn-ghost,
+.dark .sk-chip,
+.dark .sk-panel,
+.dark .sk-faq {
+  background: hsl(var(--card));
+  border-color: hsl(var(--border));
+}
+
+.dark .sk-badge {
+  color: hsl(var(--primary));
+}

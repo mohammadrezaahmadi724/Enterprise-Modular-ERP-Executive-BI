@@ -6,16 +6,34 @@ import type { ErpModuleCode } from '@repo/contracts';
 import { MEETING_TIME_SLOTS, nextSevenJalaliDays } from '@/lib/jalali-slots';
 import { postMeetingRequest } from '@/lib/pricing-api';
 
+type ContactSeed = {
+  fullName?: string;
+  phone?: string;
+  company?: string;
+  jobTitle?: string;
+};
+
 type Props = {
   open: boolean;
   onClose: () => void;
   selectedModules?: ErpModuleCode[];
   estimateId?: string;
+  /** از ویزارد برآورد — پر کردن فرم تماس */
+  initialContact?: ContactSeed;
+  /** رد کردن سؤال «برآورد دارید؟» وقتی estimateId موجود است */
+  skipEstimateQuestion?: boolean;
 };
 
 type Step = 'estimate' | 'type' | 'day' | 'time' | 'contact' | 'done';
 
-export function MeetingDialog({ open, onClose, selectedModules = [], estimateId }: Props) {
+export function MeetingDialog({
+  open,
+  onClose,
+  selectedModules = [],
+  estimateId,
+  initialContact,
+  skipEstimateQuestion = false,
+}: Props) {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [step, setStep] = useState<Step>('estimate');
@@ -43,6 +61,23 @@ export function MeetingDialog({ open, onClose, selectedModules = [], estimateId 
     if (open && !el.open) el.showModal();
     if (!open && el.open) el.close();
   }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    if (initialContact) {
+      setForm((prev) => ({
+        ...prev,
+        fullName: initialContact.fullName ?? prev.fullName,
+        phone: initialContact.phone ?? prev.phone,
+        company: initialContact.company ?? prev.company,
+        jobTitle: initialContact.jobTitle ?? prev.jobTitle,
+      }));
+    }
+    if (skipEstimateQuestion && estimateId) {
+      setHasEstimate(true);
+      setStep('type');
+    }
+  }, [open, initialContact, skipEstimateQuestion, estimateId]);
 
   const stepLabel =
     step === 'estimate'

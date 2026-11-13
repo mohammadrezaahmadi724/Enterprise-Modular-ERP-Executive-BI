@@ -1,5 +1,6 @@
 import { resolveCatchAll } from '../../../lib/module-catch-all';
 
-export default function HrCatchAll({ params }: { params: { slug?: string[] } }) {
-  return resolveCatchAll('hr', '/hr', params.slug);
+export default async function HrCatchAll({ params }: { params: Promise<{ slug?: string[] }> }) {
+  const { slug } = await params;
+  return resolveCatchAll('hr', '/hr', slug);
 }

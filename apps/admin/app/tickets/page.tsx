@@ -1,5 +1,5 @@
-import { AdminResourcePage } from '../../components/admin-resource-page';
+import { MarketingTicketsAdmin } from '../../components/marketing-tickets-admin';
 
 export default function TicketsPage() {
-  return <AdminResourcePage resourceKey="tickets" />;
+  return <MarketingTicketsAdmin />;
 }

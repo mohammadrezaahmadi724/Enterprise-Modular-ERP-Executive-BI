@@ -38,7 +38,8 @@ export class HealthController {
   @Public()
   @Post('api/internal/cron/trigger')
   cronTrigger(@Headers('x-cron-token') token?: string) {
-    if (token !== process.env.CRON_SECRET_TOKEN) {
+    const secret = process.env.CRON_SECRET_TOKEN?.trim();
+    if (!secret || token !== secret) {
       throw new UnauthorizedException();
     }
     return { triggered: true };

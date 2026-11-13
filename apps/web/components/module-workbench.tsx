@@ -37,7 +37,7 @@ export function ModuleWorkbench({ screen }: { screen: ErpScreen }) {
   useEffect(() => {
     void fetchErpRecords(screen.href)
       .then((r) => {
-        if (r.length) setRows(r);
+        if (r.length) setRows(r.map(showSavedFields));
       })
       .catch((e: Error) => setApiError(e.message));
   }, [screen.href]);
@@ -71,15 +71,24 @@ export function ModuleWorkbench({ screen }: { screen: ErpScreen }) {
 
   const save = () => {
     if (!draft) return;
+    const form = document.getElementById('erp-record-form');
+    const typed = { ...draft };
+    if (form instanceof HTMLFormElement) {
+      const data = new FormData(form);
+      for (const f of screen.fields) {
+        const v = data.get(f.key);
+        if (typeof v === 'string') typed[f.key] = f.type === 'number' ? Number(v) : v;
+      }
+    }
     void (async () => {
       try {
         setApiError(null);
         if (editingId) {
-          const { row } = await updateErpRecord(screen.href, String(editingId), draft);
-          setRows((prev) => prev.map((r) => (String(r.id) === editingId ? (row as typeof draft) : r)));
+          const { row } = await updateErpRecord(screen.href, String(editingId), typed);
+          setRows((prev) => prev.map((r) => (String(r.id) === editingId ? showSavedFields({ ...typed, ...row }) : r)));
         } else {
-          const { row } = await createErpRecord(screen.href, draft);
-          setRows((prev) => [row as Record<string, string | number>, ...prev]);
+          const { row } = await createErpRecord(screen.href, typed);
+          setRows((prev) => [showSavedFields({ ...typed, ...row }), ...prev]);
         }
         setDraft(null);
         setEditingId(null);
@@ -121,7 +130,7 @@ export function ModuleWorkbench({ screen }: { screen: ErpScreen }) {
         <CardContent className="space-y-4 pt-6">
           <ErpDataTable
             columns={tableColumns}
-            data={rows as Array<Record<string, unknown>>}
+            data={rows as Array<Record<string, string | number>>}
             renderRowActions={(row) => (
               <Button type="button" size="sm" variant="outline" onClick={() => openEdit(row as Record<string, string | number>)}>
                 ویرایش
@@ -134,6 +143,7 @@ export function ModuleWorkbench({ screen }: { screen: ErpScreen }) {
       {draft && (
         <Card className="border-primary/25">
           <CardContent className="space-y-4 pt-6">
+            <form id="erp-record-form" className="space-y-4" onSubmit={(e) => { e.preventDefault(); save(); }}>
             <h3 className="font-semibold">{editingId ? 'ویرایش' : 'ثبت جدید'}</h3>
             <Box className="grid gap-3 sm:grid-cols-2">
               {screen.fields.map((f) => (
@@ -141,6 +151,7 @@ export function ModuleWorkbench({ screen }: { screen: ErpScreen }) {
                   <span className="text-muted-foreground">{f.label}</span>
                   {f.type === 'select' ? (
                     <select
+                      name={f.key}
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
                       value={String(draft[f.key] ?? '')}
                       onChange={(e) => setDraft({ ...draft, [f.key]: e.target.value })}
@@ -159,6 +170,7 @@ export function ModuleWorkbench({ screen }: { screen: ErpScreen }) {
                     />
                   ) : (
                     <Input
+                      name={f.key}
                       value={String(draft[f.key] ?? '')}
                       onChange={(e) =>
                         setDraft({
@@ -179,11 +191,23 @@ export function ModuleWorkbench({ screen }: { screen: ErpScreen }) {
                 انصراف
               </Button>
             </Box>
+            </form>
           </CardContent>
         </Card>
       )}
     </div>
   );
+}
+
+function showSavedFields(row: Record<string, string | number>): Record<string, string | number> {
+  const person = row.person || row.title || row.fullName || '';
+  const title = row.title || row.person || '';
+  return {
+    ...row,
+    code: row.code || '',
+    person,
+    title,
+  };
 }
 
 function Box(props: React.HTMLAttributes<HTMLDivElement>) {

@@ -1,16 +1,21 @@
 'use client';
 
-import { AppShell, PublicHeader, TenantHeader, TenantSidebar } from '@repo/ui';
+import { PublicHeader, TenantCloudShell } from '@repo/ui';
 import { usePathname } from 'next/navigation';
-import { AlertBell } from './alert-bell';
+import { useMasterDataSidebarHrefs } from '../hooks/use-master-data-sidebar';
+import { useTenantRailFilter } from '../hooks/use-tenant-permissions';
 
 const PUBLIC_PREFIXES = ['/checkout', '/login', '/register'];
 
 export function TenantShell({ children }: { children: React.ReactNode }) {
   const path = usePathname() ?? '/';
+  const masterDataHiddenHrefs = useMasterDataSidebarHrefs();
+  const { hiddenRailIds } = useTenantRailFilter();
   const isPublic = PUBLIC_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`));
 
   if (isPublic) {
+    const bareGate = path === '/login' || path === '/register' || path.startsWith('/login/');
+    if (bareGate) return <>{children}</>;
     return (
       <>
         <PublicHeader homeHref={process.env.NEXT_PUBLIC_MARKETING_URL ?? '/'} />
@@ -24,8 +29,8 @@ export function TenantShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AppShell sidebar={<TenantSidebar />} header={<TenantHeader tenantName="شرکت نمونه"><AlertBell /></TenantHeader>}>
+    <TenantCloudShell hideMenuHrefs={masterDataHiddenHrefs} hiddenRailIds={hiddenRailIds}>
       {children}
-    </AppShell>
+    </TenantCloudShell>
   );
 }

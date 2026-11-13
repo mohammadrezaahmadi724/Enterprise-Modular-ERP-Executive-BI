@@ -36,6 +36,13 @@ const QUICK_LINKS: { href: string; title: string; desc: string; icon: LucideIcon
     accent: 'from-amber-500/15 to-primary/5',
   },
   {
+    href: '/cloud-pricing',
+    title: 'تعرفه ابری',
+    desc: 'برآوردگر مارکتینگ و اشتراک ماهانه',
+    icon: CreditCard,
+    accent: 'from-sky-500/15 to-primary/5',
+  },
+  {
     href: '/tickets',
     title: 'تیکت‌ها',
     desc: 'پشتیبانی SaaS',

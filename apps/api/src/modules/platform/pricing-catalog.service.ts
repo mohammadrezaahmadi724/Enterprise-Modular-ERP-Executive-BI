@@ -3,12 +3,17 @@ import {
   DEFAULT_ERP_MODULE_CATALOG,
   PRICE_CATALOG_SETTING_KEY,
   PRICE_CATALOG_VERSION,
+  computeWizardEstimate,
+  tomansToIrr,
   type ErpModuleCode,
   type ModuleCatalogEntry,
   type PlanModulePricing,
+  type WizardEstimateInput,
+  type WizardEstimateResult,
   mergeCatalogWithOverrides,
 } from '@repo/contracts';
 import { platformDb } from '../../prisma/platform-db';
+import { loadCloudSubscriptionRates } from './cloud-subscription.service';
 
 type CatalogSettingValue = {
   version: number;
@@ -131,5 +136,35 @@ export async function computeModuleEstimate(moduleCodes: ErpModuleCode[]) {
     rangeMinIrr: Math.round(subtotal * 0.92),
     rangeMaxIrr: Math.round(subtotal * 1.18),
     validUntil: validUntil.toISOString(),
+  };
+}
+
+export async function computeWizardEstimatePayload(input: WizardEstimateInput): Promise<
+  WizardEstimateResult & {
+  currency: 'IRR';
+  subtotalIrr: number;
+  totalIrr: number;
+  rangeMinIrr: number;
+  rangeMaxIrr: number;
+  linesIrr: Array<{ key: string; titleFa: string; amountIrr: number; meta?: Record<string, string | number> }>;
+  cloudSubscription: Awaited<ReturnType<typeof loadCloudSubscriptionRates>>;
+}
+> {
+  const cloudRates = await loadCloudSubscriptionRates();
+  const wizard = computeWizardEstimate({ ...input, cloudRates });
+  return {
+    ...wizard,
+    currency: 'IRR',
+    subtotalIrr: tomansToIrr(wizard.afterUserTomans),
+    totalIrr: tomansToIrr(wizard.totalTomans),
+    rangeMinIrr: tomansToIrr(wizard.rangeMinTomans),
+    rangeMaxIrr: tomansToIrr(wizard.rangeMaxTomans),
+    linesIrr: wizard.lines.map((line) => ({
+      key: line.key,
+      titleFa: line.titleFa,
+      amountIrr: tomansToIrr(line.amountTomans),
+      meta: line.meta,
+    })),
+    cloudSubscription: cloudRates,
   };
 }

@@ -1,5 +1,6 @@
 @import '../../../packages/ui/src/styles/marketing-tokens.css';
 @import '../../../packages/ui/src/styles/base-plain.css';
+@import '../../../packages/ui/src/styles/platform-cloud.css';
 
 @tailwind base;
 @tailwind components;

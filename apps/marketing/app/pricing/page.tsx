@@ -10,40 +10,39 @@ import {
   PricingTrustRow,
 } from '@/components/marketing/PricingLandingBands';
 import { DEFAULT_ERP_MODULE_CATALOG } from '@repo/contracts';
+import { PhoneBar } from '@/components/marketing/PhoneBar';
+import { useSiteContent } from '@/lib/use-site-content';
 
 export default function PricingPage() {
   const [meetingOpen, setMeetingOpen] = useState(false);
+  const site = useSiteContent();
 
   return (
     <main className="est-root est-root--landing flex-1" dir="rtl">
-      <section className="est-hero pl relative py-16 overflow-hidden">
-        <div className="est-hero-glow absolute inset-0 pointer-events-none" />
-        <div className="relative mx-auto max-w-3xl px-4 text-center space-y-4">
-          <span className="est-eyebrow inline-flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="est-eyebrow-dot size-2 rounded-full" />
-            قیمت و هزینه ERP اختصاصی
+      <section className="sk-page px-4 py-8">
+        <div className="sk-panel mx-auto max-w-4xl px-6 py-12 text-center space-y-4">
+          <span className="sk-badge inline-flex items-center gap-2">
+            <span className="size-2 rounded-full bg-primary" />
+            {site.pricingBadge}
           </span>
-          <h1 className="text-3xl md:text-4xl font-bold leading-snug">
-            برآورد هزینه متناسب با <span className="text-primary">فرآیند سازمان شما</span>
+          <h1 className="sk-display">
+            {site.pricingTitle}
+            <br />
+            <span className="text-primary">{site.pricingAccent}</span>
           </h1>
-          <p className="est-hero-copy text-muted-foreground text-sm md:text-base">
-            قیمت ERP یک عدد ثابت نیست. ماژول‌های انتخابی، تعداد کاربران، سفارشی‌سازی و انتقال داده محدوده نهایی را
-            تعیین می‌کنند.
-          </p>
-          <div className="est-hero-actions flex flex-wrap justify-center gap-3 pt-2">
-            <Link
-              href="/pricing/estimate"
-              className="est-primary inline-flex rounded-xl bg-primary text-primary-foreground px-6 py-3 text-sm font-medium"
-            >
-              شروع برآورد هزینه ERP
+          <p className="sk-lead mx-auto max-w-2xl">{site.pricingBody}</p>
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            <Link href="/pricing/estimate" className="sk-btn sk-btn-primary">
+              شروع برآورد هزینه
             </Link>
-            <button type="button" className="rounded-xl border px-6 py-3 text-sm hover:bg-muted/50" onClick={() => setMeetingOpen(true)}>
+            <button type="button" className="sk-btn sk-btn-ghost" onClick={() => setMeetingOpen(true)}>
               رزرو جلسه
             </button>
           </div>
-          <p className="pl-microcopy text-xs text-muted-foreground">حدود ۲ دقیقه · بدون ساخت حساب ERP</p>
+          <p className="text-xs text-muted-foreground">حدود ۲ دقیقه · بدون ساخت حساب ERP · قیمت از پنل سوپر ادمین</p>
         </div>
       </section>
+      <PhoneBar />
 
       <PricingTrustRow />
 

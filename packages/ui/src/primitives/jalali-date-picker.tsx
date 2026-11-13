@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import jalaali from 'jalaali-js';
+import * as jalaali from 'jalaali-js';
 import { Button } from '../components/button';
 import { cn } from '../lib/cn';
 import { Input } from './input';

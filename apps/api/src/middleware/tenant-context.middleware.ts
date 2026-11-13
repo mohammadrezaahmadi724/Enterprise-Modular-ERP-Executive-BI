@@ -12,15 +12,13 @@ export class TenantContextMiddleware implements NestMiddleware {
   const correlationId = (req.headers['x-correlation-id'] as string) || randomUUID();
     const traceId = (req.headers['traceparent'] as string)?.split('-')[1] || randomUUID();
 
-    TenantContext.run(
-      {
-        tenantId,
-        userId,
-        correlationId,
-        traceId,
-        isSuperAdmin: req.headers['x-super-admin'] === 'true',
-      },
-      () => next(),
-    );
+    const data = {
+      tenantId,
+      userId,
+      correlationId,
+      traceId,
+      isSuperAdmin: req.headers['x-super-admin'] === 'true',
+    };
+    TenantContext.run(data, () => next());
   }
 }
